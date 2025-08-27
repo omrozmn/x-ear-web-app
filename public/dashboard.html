@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - X-Ear CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',
+                        'light-gray': '#F9FAFB'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light-gray">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar-nav">
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-8">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold text-gray-900">X-Ear CRM</h1>
+            </div>
+            
+            <ul class="space-y-2">
+                <li><a href="dashboard.html" class="nav-item active">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                    </svg>
+                    Dashboard
+                </a></li>
+                <li><a href="patients.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                    </svg>
+                    Hastalar
+                </a></li>
+                <li><a href="appointments.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                    </svg>
+                    Randevular
+                </a></li>
+                <li><a href="inventory.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/>
+                    </svg>
+                    Stok
+                </a></li>
+                <li><a href="campaigns.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                    </svg>
+                    Kampanyalar
+                </a></li>
+                <li><a href="reports.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                    </svg>
+                    Raporlar
+                </a></li>
+                <li><a href="settings.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                    </svg>
+                    Ayarlar
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button class="lg:hidden" data-menu-toggle>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-gray-900">Dashboard</h2>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Hasta ara..." class="form-input w-64" data-search="patients">
+                        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="relative">
+                        <button class="p-2 text-gray-400 hover:text-gray-600" id="notificationBtn">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+                            </svg>
+                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" id="notificationCount">3</span>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%232563EB'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='Arial' font-size='14' font-weight='bold'%3EAD%3C/text%3E%3C/svg%3E" alt="Admin" class="w-8 h-8 rounded-full">
+                        <span class="text-sm font-medium text-gray-700">Admin User</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="p-6">
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="card p-6 cursor-pointer hover:shadow-lg transition-shadow" onclick="window.location.href='patients.html'">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Toplam Hasta</p>
+                            <p class="text-3xl font-bold text-gray-900" id="totalPatients">156</p>
+                        </div>
+                        <div class="p-3 bg-blue-100 rounded-full">
+                            <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-sm text-green-600">+12% bu ay</span>
+                    </div>
+                </div>
+
+                <div class="card p-6 cursor-pointer hover:shadow-lg transition-shadow" onclick="navigateToPatients('trial')">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Aktif Denemeler</p>
+                            <p class="text-3xl font-bold text-gray-900" id="activeTrials">23</p>
+                        </div>
+                        <div class="p-3 bg-yellow-100 rounded-full">
+                            <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-sm text-blue-600">5 deneme bitiyor</span>
+                    </div>
+                </div>
+
+                <div class="card p-6 cursor-pointer hover:shadow-lg transition-shadow" onclick="window.location.href='reports.html'">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Aylık Ciro</p>
+                            <p class="text-3xl font-bold text-gray-900" id="monthlyRevenue">₺485.000</p>
+                        </div>
+                        <div class="p-3 bg-green-100 rounded-full">
+                            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-sm text-green-600">+8% geçen aya göre</span>
+                    </div>
+                </div>
+
+                <div class="card p-6 cursor-pointer hover:shadow-lg transition-shadow" onclick="navigateToAppointments()">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Bugünkü Randevular</p>
+                            <p class="text-3xl font-bold text-gray-900" id="appointmentsToday">8</p>
+                        </div>
+                        <div class="p-3 bg-purple-100 rounded-full">
+                            <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-sm text-orange-600">2 randevu beklemede</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Data -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Patient Funnel -->
+                <div class="card p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Hasta Funnel</h3>
+                    <div class="space-y-4" id="patientFunnel">
+                        <!-- Funnel data will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Hızlı İşlemler</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button class="btn-primary p-4 text-left" onclick="openAddPatientForm()">
+                            <svg class="w-6 h-6 mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                            </svg>
+                            <div class="text-sm font-medium">Yeni Hasta</div>
+                        </button>
+                        
+                        <button class="btn-primary p-4 text-left" onclick="openAddAppointmentForm()">
+                            <svg class="w-6 h-6 mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                            </svg>
+                            <div class="text-sm font-medium">Randevu Ekle</div>
+                        </button>
+                        
+                        <button class="btn-secondary p-4 text-left" onclick="showSMSModal()">
+                            <svg class="w-6 h-6 mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                            </svg>
+                            <div class="text-sm font-medium">SMS Gönder</div>
+                        </button>
+                        
+                        <button class="btn-secondary p-4 text-left" onclick="window.location.href='inventory.html'">
+                            <svg class="w-6 h-6 mb-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <div class="text-sm font-medium">Stok Kontrol</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activities and Upcoming Appointments -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Recent Activities -->
+                <div class="card p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Son Aktiviteler</h3>
+                    <div class="space-y-4" id="recentActivities">
+                        <!-- Activities will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Upcoming Appointments -->
+                <div class="card p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Yaklaşan Randevular</h3>
+                    <div class="space-y-4" id="upcomingAppointments">
+                        <!-- Appointments will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- SMS Modal -->
+    <div id="smsModal" class="modal-overlay hidden">
+        <div class="modal-content p-6 max-w-md">
+            <h3 class="text-lg font-semibold mb-4">Hızlı SMS Gönder</h3>
+            <form id="smsForm">
+                <div class="mb-4">
+                    <label class="form-label">Alıcı Grubu</label>
+                    <select class="form-input" id="recipientGroup">
+                        <option value="no_show">Randevu Kaçıranlar</option>
+                        <option value="trial_ending">Denemesi Bitenler</option>
+                        <option value="follow_up">Takip Gereken</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Mesaj</label>
+                    <textarea class="form-input" rows="3" id="smsMessage" placeholder="Mesajınızı yazın..."></textarea>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" class="btn-secondary" onclick="closeSMSModal()">İptal</button>
+                    <button type="submit" class="btn-primary">Gönder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/app.js"></script>
+    <script src="../assets/data.js"></script>
+    <script>
+        // Dashboard specific functionality
+        function initPage() {
+            loadDashboardData();
+            setupSMSModal();
+            setupHeaderInteractions();
+        }
+        
+        function setupHeaderInteractions() {
+            // Setup patient search
+            const searchInput = document.querySelector('[data-search="patients"]');
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const searchTerm = this.value.trim();
+                    if (searchTerm) {
+                        window.location.href = `patients.html?search=${encodeURIComponent(searchTerm)}`;
+                    } else {
+                        window.location.href = 'patients.html';
+                    }
+                }
+            });
+            
+            // Setup notification button
+            document.getElementById('notificationBtn').addEventListener('click', function() {
+                showToast('Bildirimler özelliği yakında eklenecek', 'info');
+            });
+        }
+
+        function loadDashboardData() {
+            // Calculate real KPIs from AppState
+            const totalPatients = AppState.patients ? AppState.patients.length : 156;
+            const activeTrials = AppState.patients ? AppState.patients.filter(p => p.segment === 'trial').length : 23;
+            const monthlyRevenue = 485000; // Simplified calculation
+            const appointmentsToday = AppState.appointments ? AppState.appointments.filter(a => {
+                const today = new Date().toISOString().split('T')[0];
+                return a.date === today && a.status === 'scheduled';
+            }).length : 8;
+
+            // Update KPI displays
+            document.getElementById('totalPatients').textContent = totalPatients;
+            document.getElementById('activeTrials').textContent = activeTrials;
+            document.getElementById('monthlyRevenue').textContent = `₺${monthlyRevenue.toLocaleString()}`;
+            document.getElementById('appointmentsToday').textContent = appointmentsToday;
+
+            // Load patient funnel with real or sample data
+            const funnelData = [
+                { stage: 'İlk Görüşme', count: Math.floor(totalPatients * 0.4), percentage: 40 },
+                { stage: 'Deneme', count: activeTrials, percentage: Math.floor((activeTrials / totalPatients) * 100) },
+                { stage: 'Satış', count: Math.floor(totalPatients * 0.2), percentage: 20 },
+                { stage: 'Takip', count: Math.floor(totalPatients * 0.15), percentage: 15 }
+            ];
+
+            const funnelContainer = document.getElementById('patientFunnel');
+            funnelContainer.innerHTML = funnelData.map(stage => {
+                const segmentMap = {
+                    'İlk Görüşme': 'lead',
+                    'Deneme': 'trial', 
+                    'Satış': 'purchased',
+                    'Takip': 'follow_up'
+                };
+                const segment = segmentMap[stage.stage];
+                
+                return `
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors" onclick="navigateToPatients('${segment}')">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-4 h-4 bg-primary rounded-full"></div>
+                            <span class="font-medium">${stage.stage}</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-lg font-bold">${stage.count}</span>
+                            <span class="text-sm text-gray-500">(${stage.percentage}%)</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Load recent activities
+            const activitiesContainer = document.getElementById('recentActivities');
+            const sampleActivities = [
+                { title: 'Yeni hasta eklendi', description: 'Ahmet Yılmaz sisteme kaydedildi', timestamp: new Date().toISOString(), user: 'Admin' },
+                { title: 'Randevu tamamlandı', description: 'Ayşe Demir kontrolü yapıldı', timestamp: new Date(Date.now() - 2*60*60*1000).toISOString(), user: 'Dr. Mehmet' },
+                { title: 'SMS gönderildi', description: '25 hastaya hatırlatma SMS\'i gönderildi', timestamp: new Date(Date.now() - 4*60*60*1000).toISOString(), user: 'Sistem' }
+            ];
+            
+            activitiesContainer.innerHTML = sampleActivities.map(activity => `
+                <div class="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg">
+                    <div class="w-2 h-2 bg-primary rounded-full mt-2"></div>
+                    <div class="flex-1">
+                        <h4 class="font-medium text-sm">${activity.title}</h4>
+                        <p class="text-sm text-gray-600">${activity.description}</p>
+                        <p class="text-xs text-gray-400 mt-1">${formatTimeAgo(activity.timestamp)} - ${activity.user}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Load upcoming appointments
+            const appointmentsContainer = document.getElementById('upcomingAppointments');
+            const sampleAppointments = [
+                { patientName: 'Mehmet Özkan', time: '09:00', type: 'Kontrol', status: 'scheduled' },
+                { patientName: 'Fatma Kaya', time: '10:30', type: 'İlk Muayene', status: 'scheduled' },
+                { patientName: 'Ali Demir', time: '14:00', type: 'Cihaz Teslimi', status: 'scheduled' }
+            ];
+            
+            appointmentsContainer.innerHTML = sampleAppointments.map(appointment => `
+                <div class="flex items-center justify-between p-3 border-l-4 border-primary bg-blue-50 rounded cursor-pointer hover:bg-blue-100 transition-colors" onclick="navigateToAppointments()">
+                    <div>
+                        <h4 class="font-medium text-sm">${appointment.patientName}</h4>
+                        <p class="text-sm text-gray-600">${appointment.type}</p>
+                        <p class="text-xs text-gray-500">Bugün ${appointment.time}</p>
+                    </div>
+                    <span class="status-badge status-scheduled">${appointment.status}</span>
+                </div>
+            `).join('');
+        }
+
+        function setupSMSModal() {
+            document.getElementById('smsForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const group = document.getElementById('recipientGroup').value;
+                const message = document.getElementById('smsMessage').value;
+                
+                if (message.trim()) {
+                    // Simulate SMS sending with recipient count
+                    const recipientCounts = {
+                        'no_show': 12,
+                        'trial_ending': 8,
+                        'follow_up': 15
+                    };
+                    const count = recipientCounts[group] || 10;
+                    
+                    showToast(`SMS ${count} kişiye başarıyla gönderildi!`, 'success');
+                    closeSMSModal();
+                    document.getElementById('smsMessage').value = '';
+                    
+                    // Refresh dashboard to show updated activity
+                    setTimeout(loadDashboardData, 1000);
+                }
+            });
+        }
+
+        function showSMSModal() {
+            document.getElementById('smsModal').classList.remove('hidden');
+        }
+
+        function closeSMSModal() {
+            document.getElementById('smsModal').classList.add('hidden');
+        }
+
+        function showToast(message, type = 'info') {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 toast-${type}`;
+            toast.style.backgroundColor = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6';
+            toast.style.color = 'white';
+            toast.textContent = message;
+            
+            // Add to page
+            document.body.appendChild(toast);
+            
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+                if (document.body.contains(toast)) {
+                    document.body.removeChild(toast);
+                }
+            }, 3000);
+        }
+
+        function formatTimeAgo(dateString) {
+            const now = new Date();
+            const date = new Date(dateString);
+            const diffInMinutes = Math.floor((now - date) / (1000 * 60));
+            
+            if (diffInMinutes < 1) return 'Az önce';
+            if (diffInMinutes < 60) return `${diffInMinutes} dakika önce`;
+            
+            const diffInHours = Math.floor(diffInMinutes / 60);
+            if (diffInHours < 24) return `${diffInHours} saat önce`;
+            
+            const diffInDays = Math.floor(diffInHours / 24);
+            return `${diffInDays} gün önce`;
+        }
+
+        // Notification handling
+        document.getElementById('notificationBtn').addEventListener('click', function() {
+            Utils.showToast('Bildirimler özelliği yakında eklenecek', 'info');
+        });
+        
+        // Navigation functions
+        function navigateToPatients(segment) {
+            if (segment) {
+                window.location.href = `patients.html?segment=${segment}`;
+            } else {
+                window.location.href = 'patients.html';
+            }
+        }
+        
+        function openAddPatientForm() {
+            window.location.href = 'patients.html?action=add';
+        }
+        
+        function openAddAppointmentForm() {
+            window.location.href = 'appointments.html?action=add';
+        }
+        
+        function navigateToAppointments() {
+            const today = new Date().toISOString().split('T')[0];
+            window.location.href = `appointments.html?date=${today}`;
+        }
+    </script>
+</body>
+</html>

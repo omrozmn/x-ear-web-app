@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raporlar - X-Ear CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',
+                        'light-gray': '#F9FAFB'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light-gray">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar-nav">
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-8">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold text-gray-900">X-Ear CRM</h1>
+            </div>
+            
+            <ul class="space-y-2">
+                <li><a href="dashboard.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                    </svg>
+                    Dashboard
+                </a></li>
+                <li><a href="patients.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                    </svg>
+                    Hastalar
+                </a></li>
+                <li><a href="appointments.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                    </svg>
+                    Randevular
+                </a></li>
+                <li><a href="inventory.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/>
+                    </svg>
+                    Stok
+                </a></li>
+                <li><a href="campaigns.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                    </svg>
+                    Kampanyalar
+                </a></li>
+                <li><a href="reports.html" class="nav-item active">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                    </svg>
+                    Raporlar
+                </a></li>
+                <li><a href="settings.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                    </svg>
+                    Ayarlar
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button class="lg:hidden" data-menu-toggle>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-gray-900">Raporlar ve Analizler</h2>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-gray-700">Tarih Aralığı:</label>
+                        <select class="filter-select" id="dateRangeFilter">
+                            <option value="7">Son 7 gün</option>
+                            <option value="30" selected>Son 30 gün</option>
+                            <option value="90">Son 3 ay</option>
+                            <option value="365">Son 1 yıl</option>
+                            <option value="custom">Özel Aralık</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn-primary" onclick="exportReports()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                        Rapor İndir
+                    </button>
+                    
+                    <div class="flex items-center space-x-3">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%232563EB'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='Arial' font-size='14' font-weight='bold'%3EAD%3C/text%3E%3C/svg%3E" alt="Admin" class="w-8 h-8 rounded-full">
+                        <span class="text-sm font-medium text-gray-700">Admin User</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6">
+            <!-- Report Tabs -->
+            <div class="mb-6">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8">
+                        <button class="tab-button active" data-tab="overview" onclick="switchTab('overview')">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                            </svg>
+                            Genel Bakış
+                        </button>
+                        <button class="tab-button" data-tab="patients" onclick="switchTab('patients')">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                            </svg>
+                            Hasta Analizleri
+                        </button>
+                        <button class="tab-button" data-tab="financial" onclick="switchTab('financial')">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                            </svg>
+                            Mali Raporlar
+                        </button>
+                        <button class="tab-button" data-tab="campaigns" onclick="switchTab('campaigns')">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                            </svg>
+                            Kampanya Analizleri
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Overview Tab -->
+            <div id="overviewTab" class="tab-content">
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="card p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Toplam Gelir</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalRevenue">₺0</p>
+                                <p class="text-sm text-green-600" id="revenueChange">+0%</p>
+                            </div>
+                            <div class="p-3 bg-green-100 rounded-lg">
+                                <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Yeni Hastalar</p>
+                                <p class="text-2xl font-bold text-gray-900" id="newPatients">0</p>
+                                <p class="text-sm text-blue-600" id="patientsChange">+0%</p>
+                            </div>
+                            <div class="p-3 bg-blue-100 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Randevu Oranı</p>
+                                <p class="text-2xl font-bold text-gray-900" id="appointmentRate">0%</p>
+                                <p class="text-sm text-yellow-600" id="appointmentChange">+0%</p>
+                            </div>
+                            <div class="p-3 bg-yellow-100 rounded-lg">
+                                <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Satış Oranı</p>
+                                <p class="text-2xl font-bold text-gray-900" id="salesRate">0%</p>
+                                <p class="text-sm text-purple-600" id="salesChange">+0%</p>
+                            </div>
+                            <div class="p-3 bg-purple-100 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Aylık Gelir Trendi</h3>
+                        <canvas id="revenueChart" width="400" height="200"></canvas>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Hasta Dağılımı</h3>
+                        <canvas id="patientDistributionChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- Performance Metrics -->
+                <div class="card p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Performans Metrikleri</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-blue-600 mb-2" id="conversionRate">0%</div>
+                            <div class="text-sm text-gray-600">Dönüşüm Oranı</div>
+                            <div class="text-xs text-gray-500 mt-1">Deneme → Satış</div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-green-600 mb-2" id="avgOrderValue">₺0</div>
+                            <div class="text-sm text-gray-600">Ortalama Sipariş Değeri</div>
+                            <div class="text-xs text-gray-500 mt-1">Hasta başına</div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-purple-600 mb-2" id="customerLifetime">₺0</div>
+                            <div class="text-sm text-gray-600">Müşteri Yaşam Değeri</div>
+                            <div class="text-xs text-gray-500 mt-1">Ortalama</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patients Tab -->
+            <div id="patientsTab" class="tab-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Yaş Dağılımı</h3>
+                        <canvas id="ageDistributionChart" width="400" height="200"></canvas>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Hasta Durumu</h3>
+                        <canvas id="patientStatusChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+                
+                <div class="card p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Hasta Segmentasyonu</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Segment</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Hasta Sayısı</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Toplam Gelir</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ortalama Değer</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dönüşüm Oranı</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200" id="patientSegmentTable">
+                                <!-- Patient segment data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Tab -->
+            <div id="financialTab" class="tab-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Gelir Analizi</h3>
+                        <canvas id="revenueAnalysisChart" width="400" height="200"></canvas>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Ürün Satış Dağılımı</h3>
+                        <canvas id="productSalesChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card p-6">
+                        <h4 class="font-medium text-gray-900 mb-4">En Çok Satan Ürünler</h4>
+                        <div class="space-y-3" id="topProducts">
+                            <!-- Top products will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h4 class="font-medium text-gray-900 mb-4">Ödeme Yöntemleri</h4>
+                        <div class="space-y-3" id="paymentMethods">
+                            <!-- Payment methods will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h4 class="font-medium text-gray-900 mb-4">Şube Performansı</h4>
+                        <div class="space-y-3" id="branchPerformance">
+                            <!-- Branch performance will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campaigns Tab -->
+            <div id="campaignsTab" class="tab-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Kampanya Performansı</h3>
+                        <canvas id="campaignPerformanceChart" width="400" height="200"></canvas>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">SMS İstatistikleri</h3>
+                        <canvas id="smsStatsChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+                
+                <div class="card p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Kampanya Detayları</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kampanya</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Gönderilen</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Açılma Oranı</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tıklama Oranı</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dönüşüm</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ROI</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200" id="campaignDetailsTable">
+                                <!-- Campaign details will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/app.js"></script>
+    <script src="../assets/data.js"></script>
+    <script>
+        let charts = {};
+        let currentDateRange = 30;
+
+        function initPage() {
+            setupDateRangeFilter();
+            loadReportData();
+            initializeCharts();
+        }
+
+        function setupDateRangeFilter() {
+            document.getElementById('dateRangeFilter').addEventListener('change', function() {
+                currentDateRange = parseInt(this.value);
+                loadReportData();
+                updateCharts();
+            });
+        }
+
+        function loadReportData() {
+            updateOverviewMetrics();
+            updatePatientAnalytics();
+            updateFinancialData();
+            updateCampaignAnalytics();
+        }
+
+        function updateOverviewMetrics() {
+            // Calculate metrics based on current date range
+            const endDate = new Date();
+            const startDate = new Date(endDate.getTime() - (currentDateRange * 24 * 60 * 60 * 1000));
+            
+            // Mock calculations - in real app, these would come from actual data
+            const totalRevenue = 450000 + Math.random() * 100000;
+            const newPatients = 45 + Math.floor(Math.random() * 20);
+            const appointmentRate = 85 + Math.random() * 10;
+            const salesRate = 65 + Math.random() * 15;
+            
+            document.getElementById('totalRevenue').textContent = Utils.formatCurrency(totalRevenue);
+            document.getElementById('newPatients').textContent = newPatients;
+            document.getElementById('appointmentRate').textContent = appointmentRate.toFixed(1) + '%';
+            document.getElementById('salesRate').textContent = salesRate.toFixed(1) + '%';
+            
+            // Update change indicators
+            document.getElementById('revenueChange').textContent = '+12.5%';
+            document.getElementById('patientsChange').textContent = '+8.3%';
+            document.getElementById('appointmentChange').textContent = '+5.2%';
+            document.getElementById('salesChange').textContent = '+3.7%';
+            
+            // Update performance metrics
+            document.getElementById('conversionRate').textContent = '68.5%';
+            document.getElementById('avgOrderValue').textContent = Utils.formatCurrency(8500);
+            document.getElementById('customerLifetime').textContent = Utils.formatCurrency(25000);
+        }
+
+        function updatePatientAnalytics() {
+            // Update patient segment table
+            const segments = [
+                { name: 'Yeni Hastalar', count: 45, revenue: 180000, avgValue: 4000, conversion: 25 },
+                { name: 'Aktif Hastalar', count: 120, revenue: 850000, avgValue: 7083, conversion: 85 },
+                { name: 'Deneme Hastalar', count: 35, revenue: 140000, avgValue: 4000, conversion: 40 },
+                { name: 'Pasif Hastalar', count: 80, revenue: 320000, avgValue: 4000, conversion: 15 }
+            ];
+            
+            const tableBody = document.getElementById('patientSegmentTable');
+            tableBody.innerHTML = segments.map(segment => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${segment.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${segment.count}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${Utils.formatCurrency(segment.revenue)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${Utils.formatCurrency(segment.avgValue)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${segment.conversion}%</td>
+                </tr>
+            `).join('');
+        }
+
+        function updateFinancialData() {
+            // Update top products
+            const topProducts = [
+                { name: 'Phonak Audéo Paradise', sales: 45, revenue: 315000 },
+                { name: 'Oticon More', sales: 38, revenue: 266000 },
+                { name: 'Widex Moment', sales: 32, revenue: 224000 },
+                { name: 'Signia Pure Charge&Go', sales: 28, revenue: 196000 }
+            ];
+            
+            document.getElementById('topProducts').innerHTML = topProducts.map(product => `
+                <div class="flex justify-between items-center">
+                    <div>
+                        <div class="text-sm font-medium text-gray-900">${product.name}</div>
+                        <div class="text-xs text-gray-500">${product.sales} satış</div>
+                    </div>
+                    <div class="text-sm font-medium text-gray-900">${Utils.formatCurrency(product.revenue)}</div>
+                </div>
+            `).join('');
+            
+            // Update payment methods
+            const paymentMethods = [
+                { name: 'Nakit', percentage: 45, amount: 450000 },
+                { name: 'Kredi Kartı', percentage: 35, amount: 350000 },
+                { name: 'Banka Transferi', percentage: 15, amount: 150000 },
+                { name: 'Taksit', percentage: 5, amount: 50000 }
+            ];
+            
+            document.getElementById('paymentMethods').innerHTML = paymentMethods.map(method => `
+                <div class="flex justify-between items-center">
+                    <div>
+                        <div class="text-sm font-medium text-gray-900">${method.name}</div>
+                        <div class="text-xs text-gray-500">${method.percentage}%</div>
+                    </div>
+                    <div class="text-sm font-medium text-gray-900">${Utils.formatCurrency(method.amount)}</div>
+                </div>
+            `).join('');
+            
+            // Update branch performance
+            const branches = [
+                { name: 'Merkez Şube', revenue: 500000, growth: 12 },
+                { name: 'Kadıköy Şube', revenue: 350000, growth: 8 },
+                { name: 'Beşiktaş Şube', revenue: 280000, growth: 15 }
+            ];
+            
+            document.getElementById('branchPerformance').innerHTML = branches.map(branch => `
+                <div class="flex justify-between items-center">
+                    <div>
+                        <div class="text-sm font-medium text-gray-900">${branch.name}</div>
+                        <div class="text-xs text-gray-500">+${branch.growth}% büyüme</div>
+                    </div>
+                    <div class="text-sm font-medium text-gray-900">${Utils.formatCurrency(branch.revenue)}</div>
+                </div>
+            `).join('');
+        }
+
+        function updateCampaignAnalytics() {
+            // Update campaign details table
+            const campaignDetails = AppState.campaigns.map(campaign => ({
+                name: campaign.name,
+                sent: campaign.sentCount || 0,
+                openRate: campaign.openRate || 0,
+                clickRate: campaign.clickRate || 0,
+                conversion: Math.floor(Math.random() * 10) + 5,
+                roi: Math.floor(Math.random() * 200) + 150
+            }));
+            
+            const tableBody = document.getElementById('campaignDetailsTable');
+            tableBody.innerHTML = campaignDetails.map(campaign => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${campaign.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${campaign.sent}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${campaign.openRate}%</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${campaign.clickRate}%</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${campaign.conversion}%</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${campaign.roi}%</td>
+                </tr>
+            `).join('');
+        }
+
+        function initializeCharts() {
+            initRevenueChart();
+            initPatientDistributionChart();
+            initAgeDistributionChart();
+            initPatientStatusChart();
+            initRevenueAnalysisChart();
+            initProductSalesChart();
+            initCampaignPerformanceChart();
+            initSmsStatsChart();
+        }
+
+        function initRevenueChart() {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            charts.revenue = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'],
+                    datasets: [{
+                        label: 'Gelir',
+                        data: [65000, 78000, 85000, 92000, 88000, 95000],
+                        borderColor: '#2563EB',
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₺' + (value / 1000) + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initPatientDistributionChart() {
+            const ctx = document.getElementById('patientDistributionChart').getContext('2d');
+            charts.patientDistribution = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Aktif', 'Deneme', 'Yeni', 'Pasif'],
+                    datasets: [{
+                        data: [120, 35, 45, 80],
+                        backgroundColor: ['#10B981', '#F59E0B', '#3B82F6', '#6B7280']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function initAgeDistributionChart() {
+            const ctx = document.getElementById('ageDistributionChart').getContext('2d');
+            charts.ageDistribution = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['18-30', '31-45', '46-60', '61-75', '75+'],
+                    datasets: [{
+                        label: 'Hasta Sayısı',
+                        data: [25, 45, 85, 120, 65],
+                        backgroundColor: '#3B82F6'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        function initPatientStatusChart() {
+            const ctx = document.getElementById('patientStatusChart').getContext('2d');
+            charts.patientStatus = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Tedavi Tamamlandı', 'Devam Eden Tedavi', 'Deneme Aşaması', 'İlk Muayene'],
+                    datasets: [{
+                        data: [150, 85, 35, 45],
+                        backgroundColor: ['#10B981', '#F59E0B', '#EF4444', '#8B5CF6']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function initRevenueAnalysisChart() {
+            const ctx = document.getElementById('revenueAnalysisChart').getContext('2d');
+            charts.revenueAnalysis = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'],
+                    datasets: [{
+                        label: 'Cihaz Satışı',
+                        data: [45000, 52000, 58000, 62000, 59000, 65000],
+                        backgroundColor: '#3B82F6'
+                    }, {
+                        label: 'Aksesuar',
+                        data: [12000, 15000, 16000, 18000, 17000, 19000],
+                        backgroundColor: '#10B981'
+                    }, {
+                        label: 'Bakım',
+                        data: [8000, 11000, 11000, 12000, 12000, 11000],
+                        backgroundColor: '#F59E0B'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            stacked: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₺' + (value / 1000) + 'K';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initProductSalesChart() {
+            const ctx = document.getElementById('productSalesChart').getContext('2d');
+            charts.productSales = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Phonak', 'Oticon', 'Widex', 'Signia', 'Diğer'],
+                    datasets: [{
+                        data: [35, 25, 20, 15, 5],
+                        backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#6B7280']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function initCampaignPerformanceChart() {
+            const ctx = document.getElementById('campaignPerformanceChart').getContext('2d');
+            charts.campaignPerformance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Hafta 1', 'Hafta 2', 'Hafta 3', 'Hafta 4'],
+                    datasets: [{
+                        label: 'Açılma Oranı',
+                        data: [65, 72, 68, 75],
+                        borderColor: '#3B82F6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)'
+                    }, {
+                        label: 'Tıklama Oranı',
+                        data: [25, 28, 24, 32],
+                        borderColor: '#10B981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initSmsStatsChart() {
+            const ctx = document.getElementById('smsStatsChart').getContext('2d');
+            charts.smsStats = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Gönderilen', 'Teslim Edilen', 'Açılan', 'Tıklanan'],
+                    datasets: [{
+                        label: 'SMS İstatistikleri',
+                        data: [1500, 1450, 1050, 320],
+                        backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCharts() {
+            // Update chart data based on date range
+            Object.values(charts).forEach(chart => {
+                if (chart) {
+                    chart.update();
+                }
+            });
+        }
+
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + 'Tab').classList.remove('hidden');
+            
+            // Add active class to selected tab button
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+        }
+
+        function exportReports() {
+            Utils.showToast('Rapor indirme özelliği yakında eklenecek', 'info');
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>

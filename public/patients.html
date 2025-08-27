@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hastalar - X-Ear CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',
+                        'light-gray': '#F9FAFB'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light-gray">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar-nav">
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-8">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold text-gray-900">X-Ear CRM</h1>
+            </div>
+            
+            <ul class="space-y-2">
+                <li><a href="dashboard.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                    </svg>
+                    Dashboard
+                </a></li>
+                <li><a href="patients.html" class="nav-item active">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                    </svg>
+                    Hastalar
+                </a></li>
+                <li><a href="appointments.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                    </svg>
+                    Randevular
+                </a></li>
+                <li><a href="inventory.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/>
+                    </svg>
+                    Stok
+                </a></li>
+                <li><a href="campaigns.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                    </svg>
+                    Kampanyalar
+                </a></li>
+                <li><a href="reports.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                    </svg>
+                    Raporlar
+                </a></li>
+                <li><a href="settings.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                    </svg>
+                    Ayarlar
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button class="lg:hidden" data-menu-toggle>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-gray-900">Hastalar</h2>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="btn-primary" onclick="showAddPatientModal()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                        </svg>
+                        Yeni Hasta
+                    </button>
+                    
+                    <div class="flex items-center space-x-3">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%232563EB'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='Arial' font-size='14' font-weight='bold'%3EAD%3C/text%3E%3C/svg%3E" alt="Admin" class="w-8 h-8 rounded-full">
+                        <span class="text-sm font-medium text-gray-700">Admin User</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Filters and Search -->
+        <div class="bg-white border-b border-gray-200 px-6 py-4">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Hasta ara (isim, TC, telefon)..." class="form-input w-80" id="patientSearch">
+                        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    
+                    <select class="form-input" id="statusFilter">
+                        <option value="">Tüm Durumlar</option>
+                        <option value="active">Aktif</option>
+                        <option value="pending">Beklemede</option>
+                        <option value="inactive">Pasif</option>
+                    </select>
+                    
+                    <select class="form-input" id="segmentFilter">
+                        <option value="">Tüm Segmentler</option>
+                        <option value="lead">Lead</option>
+                        <option value="trial">Deneme</option>
+                        <option value="purchased">Satın Aldı</option>
+                        <option value="follow_up">Takip</option>
+                    </select>
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm text-gray-600">Toplam: <span id="totalCount">0</span> hasta</span>
+                    <button class="btn-secondary" onclick="exportPatients()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                        Dışa Aktar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient List -->
+        <div class="p-6">
+            <div class="card overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="selectAll" class="rounded">
+                                </th>
+                                <th>Hasta Bilgileri</th>
+                                <th>İletişim</th>
+                                <th>Durum</th>
+                                <th>Segment</th>
+                                <th>Son Ziyaret</th>
+                                <th>SGK Durumu</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patientTableBody">
+                            <!-- Patient rows will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="flex items-center justify-between mt-6">
+                <div class="text-sm text-gray-600">
+                    <span id="paginationInfo">1-10 arası gösteriliyor, toplam 0 hasta</span>
+                </div>
+                <div class="flex items-center space-x-2" id="paginationControls">
+                    <!-- Pagination buttons will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Patient Modal -->
+    <div id="addPatientModal" class="modal-overlay hidden">
+        <div class="modal-content p-6 max-w-2xl">
+            <h3 class="text-lg font-semibold mb-6">Yeni Hasta Ekle</h3>
+            <form id="addPatientForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="form-label">Ad Soyad *</label>
+                        <input type="text" class="form-input" id="patientName" required>
+                    </div>
+                    <div>
+                        <label class="form-label">TC Kimlik No *</label>
+                        <input type="text" class="form-input" id="patientTC" maxlength="11" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Telefon *</label>
+                        <input type="tel" class="form-input" id="patientPhone" required>
+                    </div>
+                    <div>
+                        <label class="form-label">E-posta</label>
+                        <input type="email" class="form-input" id="patientEmail">
+                    </div>
+                    <div>
+                        <label class="form-label">Doğum Tarihi</label>
+                        <input type="date" class="form-input" id="patientBirthDate">
+                    </div>
+                    <div>
+                        <label class="form-label">Segment</label>
+                        <select class="form-input" id="patientSegment">
+                            <option value="lead">Lead</option>
+                            <option value="trial">Deneme</option>
+                            <option value="purchased">Satın Aldı</option>
+                            <option value="follow_up">Takip</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Adres</label>
+                    <textarea class="form-input" rows="2" id="patientAddress"></textarea>
+                </div>
+                <div class="mb-6">
+                    <label class="form-label">Notlar</label>
+                    <textarea class="form-input" rows="3" id="patientNotes" placeholder="Hasta hakkında notlar..."></textarea>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" class="btn-secondary" onclick="closeAddPatientModal()">İptal</button>
+                    <button type="submit" class="btn-primary">Hasta Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bulk SMS Modal -->
+    <div id="bulkSMSModal" class="modal-overlay hidden">
+        <div class="modal-content p-6">
+            <h3 class="text-lg font-semibold mb-4">Toplu SMS Gönder</h3>
+            <div class="mb-4">
+                <p class="text-sm text-gray-600">Seçilen <span id="bulkSMSCount" class="font-semibold">0</span> hastaya SMS gönderilecek.</p>
+            </div>
+            <form id="bulkSMSForm">
+                <div class="mb-4">
+                    <label class="form-label">Mesaj İçeriği *</label>
+                    <textarea id="bulkSMSMessage" class="form-input" rows="4" maxlength="160" placeholder="SMS mesajınızı yazın..." required></textarea>
+                    <p class="text-xs text-gray-500 mt-1">Maksimum 160 karakter</p>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" class="btn-secondary" onclick="closeBulkSMSModal()">İptal</button>
+                    <button type="button" class="btn-primary" onclick="sendBulkSMS()">SMS Gönder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bulk Status Modal -->
+    <div id="bulkStatusModal" class="modal-overlay hidden">
+        <div class="modal-content p-6">
+            <h3 class="text-lg font-semibold mb-4">Toplu Durum Güncelle</h3>
+            <div class="mb-4">
+                <p class="text-sm text-gray-600">Seçilen <span id="bulkStatusCount" class="font-semibold">0</span> hastanın durumu güncellenecek.</p>
+            </div>
+            <form id="bulkStatusForm">
+                <div class="mb-4">
+                    <label class="form-label">Yeni Durum *</label>
+                    <select id="bulkNewStatus" class="form-input" required>
+                        <option value="">Durum seçin...</option>
+                        <option value="active">Aktif</option>
+                        <option value="pending">Beklemede</option>
+                        <option value="inactive">Pasif</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" class="btn-secondary" onclick="closeBulkStatusModal()">İptal</button>
+                    <button type="button" class="btn-primary" onclick="updateBulkStatus()">Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Appointment Modal -->
+    <div id="addAppointmentModal" class="modal-overlay hidden">
+        <div class="modal-content p-6">
+            <h3 class="text-lg font-semibold mb-4">Randevu Ekle</h3>
+            <div class="mb-4 p-3 bg-blue-50 rounded-md">
+                <p class="text-sm text-blue-800">Hasta: <span id="appointmentPatientName" class="font-semibold"></span></p>
+            </div>
+            <form id="addAppointmentForm">
+                <input type="hidden" id="appointmentPatientId">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="form-label">Tarih *</label>
+                        <input type="date" id="appointmentDate" class="form-input" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Saat *</label>
+                        <input type="time" id="appointmentTime" class="form-input" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Randevu Türü *</label>
+                        <select id="appointmentType" class="form-input" required>
+                            <option value="">Tür seçin...</option>
+                            <option value="consultation">Konsültasyon</option>
+                            <option value="fitting">Cihaz Takma</option>
+                            <option value="adjustment">Ayarlama</option>
+                            <option value="maintenance">Bakım</option>
+                            <option value="follow_up">Kontrol</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Klinisyen</label>
+                        <select id="appointmentClinician" class="form-input">
+                            <option value="">Klinisyen seçin...</option>
+                            <option value="dr-ayse-yilmaz">Dr. Ayşe Yılmaz</option>
+                            <option value="dr-mehmet-kaya">Dr. Mehmet Kaya</option>
+                            <option value="aud-fatma-demir">Aud. Fatma Demir</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Şube</label>
+                    <select id="appointmentBranch" class="form-input">
+                        <option value="">Şube seçin...</option>
+                        <option value="merkez">Merkez Şube</option>
+                        <option value="kadikoy">Kadıköy Şube</option>
+                        <option value="besiktas">Beşiktaş Şube</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label class="form-label">Notlar</label>
+                    <textarea id="appointmentNotes" class="form-input" rows="2" placeholder="Randevu notları..."></textarea>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" class="btn-secondary" onclick="closeAddAppointmentModal()">İptal</button>
+                    <button type="button" class="btn-primary" onclick="saveAppointment()">Randevu Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bulk Actions Modal -->
+    <div id="bulkActionsModal" class="modal-overlay hidden">
+        <div class="modal-content p-6">
+            <h3 class="text-lg font-semibold mb-4">Toplu İşlemler</h3>
+            <div class="space-y-3">
+                <button class="w-full btn-secondary text-left" onclick="bulkSendSMS()">
+                    <svg class="w-4 h-4 mr-2 inline" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                    </svg>
+                    SMS Gönder
+                </button>
+                <button class="w-full btn-secondary text-left" onclick="bulkExport()">
+                    <svg class="w-4 h-4 mr-2 inline" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                    Seçilenleri Dışa Aktar
+                </button>
+                <button class="w-full btn-secondary text-left" onclick="bulkUpdateStatus()">
+                    <svg class="w-4 h-4 mr-2 inline" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+                    </svg>
+                    Durum Güncelle
+                </button>
+            </div>
+            <div class="flex justify-end mt-6">
+                <button class="btn-secondary" onclick="closeBulkActionsModal()">Kapat</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/app.js"></script>
+    <script src="../assets/data.js"></script>
+    <script>
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let filteredPatients = [];
+        let selectedPatients = [];
+
+        function initPage() {
+            loadPatients();
+            setupEventListeners();
+            handleURLParameters();
+        }
+        
+        function handleURLParameters() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const action = urlParams.get('action');
+            const segment = urlParams.get('segment');
+            const search = urlParams.get('search');
+            
+            // Handle action parameter
+            if (action === 'add') {
+                showAddPatientModal();
+            }
+            
+            // Handle segment parameter
+            if (segment) {
+                document.getElementById('segmentFilter').value = segment;
+                filterPatients();
+            }
+            
+            // Handle search parameter
+            if (search) {
+                document.getElementById('patientSearch').value = search;
+                filterPatients();
+            }
+        }
+
+        function setupEventListeners() {
+            // Search and filters
+            document.getElementById('patientSearch').addEventListener('input', Utils.debounce(filterPatients, 300));
+            document.getElementById('statusFilter').addEventListener('change', filterPatients);
+            document.getElementById('segmentFilter').addEventListener('change', filterPatients);
+            
+            // Select all checkbox
+            document.getElementById('selectAll').addEventListener('change', function() {
+                const checkboxes = document.querySelectorAll('input[name="patientSelect"]');
+                checkboxes.forEach(cb => cb.checked = this.checked);
+                updateSelectedPatients();
+            });
+            
+            // Add patient form
+            document.getElementById('addPatientForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (this.dataset.editMode === 'true') {
+                    handleEditPatient(e);
+                } else {
+                    handleAddPatient(e);
+                }
+            });
+        }
+
+        function loadPatients() {
+            filteredPatients = [...AppState.patients];
+            renderPatients();
+            updatePagination();
+        }
+
+        function filterPatients() {
+            const search = document.getElementById('patientSearch').value.toLowerCase();
+            const status = document.getElementById('statusFilter').value;
+            const segment = document.getElementById('segmentFilter').value;
+            
+            filteredPatients = AppState.patients.filter(patient => {
+                const matchesSearch = !search || 
+                    patient.name.toLowerCase().includes(search) ||
+                    patient.tcNumber.includes(search) ||
+                    patient.phone.includes(search);
+                    
+                const matchesStatus = !status || patient.status === status;
+                const matchesSegment = !segment || patient.segment === segment;
+                
+                return matchesSearch && matchesStatus && matchesSegment;
+            });
+            
+            currentPage = 1;
+            renderPatients();
+            updatePagination();
+        }
+
+        function renderPatients() {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const patientsToShow = filteredPatients.slice(startIndex, endIndex);
+            
+            const tbody = document.getElementById('patientTableBody');
+            
+            if (patientsToShow.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-8 text-gray-500">
+                            <div class="flex flex-col items-center">
+                                <svg class="w-12 h-12 text-gray-300 mb-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                                </svg>
+                                <p class="text-lg font-medium mb-2">Hasta bulunamadı</p>
+                                <p class="text-sm mb-4">Arama kriterlerinizi değiştirin veya yeni hasta ekleyin</p>
+                                <button onclick="showAddPatientModal()" class="btn-primary">
+                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                                    </svg>
+                                    İlk Hastayı Ekle
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = patientsToShow.map(patient => {
+                const deviceCount = patient.devices ? patient.devices.length : 0;
+                const activeDevices = patient.devices ? patient.devices.filter(d => d.status === 'trial' || d.status === 'purchased').length : 0;
+                
+                return `
+                    <tr class="hover:bg-gray-50">
+                        <td>
+                            <input type="checkbox" name="patientSelect" value="${patient.id}" class="rounded" onchange="updateSelectedPatients()">
+                        </td>
+                        <td>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-semibold">
+                                    ${patient.name.split(' ').map(n => n[0]).join('').substring(0, 2)}
+                                </div>
+                                <div>
+                                    <div class="font-medium text-gray-900 cursor-pointer hover:text-primary transition-colors" onclick="viewPatient('${patient.id}')">${patient.name}</div>
+                                    <div class="text-sm text-gray-500">TC: ${patient.tcNumber}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-sm">
+                                <div class="text-gray-900">${patient.phone}</div>
+                                <div class="text-gray-500">${patient.email || '-'}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="status-badge status-${patient.status}">
+                                ${patient.status === 'active' ? 'Aktif' : patient.status === 'pending' ? 'Beklemede' : 'Pasif'}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="px-2 py-1 text-xs font-medium rounded-full ${
+                                patient.segment === 'lead' ? 'bg-blue-100 text-blue-800' :
+                                patient.segment === 'trial' ? 'bg-yellow-100 text-yellow-800' :
+                                patient.segment === 'purchased' ? 'bg-green-100 text-green-800' :
+                                'bg-purple-100 text-purple-800'
+                            }">
+                                ${patient.segment === 'lead' ? 'Lead' : 
+                                  patient.segment === 'trial' ? 'Deneme' :
+                                  patient.segment === 'purchased' ? 'Satın Aldı' : 'Takip'}
+                            </span>
+                        </td>
+                        <td class="text-sm text-gray-900">
+                            <div>${Utils.formatDate(patient.lastVisit)}</div>
+                            <div class="text-xs text-gray-500">${activeDevices}/${deviceCount} cihaz</div>
+                        </td>
+                        <td>
+                            <span class="status-badge ${
+                                patient.sgkStatus === 'approved' ? 'status-active' :
+                                patient.sgkStatus === 'pending' ? 'status-pending' : 'status-inactive'
+                            }">
+                                ${patient.sgkStatus === 'approved' ? 'Onaylı' : 
+                                  patient.sgkStatus === 'pending' ? 'Beklemede' : 'Reddedildi'}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="flex items-center space-x-2">
+                                <button class="text-primary hover:text-blue-700" onclick="viewPatient('${patient.id}')" title="Görüntüle">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                                <button class="text-gray-600 hover:text-gray-800" onclick="editPatient('${patient.id}')" title="Düzenle">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                                    </svg>
+                                </button>
+                                <button class="text-green-600 hover:text-green-800" onclick="addAppointment('${patient.id}')" title="Randevu Ekle">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                                <button class="text-red-600 hover:text-red-800" onclick="deletePatient('${patient.id}')" title="Sil">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            
+            document.getElementById('totalCount').textContent = filteredPatients.length;
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredPatients.length / itemsPerPage);
+            const startItem = (currentPage - 1) * itemsPerPage + 1;
+            const endItem = Math.min(currentPage * itemsPerPage, filteredPatients.length);
+            
+            document.getElementById('paginationInfo').textContent = 
+                `${startItem}-${endItem} arası gösteriliyor, toplam ${filteredPatients.length} hasta`;
+            
+            const paginationControls = document.getElementById('paginationControls');
+            paginationControls.innerHTML = '';
+            
+            if (totalPages > 1) {
+                // Previous button
+                const prevBtn = document.createElement('button');
+                prevBtn.className = `px-3 py-1 rounded ${currentPage === 1 ? 'bg-gray-200 text-gray-400' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'}`;
+                prevBtn.textContent = 'Önceki';
+                prevBtn.disabled = currentPage === 1;
+                prevBtn.onclick = () => changePage(currentPage - 1);
+                paginationControls.appendChild(prevBtn);
+                
+                // Page numbers
+                for (let i = 1; i <= totalPages; i++) {
+                    if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                        const pageBtn = document.createElement('button');
+                        pageBtn.className = `px-3 py-1 rounded ${i === currentPage ? 'bg-primary text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'}`;
+                        pageBtn.textContent = i;
+                        pageBtn.onclick = () => changePage(i);
+                        paginationControls.appendChild(pageBtn);
+                    } else if (i === currentPage - 2 || i === currentPage + 2) {
+                        const dots = document.createElement('span');
+                        dots.className = 'px-2 text-gray-500';
+                        dots.textContent = '...';
+                        paginationControls.appendChild(dots);
+                    }
+                }
+                
+                // Next button
+                const nextBtn = document.createElement('button');
+                nextBtn.className = `px-3 py-1 rounded ${currentPage === totalPages ? 'bg-gray-200 text-gray-400' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'}`;
+                nextBtn.textContent = 'Sonraki';
+                nextBtn.disabled = currentPage === totalPages;
+                nextBtn.onclick = () => changePage(currentPage + 1);
+                paginationControls.appendChild(nextBtn);
+            }
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            renderPatients();
+            updatePagination();
+        }
+
+        function updateSelectedPatients() {
+            const checkboxes = document.querySelectorAll('input[name="patientSelect"]:checked');
+            selectedPatients = Array.from(checkboxes).map(cb => cb.value);
+            
+            // Show bulk actions if patients are selected
+            if (selectedPatients.length > 0) {
+                showBulkActionsButton();
+            } else {
+                hideBulkActionsButton();
+            }
+        }
+
+        function showBulkActionsButton() {
+            let bulkBtn = document.getElementById('bulkActionsBtn');
+            if (!bulkBtn) {
+                bulkBtn = document.createElement('button');
+                bulkBtn.id = 'bulkActionsBtn';
+                bulkBtn.className = 'btn-secondary';
+                bulkBtn.innerHTML = `
+                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 16a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                    </svg>
+                    Toplu İşlemler (${selectedPatients.length})
+                `;
+                bulkBtn.onclick = showBulkActionsModal;
+                document.querySelector('header .flex.items-center.space-x-4').appendChild(bulkBtn);
+            } else {
+                bulkBtn.innerHTML = `
+                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 16a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                    </svg>
+                    Toplu İşlemler (${selectedPatients.length})
+                `;
+            }
+        }
+
+        function hideBulkActionsButton() {
+            const bulkBtn = document.getElementById('bulkActionsBtn');
+            if (bulkBtn) {
+                bulkBtn.remove();
+            }
+        }
+
+        // Modal functions
+        function showAddPatientModal() {
+            document.getElementById('addPatientModal').classList.remove('hidden');
+        }
+
+        function closeAddPatientModal() {
+            document.getElementById('addPatientModal').classList.add('hidden');
+            const form = document.getElementById('addPatientForm');
+            form.reset();
+            
+            // Reset form to add mode
+            delete form.dataset.editMode;
+            delete form.dataset.patientId;
+            
+            // Reset modal title and button text
+            document.querySelector('#addPatientModal h3').textContent = 'Yeni Hasta Ekle';
+            document.querySelector('#addPatientForm button[type="submit"]').textContent = 'Hasta Ekle';
+        }
+
+        function showBulkActionsModal() {
+            document.getElementById('bulkActionsModal').classList.remove('hidden');
+        }
+
+        function closeBulkActionsModal() {
+            document.getElementById('bulkActionsModal').classList.add('hidden');
+        }
+
+        // Patient actions
+        function handleAddPatient(e) {
+            e.preventDefault();
+            
+            const patientData = {
+                name: document.getElementById('patientName').value,
+                tcNumber: document.getElementById('patientTC').value,
+                phone: document.getElementById('patientPhone').value,
+                email: document.getElementById('patientEmail').value,
+                birthDate: document.getElementById('patientBirthDate').value,
+                address: document.getElementById('patientAddress').value,
+                segment: document.getElementById('patientSegment').value,
+                notes: document.getElementById('patientNotes').value,
+                status: 'active',
+                lastVisit: new Date().toISOString(),
+                sgkStatus: 'pending',
+                devices: []
+            };
+            
+            // Validate required fields
+            if (!patientData.name || !patientData.tcNumber || !patientData.phone) {
+                Utils.showToast('Lütfen zorunlu alanları doldurun', 'error');
+                return;
+            }
+            
+            // Validate TC number
+            if (!Utils.validateTCNumber(patientData.tcNumber)) {
+                Utils.showToast('Geçersiz TC Kimlik Numarası', 'error');
+                return;
+            }
+            
+            // Check if TC number already exists
+            if (AppState.patients.some(p => p.tcNumber === patientData.tcNumber)) {
+                Utils.showToast('Bu TC Kimlik Numarası zaten kayıtlı', 'error');
+                return;
+            }
+            
+            // Validate phone number
+            if (!/^[0-9]{10,11}$/.test(patientData.phone.replace(/[^0-9]/g, ''))) {
+                Utils.showToast('Geçersiz telefon numarası', 'error');
+                return;
+            }
+            
+            // Validate email if provided
+            if (patientData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(patientData.email)) {
+                Utils.showToast('Geçersiz e-posta adresi', 'error');
+                return;
+            }
+            
+            const newPatient = PatientManager.addPatient(patientData);
+            Utils.showToast('Hasta başarıyla eklendi', 'success');
+            closeAddPatientModal();
+            loadPatients();
+        }
+        
+        function handleEditPatient(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const patientId = form.dataset.patientId;
+            
+            const patientData = {
+                name: document.getElementById('patientName').value,
+                tcNumber: document.getElementById('patientTC').value,
+                phone: document.getElementById('patientPhone').value,
+                email: document.getElementById('patientEmail').value,
+                birthDate: document.getElementById('patientBirthDate').value,
+                address: document.getElementById('patientAddress').value,
+                segment: document.getElementById('patientSegment').value,
+                notes: document.getElementById('patientNotes').value
+            };
+            
+            // Validate required fields
+            if (!patientData.name || !patientData.tcNumber || !patientData.phone) {
+                Utils.showToast('Lütfen zorunlu alanları doldurun', 'error');
+                return;
+            }
+            
+            // Validate TC number
+            if (!Utils.validateTCNumber(patientData.tcNumber)) {
+                Utils.showToast('Geçersiz TC Kimlik Numarası', 'error');
+                return;
+            }
+            
+            // Check if TC number already exists (excluding current patient)
+            if (AppState.patients.some(p => p.tcNumber === patientData.tcNumber && p.id !== patientId)) {
+                Utils.showToast('Bu TC Kimlik Numarası başka bir hasta tarafından kullanılıyor', 'error');
+                return;
+            }
+            
+            // Update patient
+            const patientIndex = AppState.patients.findIndex(p => p.id === patientId);
+            if (patientIndex > -1) {
+                AppState.patients[patientIndex] = { ...AppState.patients[patientIndex], ...patientData };
+                Utils.showToast('Hasta bilgileri güncellendi', 'success');
+                closeAddPatientModal();
+                loadPatients();
+            } else {
+                Utils.showToast('Hasta bulunamadı', 'error');
+            }
+        }
+
+        function viewPatient(patientId) {
+            window.location.href = `patient-details.html?id=${patientId}`;
+        }
+
+        function editPatient(patientId) {
+            const patient = AppState.patients.find(p => p.id === patientId);
+            if (!patient) {
+                Utils.showToast('Hasta bulunamadı', 'error');
+                return;
+            }
+            
+            // Populate form with patient data
+            document.getElementById('patientName').value = patient.name;
+            document.getElementById('patientTC').value = patient.tcNumber;
+            document.getElementById('patientPhone').value = patient.phone;
+            document.getElementById('patientEmail').value = patient.email || '';
+            document.getElementById('patientBirthDate').value = patient.birthDate || '';
+            document.getElementById('patientAddress').value = patient.address || '';
+            document.getElementById('patientSegment').value = patient.segment;
+            document.getElementById('patientNotes').value = patient.notes || '';
+            
+            // Change form to edit mode
+            const form = document.getElementById('addPatientForm');
+            form.dataset.editMode = 'true';
+            form.dataset.patientId = patientId;
+            
+            // Update modal title and button text
+            document.querySelector('#addPatientModal h3').textContent = 'Hasta Düzenle';
+            document.querySelector('#addPatientForm button[type="submit"]').textContent = 'Güncelle';
+            
+            showAddPatientModal();
+        }
+        
+        function deletePatient(patientId) {
+            const patient = AppState.patients.find(p => p.id === patientId);
+            if (!patient) {
+                Utils.showToast('Hasta bulunamadı', 'error');
+                return;
+            }
+            
+            if (confirm(`${patient.name} adlı hastayı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.`)) {
+                const index = AppState.patients.findIndex(p => p.id === patientId);
+                if (index > -1) {
+                    AppState.patients.splice(index, 1);
+                    Utils.showToast('Hasta silindi', 'success');
+                    loadPatients();
+                }
+            }
+        }
+
+        function addAppointment(patientId) {
+            showAddAppointmentModal(patientId);
+        }
+
+        function exportPatients() {
+            Utils.showToast('Dışa aktarma özelliği yakında eklenecek', 'info');
+        }
+
+        // Modal functions for new modals
+        function showBulkSMSModal() {
+            document.getElementById('bulkSMSCount').textContent = selectedPatients.length;
+            document.getElementById('bulkSMSModal').classList.remove('hidden');
+        }
+
+        function closeBulkSMSModal() {
+            document.getElementById('bulkSMSModal').classList.add('hidden');
+            document.getElementById('bulkSMSMessage').value = '';
+        }
+
+        function showBulkStatusModal() {
+            document.getElementById('bulkStatusCount').textContent = selectedPatients.length;
+            document.getElementById('bulkStatusModal').classList.remove('hidden');
+        }
+
+        function closeBulkStatusModal() {
+            document.getElementById('bulkStatusModal').classList.add('hidden');
+            document.getElementById('bulkNewStatus').value = '';
+        }
+
+        function showAddAppointmentModal(patientId) {
+            const patient = AppState.patients.find(p => p.id === patientId);
+            if (!patient) {
+                Utils.showToast('Hasta bulunamadı', 'error');
+                return;
+            }
+            
+            document.getElementById('appointmentPatientId').value = patientId;
+            document.getElementById('appointmentPatientName').textContent = patient.name;
+            document.getElementById('addAppointmentModal').classList.remove('hidden');
+        }
+
+        function closeAddAppointmentModal() {
+            document.getElementById('addAppointmentModal').classList.add('hidden');
+            document.getElementById('addAppointmentForm').reset();
+        }
+
+        // Bulk actions
+        function bulkSendSMS() {
+            showBulkSMSModal();
+            closeBulkActionsModal();
+        }
+
+        function sendBulkSMS() {
+            const message = document.getElementById('bulkSMSMessage').value;
+            if (!message.trim()) {
+                Utils.showToast('Lütfen mesaj içeriğini girin', 'error');
+                return;
+            }
+            
+            if (message.length > 160) {
+                Utils.showToast('SMS mesajı 160 karakterden uzun olamaz', 'error');
+                return;
+            }
+            
+            // Create campaign for selected patients
+            const selectedPatientData = selectedPatients.map(id => {
+                const patient = AppState.patients.find(p => p.id === id);
+                return {
+                    id: patient.id,
+                    name: patient.name,
+                    phone: patient.phone
+                };
+            });
+            
+            // Simulate SMS sending
+            Utils.showToast(`SMS ${selectedPatients.length} hastaya gönderildi`, 'success');
+            closeBulkSMSModal();
+            clearSelection();
+        }
+
+        function bulkExport() {
+            exportSelectedPatients();
+            closeBulkActionsModal();
+        }
+        
+        function exportSelectedPatients() {
+            const selectedPatientData = selectedPatients.map(id => {
+                const patient = AppState.patients.find(p => p.id === id);
+                return {
+                    'Ad Soyad': patient.name,
+                    'TC No': patient.tcNumber,
+                    'Telefon': patient.phone,
+                    'E-posta': patient.email || '',
+                    'Durum': patient.status === 'active' ? 'Aktif' : patient.status === 'pending' ? 'Beklemede' : 'Pasif',
+                    'Segment': patient.segment === 'lead' ? 'Lead' : patient.segment === 'trial' ? 'Deneme' : patient.segment === 'purchased' ? 'Satın Aldı' : 'Takip',
+                    'Kayıt Tarihi': Utils.formatDate(patient.createdAt)
+                };
+            });
+            
+            const csvContent = convertToCSV(selectedPatientData);
+            downloadCSV(csvContent, `hastalar_${new Date().toISOString().split('T')[0]}.csv`);
+            Utils.showToast(`${selectedPatients.length} hasta dışa aktarıldı`, 'success');
+            clearSelection();
+        }
+        
+        function convertToCSV(data) {
+            if (data.length === 0) return '';
+            
+            const headers = Object.keys(data[0]);
+            const csvRows = [headers.join(',')];
+            
+            data.forEach(row => {
+                const values = headers.map(header => {
+                    const value = row[header];
+                    return `"${value}"`;
+                });
+                csvRows.push(values.join(','));
+            });
+            
+            return csvRows.join('\n');
+        }
+        
+        function downloadCSV(content, filename) {
+            const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        function clearSelection() {
+            selectedPatients = [];
+            document.getElementById('selectAll').checked = false;
+            document.querySelectorAll('input[name="patientSelect"]').forEach(cb => cb.checked = false);
+            hideBulkActionsButton();
+        }
+
+        function bulkUpdateStatus() {
+            showBulkStatusModal();
+            closeBulkActionsModal();
+        }
+
+        function updateBulkStatus() {
+            const newStatus = document.getElementById('bulkNewStatus').value;
+            if (!newStatus) {
+                Utils.showToast('Lütfen yeni durumu seçin', 'error');
+                return;
+            }
+            
+            // Update selected patients' status
+            selectedPatients.forEach(patientId => {
+                const patientIndex = AppState.patients.findIndex(p => p.id === patientId);
+                if (patientIndex > -1) {
+                    AppState.patients[patientIndex].status = newStatus;
+                }
+            });
+            
+            Utils.showToast(`${selectedPatients.length} hastanın durumu güncellendi`, 'success');
+            closeBulkStatusModal();
+            clearSelection();
+            loadPatients();
+        }
+        
+        function bulkDelete() {
+            if (selectedPatients.length === 0) {
+                Utils.showToast('Lütfen en az bir hasta seçin', 'warning');
+                return;
+            }
+            
+            if (confirm(`${selectedPatients.length} hastayı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.`)) {
+                let deletedCount = 0;
+                selectedPatients.forEach(patientId => {
+                    const index = AppState.patients.findIndex(p => p.id === patientId);
+                    if (index > -1) {
+                        AppState.patients.splice(index, 1);
+                        deletedCount++;
+                    }
+                });
+                
+                Utils.showToast(`${deletedCount} hasta silindi`, 'success');
+                clearSelection();
+                loadPatients();
+            }
+            closeBulkActionsModal();
+        }
+
+        function saveAppointment() {
+            const patientId = document.getElementById('appointmentPatientId').value;
+            const date = document.getElementById('appointmentDate').value;
+            const time = document.getElementById('appointmentTime').value;
+            const type = document.getElementById('appointmentType').value;
+            
+            if (!date || !time || !type) {
+                Utils.showToast('Lütfen zorunlu alanları doldurun', 'error');
+                return;
+            }
+            
+            // Create appointment object
+            const appointment = {
+                id: Utils.generateId(),
+                patientId: patientId,
+                date: date,
+                time: time,
+                type: type,
+                clinician: document.getElementById('appointmentClinician').value,
+                branch: document.getElementById('appointmentBranch').value,
+                notes: document.getElementById('appointmentNotes').value,
+                status: 'scheduled',
+                createdAt: new Date().toISOString()
+            };
+            
+            // Add to appointments (assuming AppState.appointments exists)
+            if (!AppState.appointments) {
+                AppState.appointments = [];
+            }
+            AppState.appointments.push(appointment);
+            
+            Utils.showToast('Randevu başarıyla eklendi', 'success');
+            closeAddAppointmentModal();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevular - X-Ear CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',
+                        'light-gray': '#F9FAFB'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light-gray">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar-nav">
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-8">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold text-gray-900">X-Ear CRM</h1>
+            </div>
+            
+            <ul class="space-y-2">
+                <li><a href="dashboard.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                    </svg>
+                    Dashboard
+                </a></li>
+                <li><a href="patients.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                    </svg>
+                    Hastalar
+                </a></li>
+                <li><a href="appointments.html" class="nav-item active">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                    </svg>
+                    Randevular
+                </a></li>
+                <li><a href="inventory.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/>
+                    </svg>
+                    Stok
+                </a></li>
+                <li><a href="campaigns.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                    </svg>
+                    Kampanyalar
+                </a></li>
+                <li><a href="reports.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                    </svg>
+                    Raporlar
+                </a></li>
+                <li><a href="settings.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                    </svg>
+                    Ayarlar
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button class="lg:hidden" data-menu-toggle>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-gray-900">Randevular</h2>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Hasta ara..." class="search-input" id="searchInput">
+                        <svg class="search-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    
+                    <button class="btn-primary" onclick="openAddAppointmentModal()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                        </svg>
+                        Yeni Randevu
+                    </button>
+                    
+                    <div class="flex items-center space-x-3">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%232563EB'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='Arial' font-size='14' font-weight='bold'%3EAD%3C/text%3E%3C/svg%3E" alt="Admin" class="w-8 h-8 rounded-full">
+                        <span class="text-sm font-medium text-gray-700">Admin User</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Filters -->
+        <div class="bg-white border-b border-gray-200 px-6 py-4">
+            <div class="flex flex-wrap items-center gap-4">
+                <div class="flex items-center space-x-2">
+                    <label class="text-sm font-medium text-gray-700">Şube:</label>
+                    <select class="filter-select" id="branchFilter">
+                        <option value="">Tümü</option>
+                        <option value="Kadıköy">Kadıköy</option>
+                        <option value="Beşiktaş">Beşiktaş</option>
+                        <option value="Üsküdar">Üsküdar</option>
+                    </select>
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    <label class="text-sm font-medium text-gray-700">Klinisyen:</label>
+                    <select class="filter-select" id="clinicianFilter">
+                        <option value="">Tümü</option>
+                        <option value="Dr. Elif Yıldız">Dr. Elif Yıldız</option>
+                        <option value="Dr. Mehmet Kaya">Dr. Mehmet Kaya</option>
+                        <option value="Dr. Ayşe Demir">Dr. Ayşe Demir</option>
+                    </select>
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    <label class="text-sm font-medium text-gray-700">Durum:</label>
+                    <select class="filter-select" id="statusFilter">
+                        <option value="">Tümü</option>
+                        <option value="scheduled">Planlandı</option>
+                        <option value="completed">Tamamlandı</option>
+                        <option value="no_show">Gelmedi</option>
+                        <option value="cancelled">İptal</option>
+                    </select>
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    <label class="text-sm font-medium text-gray-700">Tarih:</label>
+                    <input type="date" class="filter-select" id="dateFilter">
+                </div>
+                
+                <button class="btn-secondary" onclick="clearFilters()">
+                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                    Filtreleri Temizle
+                </button>
+            </div>
+        </div>
+
+        <!-- View Toggle -->
+        <div class="bg-white border-b border-gray-200 px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-1 bg-gray-100 rounded-lg p-1">
+                    <button class="view-toggle-btn active" data-view="list" onclick="switchView('list')">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 12a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 16a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                        Liste
+                    </button>
+                    <button class="view-toggle-btn" data-view="calendar" onclick="switchView('calendar')">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                        </svg>
+                        Takvim
+                    </button>
+                </div>
+                
+                <div class="text-sm text-gray-600">
+                    <span id="appointmentCount">0</span> randevu bulundu
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-6">
+            <!-- List View -->
+            <div id="listView" class="space-y-4">
+                <!-- Appointments will be populated here -->
+            </div>
+
+            <!-- Calendar View -->
+            <div id="calendarView" class="hidden">
+                <div class="card">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-semibold">Takvim Görünümü</h3>
+                            <div class="flex items-center space-x-4">
+                                <button onclick="previousMonth()" class="p-2 hover:bg-gray-100 rounded">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                                <h4 class="text-xl font-semibold" id="currentMonth">Ocak 2024</h4>
+                                <button onclick="nextMonth()" class="p-2 hover:bg-gray-100 rounded">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-7 gap-1 mb-4">
+                            <div class="p-3 text-center text-sm font-medium text-gray-500">Pzt</div>
+                            <div class="p-3 text-center text-sm font-medium text-gray-500">Sal</div>
+                            <div class="p-3 text-center text-sm font-medium text-gray-500">Çar</div>
+                            <div class="p-3 text-center text-sm font-medium text-gray-500">Per</div>
+                            <div class="p-3 text-center text-sm font-medium text-gray-500">Cum</div>
+                            <div class="p-3 text-center text-sm font-medium text-gray-500">Cmt</div>
+                            <div class="p-3 text-center text-sm font-medium text-gray-500">Paz</div>
+                        </div>
+                        
+                        <div class="grid grid-cols-7 gap-1" id="calendarGrid">
+                            <!-- Calendar days will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Appointment Modal -->
+    <div id="addAppointmentModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Yeni Randevu Ekle</h3>
+                <button class="modal-close" onclick="closeAddAppointmentModal()">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="addAppointmentForm" class="modal-body space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Hasta *</label>
+                        <select class="form-input" id="appointmentPatient" required>
+                            <option value="">Hasta seçin</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="form-label">Randevu Türü *</label>
+                        <select class="form-input" id="appointmentType" required>
+                            <option value="">Tür seçin</option>
+                            <option value="İlk Değerlendirme">İlk Değerlendirme</option>
+                            <option value="Kontrol">Kontrol</option>
+                            <option value="Cihaz Teslimi">Cihaz Teslimi</option>
+                            <option value="Ayarlama">Ayarlama</option>
+                            <option value="Temizlik">Temizlik</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="form-label">Tarih *</label>
+                        <input type="date" class="form-input" id="appointmentDate" required>
+                    </div>
+                    
+                    <div>
+                        <label class="form-label">Saat *</label>
+                        <input type="time" class="form-input" id="appointmentTime" required>
+                    </div>
+                    
+                    <div>
+                        <label class="form-label">Klinisyen *</label>
+                        <select class="form-input" id="appointmentClinician" required>
+                            <option value="">Klinisyen seçin</option>
+                            <option value="Dr. Elif Yıldız">Dr. Elif Yıldız</option>
+                            <option value="Dr. Mehmet Kaya">Dr. Mehmet Kaya</option>
+                            <option value="Dr. Ayşe Demir">Dr. Ayşe Demir</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="form-label">Şube *</label>
+                        <select class="form-input" id="appointmentBranch" required>
+                            <option value="">Şube seçin</option>
+                            <option value="Kadıköy">Kadıköy</option>
+                            <option value="Beşiktaş">Beşiktaş</option>
+                            <option value="Üsküdar">Üsküdar</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="form-label">Notlar</label>
+                    <textarea class="form-input" id="appointmentNotes" rows="3" placeholder="Randevu notları..."></textarea>
+                </div>
+            </form>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeAddAppointmentModal()">İptal</button>
+                <button type="submit" form="addAppointmentForm" class="btn-primary">Randevu Ekle</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Appointment Modal -->
+    <div id="viewAppointmentModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Randevu Detayları</h3>
+                <button class="modal-close" onclick="closeViewAppointmentModal()">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="modal-body space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Hasta</label>
+                        <p id="viewAppointmentPatient" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Durum</label>
+                        <p id="viewAppointmentStatus" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Tarih</label>
+                        <p id="viewAppointmentDate" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Saat</label>
+                        <p id="viewAppointmentTime" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Tür</label>
+                        <p id="viewAppointmentType" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Klinisyen</label>
+                        <p id="viewAppointmentClinician" class="mt-1 text-sm text-gray-900"></p>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Şube</label>
+                    <p id="viewAppointmentBranch" class="mt-1 text-sm text-gray-900"></p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Notlar</label>
+                    <p id="viewAppointmentNotes" class="mt-1 text-sm text-gray-900"></p>
+                </div>
+                
+                <div class="border-t pt-4">
+                    <h4 class="text-sm font-medium text-gray-700 mb-2">Hasta Bilgileri</h4>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-gray-500">Telefon:</span>
+                            <span id="viewPatientPhone" class="ml-2 text-gray-900"></span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">E-posta:</span>
+                            <span id="viewPatientEmail" class="ml-2 text-gray-900"></span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">Yaş:</span>
+                            <span id="viewPatientAge" class="ml-2 text-gray-900"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button onclick="closeViewAppointmentModal()" class="btn btn-secondary">
+                    Kapat
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/app.js"></script>
+    <script src="../assets/data.js"></script>
+    <script>
+        let currentView = 'list';
+        let currentDate = new Date();
+        let filteredAppointments = [];
+
+        function initPage() {
+            loadAppointments();
+            populatePatientSelect();
+            setupFilters();
+            setupForm();
+            
+            // Check if we need to add appointment for specific patient or just open add form
+            const urlParams = new URLSearchParams(window.location.search);
+            const action = urlParams.get('action');
+            const patientId = urlParams.get('patientId');
+            const dateFilter = urlParams.get('date');
+            
+            if (action === 'add') {
+                openAddAppointmentModal();
+                if (patientId) {
+                    document.getElementById('appointmentPatient').value = patientId;
+                }
+            }
+            
+            if (dateFilter) {
+                document.getElementById('dateFilter').value = dateFilter;
+                applyFilters();
+            }
+        }
+
+        function loadAppointments() {
+            filteredAppointments = [...AppState.appointments];
+            applyFilters();
+            renderAppointments();
+            updateAppointmentCount();
+            checkForNoShows();
+        }
+        
+        function checkForNoShows() {
+            const now = new Date();
+            const appointments = AppState.appointments || [];
+            
+            appointments.forEach(appointment => {
+                if (appointment.status === 'scheduled') {
+                    const appointmentDateTime = new Date(appointment.date + ' ' + appointment.time);
+                    const timeDiff = now - appointmentDateTime;
+                    
+                    // If appointment was more than 30 minutes ago, mark as no-show
+                    if (timeDiff > 30 * 60 * 1000) {
+                        appointment.status = 'no_show';
+                        
+                        // Add notification
+                        if (window.NotificationManager) {
+                            const patient = AppState.patients.find(p => p.id === appointment.patientId);
+                            NotificationManager.add({
+                                type: 'warning',
+                                title: 'Randevuya Gelmedi',
+                                message: `${patient ? patient.name : 'Hasta'} randevusuna gelmedi`,
+                                priority: 'high'
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
+        function populatePatientSelect() {
+            const select = document.getElementById('appointmentPatient');
+            const patients = AppState.patients;
+            
+            patients.forEach(patient => {
+                const option = document.createElement('option');
+                option.value = patient.id;
+                option.textContent = `${patient.name} (${patient.tcNumber})`;
+                select.appendChild(option);
+            });
+        }
+
+        function setupFilters() {
+            const filters = ['branchFilter', 'clinicianFilter', 'statusFilter', 'dateFilter'];
+            filters.forEach(filterId => {
+                document.getElementById(filterId).addEventListener('change', applyFilters);
+            });
+            
+            document.getElementById('searchInput').addEventListener('input', applyFilters);
+        }
+
+        function setupForm() {
+            document.getElementById('addAppointmentForm').addEventListener('submit', handleAddAppointment);
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const branchFilter = document.getElementById('branchFilter').value;
+            const clinicianFilter = document.getElementById('clinicianFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+
+            filteredAppointments = AppState.appointments.filter(appointment => {
+                const patient = AppState.patients.find(p => p.id === appointment.patientId);
+                const patientName = patient ? patient.name.toLowerCase() : '';
+                
+                const matchesSearch = !searchTerm || 
+                    patientName.includes(searchTerm) ||
+                    appointment.type.toLowerCase().includes(searchTerm) ||
+                    appointment.clinician.toLowerCase().includes(searchTerm);
+                
+                const matchesBranch = !branchFilter || appointment.branch === branchFilter;
+                const matchesClinician = !clinicianFilter || appointment.clinician === clinicianFilter;
+                const matchesStatus = !statusFilter || appointment.status === statusFilter;
+                const matchesDate = !dateFilter || appointment.date === dateFilter;
+                
+                return matchesSearch && matchesBranch && matchesClinician && matchesStatus && matchesDate;
+            });
+            
+            renderAppointments();
+            updateAppointmentCount();
+        }
+
+        function renderAppointments() {
+            if (currentView === 'list') {
+                renderListView();
+            } else {
+                renderCalendarView();
+            }
+        }
+
+        function renderListView() {
+            const listView = document.getElementById('listView');
+            
+            if (filteredAppointments.length === 0) {
+                listView.innerHTML = `
+                    <div class="card p-8 text-center">
+                        <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                        </svg>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">Randevu bulunamadı</h3>
+                        <p class="text-gray-500 mb-4">Arama kriterlerinize uygun randevu bulunmuyor.</p>
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                            <button class="btn-primary" onclick="openAddAppointmentModal()">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                                </svg>
+                                İlk Randevuyu Ekle
+                            </button>
+                            <button class="btn-secondary" onclick="clearFilters()">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                                Filtreleri Temizle
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Add bulk actions bar
+            const bulkActionsHtml = `
+                <div id="bulkActionsBar" class="hidden bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <span class="text-sm font-medium text-blue-900" id="selectedCount">0 randevu seçildi</span>
+                            <div class="flex space-x-2">
+                                <button onclick="bulkMarkCompleted()" class="btn-sm bg-green-600 text-white hover:bg-green-700">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Tamamlandı İşaretle
+                                </button>
+                                <button onclick="bulkMarkNoShow()" class="btn-sm bg-orange-600 text-white hover:bg-orange-700">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L8.464 8.464M9.878 9.878l-1.414-1.414M15.121 15.121L13.707 13.707M15.121 15.121L16.535 16.535M15.121 15.121l1.414 1.414M13.707 13.707L12.293 12.293M13.707 13.707l-1.414-1.414M12.293 12.293L10.879 10.879"/>
+                                    </svg>
+                                    Gelmedi İşaretle
+                                </button>
+                                <button onclick="bulkDelete()" class="btn-sm bg-red-600 text-white hover:bg-red-700">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Sil
+                                </button>
+                            </div>
+                        </div>
+                        <button onclick="clearSelection()" class="text-blue-600 hover:text-blue-800 text-sm">
+                            Seçimi Temizle
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            listView.innerHTML = bulkActionsHtml + filteredAppointments.map(appointment => {
+                const patient = AppState.patients.find(p => p.id === appointment.patientId);
+                const patientName = patient ? patient.name : 'Bilinmeyen Hasta';
+                
+                const appointmentDateTime = new Date(appointment.date + ' ' + appointment.time);
+                const now = new Date();
+                const isToday = appointment.date === new Date().toISOString().split('T')[0];
+                const isUpcoming = appointmentDateTime > now;
+                
+                return `
+                    <div class="card p-6 hover:shadow-md transition-shadow ${isToday ? 'border-l-4 border-blue-500' : ''}">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <input type="checkbox" class="appointment-checkbox w-4 h-4 text-blue-600 rounded" value="${appointment.id}" onchange="handleAppointmentSelection()">
+                                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-semibold">
+                                    ${patientName.split(' ').map(n => n[0]).join('').substring(0, 2)}
+                                </div>
+                                <div>
+                                    <div class="flex items-center space-x-2">
+                                        <h3 class="text-lg font-semibold text-gray-900">${patientName}</h3>
+                                        ${isToday ? '<span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Bugün</span>' : ''}
+                                    </div>
+                                    <p class="text-sm text-gray-600">${appointment.type}</p>
+                                    <div class="flex items-center space-x-4 mt-1 text-sm text-gray-500">
+                                        <span>${Utils.formatDate(appointment.date)} ${appointment.time}</span>
+                                        <span>${appointment.clinician}</span>
+                                        <span>${appointment.branch}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-3">
+                                <span class="status-badge status-${appointment.status}">
+                                    ${getStatusText(appointment.status)}
+                                </span>
+                                
+                                <div class="flex items-center space-x-2">
+                                    ${appointment.status === 'scheduled' && isUpcoming ? `
+                                        <button class="btn-icon text-green-600 hover:bg-green-50" onclick="markAsCompleted('${appointment.id}')" title="Tamamlandı Olarak İşaretle">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </button>
+                                        <button class="btn-icon text-orange-600 hover:bg-orange-50" onclick="markAsNoShow('${appointment.id}')" title="Gelmedi Olarak İşaretle">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L8.464 8.464M9.878 9.878l-1.414-1.414M15.121 15.121L13.707 13.707M15.121 15.121L16.535 16.535M15.121 15.121l1.414 1.414M13.707 13.707L12.293 12.293M13.707 13.707l-1.414-1.414M12.293 12.293L10.879 10.879"/>
+                                            </svg>
+                                        </button>
+                                    ` : ''}
+                                    
+                                    <button class="btn-icon" onclick="viewAppointment('${appointment.id}')" title="Detayları Görüntüle">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </button>
+                                    
+                                    <button class="btn-icon" onclick="editAppointment('${appointment.id}')" title="Düzenle">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                                        </svg>
+                                    </button>
+                                    
+                                    <button class="btn-icon text-red-600 hover:bg-red-50" onclick="deleteAppointment('${appointment.id}')" title="Sil">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd"/>
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L7.586 12l-1.293 1.293a1 1 0 101.414 1.414L9 13.414l2.293 2.293a1 1 0 001.414-1.414L11.414 12l1.293-1.293z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </button>
+                                    
+                                    <button class="btn-icon" onclick="viewPatient('${appointment.patientId}')" title="Hasta Detayı">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        ${appointment.notes ? `
+                            <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+                                <p class="text-sm text-gray-700">${appointment.notes}</p>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderCalendarView() {
+            const calendarGrid = document.getElementById('calendarGrid');
+            const currentMonthElement = document.getElementById('currentMonth');
+            
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            currentMonthElement.textContent = `${getMonthName(month)} ${year}`;
+            
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - (firstDay.getDay() + 6) % 7);
+            
+            const days = [];
+            const currentDateObj = new Date(startDate);
+            
+            for (let i = 0; i < 42; i++) {
+                const dayAppointments = filteredAppointments.filter(apt => {
+                    const aptDate = new Date(apt.date);
+                    return aptDate.toDateString() === currentDateObj.toDateString();
+                });
+                
+                const isCurrentMonth = currentDateObj.getMonth() === month;
+                const isToday = currentDateObj.toDateString() === new Date().toDateString();
+                
+                days.push(`
+                    <div class="calendar-day ${
+                        isCurrentMonth ? 'current-month' : 'other-month'
+                    } ${isToday ? 'today' : ''}" data-date="${currentDateObj.toISOString().split('T')[0]}">
+                        <div class="day-number">${currentDateObj.getDate()}</div>
+                        <div class="day-appointments">
+                            ${dayAppointments.slice(0, 3).map(apt => {
+                                const patient = AppState.patients.find(p => p.id === apt.patientId);
+                                return `
+                                    <div class="appointment-item status-${apt.status}" title="${patient ? patient.name : 'Bilinmeyen'} - ${apt.type}">
+                                        <span class="appointment-time">${apt.time}</span>
+                                        <span class="appointment-patient">${patient ? patient.name.split(' ')[0] : 'Bilinmeyen'}</span>
+                                    </div>
+                                `;
+                            }).join('')}
+                            ${dayAppointments.length > 3 ? `<div class="more-appointments">+${dayAppointments.length - 3} daha</div>` : ''}
+                        </div>
+                    </div>
+                `);
+                
+                currentDateObj.setDate(currentDateObj.getDate() + 1);
+            }
+            
+            calendarGrid.innerHTML = days.join('');
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'scheduled': 'Planlandı',
+                'completed': 'Tamamlandı',
+                'no_show': 'Gelmedi',
+                'cancelled': 'İptal'
+            };
+            return statusMap[status] || status;
+        }
+
+        function getMonthName(month) {
+            const months = [
+                'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
+                'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
+            ];
+            return months[month];
+        }
+
+        function switchView(view) {
+            currentView = view;
+            
+            // Update toggle buttons
+            document.querySelectorAll('.view-toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-view="${view}"]`).classList.add('active');
+            
+            // Show/hide views
+            document.getElementById('listView').classList.toggle('hidden', view !== 'list');
+            document.getElementById('calendarView').classList.toggle('hidden', view !== 'calendar');
+            
+            renderAppointments();
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendarView();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendarView();
+        }
+
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('branchFilter').value = '';
+            document.getElementById('clinicianFilter').value = '';
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('dateFilter').value = '';
+            applyFilters();
+        }
+
+        function updateAppointmentCount() {
+            document.getElementById('appointmentCount').textContent = filteredAppointments.length;
+        }
+
+        function openAddAppointmentModal() {
+            document.getElementById('addAppointmentModal').classList.remove('hidden');
+            
+            // Set default date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('appointmentDate').value = today;
+        }
+
+        function closeAddAppointmentModal() {
+            document.getElementById('addAppointmentModal').classList.add('hidden');
+            const form = document.getElementById('addAppointmentForm');
+            form.reset();
+            delete form.dataset.editId;
+            
+            // Reset modal title and button text
+            document.querySelector('.modal-title').textContent = 'Yeni Randevu Ekle';
+            document.querySelector('button[type="submit"]').textContent = 'Randevu Ekle';
+        }
+
+        function handleAddAppointment(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const editId = form.dataset.editId;
+            
+            const appointmentData = {
+                patientId: document.getElementById('appointmentPatient').value,
+                type: document.getElementById('appointmentType').value,
+                date: document.getElementById('appointmentDate').value,
+                time: document.getElementById('appointmentTime').value,
+                clinician: document.getElementById('appointmentClinician').value,
+                branch: document.getElementById('appointmentBranch').value,
+                notes: document.getElementById('appointmentNotes').value,
+                status: editId ? AppState.appointments.find(a => a.id === editId).status : 'scheduled'
+            };
+            
+            if (editId) {
+                // Update existing appointment
+                const appointmentIndex = AppState.appointments.findIndex(a => a.id === editId);
+                if (appointmentIndex > -1) {
+                    AppState.appointments[appointmentIndex] = { ...AppState.appointments[appointmentIndex], ...appointmentData };
+                    Utils.showToast('Randevu güncellendi', 'success');
+                }
+                delete form.dataset.editId;
+            } else {
+                // Add new appointment
+                AppointmentManager.addAppointment(appointmentData);
+                const patient = AppState.patients.find(p => p.id === appointmentData.patientId);
+                Utils.showToast(`${patient ? patient.name : 'Hasta'} için randevu eklendi`, 'success');
+            }
+            
+            closeAddAppointmentModal();
+            loadAppointments();
+        }
+
+        function editAppointment(appointmentId) {
+            const appointment = AppState.appointments.find(a => a.id === appointmentId);
+            if (!appointment) {
+                Utils.showToast('Randevu bulunamadı', 'error');
+                return;
+            }
+            
+            const patient = AppState.patients.find(p => p.id === appointment.patientId);
+            
+            // Populate edit form with current values
+            document.getElementById('appointmentPatient').value = appointment.patientId;
+            document.getElementById('appointmentType').value = appointment.type;
+            document.getElementById('appointmentDate').value = appointment.date;
+            document.getElementById('appointmentTime').value = appointment.time;
+            document.getElementById('appointmentClinician').value = appointment.clinician;
+            document.getElementById('appointmentBranch').value = appointment.branch;
+            document.getElementById('appointmentNotes').value = appointment.notes || '';
+            
+            // Store the appointment ID for updating
+            document.getElementById('addAppointmentForm').dataset.editId = appointmentId;
+            
+            // Change modal title and button text
+            document.querySelector('.modal-title').textContent = 'Randevu Düzenle';
+            document.querySelector('button[type="submit"]').textContent = 'Randevu Güncelle';
+            
+            openAddAppointmentModal();
+        }
+        
+        function markAsCompleted(appointmentId) {
+            const appointmentIndex = AppState.appointments.findIndex(a => a.id === appointmentId);
+            if (appointmentIndex > -1) {
+                AppState.appointments[appointmentIndex].status = 'completed';
+                AppState.appointments[appointmentIndex].completedAt = new Date().toISOString();
+                
+                // Update patient's last visit
+                const appointment = AppState.appointments[appointmentIndex];
+                const patientIndex = AppState.patients.findIndex(p => p.id === appointment.patientId);
+                if (patientIndex > -1) {
+                    AppState.patients[patientIndex].lastVisit = appointment.date;
+                }
+                
+                Utils.showToast('Randevu tamamlandı olarak işaretlendi', 'success');
+                loadAppointments();
+            }
+        }
+        
+        function markAsNoShow(appointmentId) {
+            const appointmentIndex = AppState.appointments.findIndex(a => a.id === appointmentId);
+            if (appointmentIndex > -1) {
+                AppState.appointments[appointmentIndex].status = 'no_show';
+                Utils.showToast('Randevu gelmedi olarak işaretlendi', 'warning');
+                loadAppointments();
+            }
+        }
+
+        function deleteAppointment(appointmentId) {
+            const appointment = AppState.appointments.find(a => a.id === appointmentId);
+            if (!appointment) {
+                Utils.showToast('Randevu bulunamadı', 'error');
+                return;
+            }
+            
+            const patient = AppState.patients.find(p => p.id === appointment.patientId);
+            const patientName = patient ? patient.name : 'Bilinmeyen Hasta';
+            
+            if (confirm(`${patientName} için ${Utils.formatDate(appointment.date)} tarihli randevuyu silmek istediğinizden emin misiniz?`)) {
+                AppointmentManager.deleteAppointment(appointmentId);
+                loadAppointments();
+                Utils.showToast('Randevu silindi', 'success');
+                
+                // Add notification
+                if (window.NotificationManager) {
+                    NotificationManager.add({
+                        type: 'info',
+                        title: 'Randevu Silindi',
+                        message: `${patientName} için randevu iptal edildi`,
+                        priority: 'normal'
+                    });
+                }
+            }
+        }
+
+        function viewAppointment(id) {
+             const appointment = AppState.appointments.find(a => a.id === id);
+             if (!appointment) {
+                 Utils.showToast('Randevu bulunamadı', 'error');
+                 return;
+             }
+             
+             const patient = AppState.patients.find(p => p.id === appointment.patientId);
+             const patientName = patient ? patient.name : 'Bilinmeyen Hasta';
+             
+             // Populate view modal
+             document.getElementById('viewAppointmentPatient').textContent = patientName;
+             document.getElementById('viewAppointmentDate').textContent = Utils.formatDate(appointment.date);
+             document.getElementById('viewAppointmentTime').textContent = appointment.time;
+             document.getElementById('viewAppointmentType').textContent = getAppointmentTypeText(appointment.type);
+             document.getElementById('viewAppointmentClinician').textContent = appointment.clinician || '-';
+             document.getElementById('viewAppointmentBranch').textContent = appointment.branch || '-';
+             document.getElementById('viewAppointmentStatus').textContent = getAppointmentStatusText(appointment.status);
+             document.getElementById('viewAppointmentNotes').textContent = appointment.notes || 'Not bulunmuyor';
+             
+             if (patient) {
+                 document.getElementById('viewPatientPhone').textContent = patient.phone || '-';
+                 document.getElementById('viewPatientEmail').textContent = patient.email || '-';
+                 document.getElementById('viewPatientAge').textContent = patient.age || '-';
+             }
+             
+             showViewAppointmentModal();
+         }
+         
+         function showViewAppointmentModal() {
+             document.getElementById('viewAppointmentModal').classList.remove('hidden');
+         }
+         
+         function closeViewAppointmentModal() {
+             document.getElementById('viewAppointmentModal').classList.add('hidden');
+         }
+        
+        function handleAppointmentSelection() {
+            const checkboxes = document.querySelectorAll('.appointment-checkbox:checked');
+            const selectedCount = checkboxes.length;
+            const bulkActionsBar = document.getElementById('bulkActionsBar');
+            const selectedCountElement = document.getElementById('selectedCount');
+            
+            if (selectedCount > 0) {
+                bulkActionsBar.classList.remove('hidden');
+                selectedCountElement.textContent = `${selectedCount} randevu seçildi`;
+            } else {
+                bulkActionsBar.classList.add('hidden');
+            }
+        }
+        
+        function clearSelection() {
+            document.querySelectorAll('.appointment-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            handleAppointmentSelection();
+        }
+        
+        function getSelectedAppointmentIds() {
+             return Array.from(document.querySelectorAll('.appointment-checkbox:checked')).map(cb => cb.value);
+         }
+         
+         function getAppointmentTypeText(type) {
+             const types = {
+                 'consultation': 'Konsültasyon',
+                 'fitting': 'Cihaz Takma',
+                 'adjustment': 'Ayarlama',
+                 'maintenance': 'Bakım',
+                 'İlk Değerlendirme': 'İlk Değerlendirme',
+                 'Kontrol': 'Kontrol',
+                 'Cihaz Teslimi': 'Cihaz Teslimi',
+                 'Ayarlama': 'Ayarlama',
+                 'Temizlik': 'Temizlik'
+             };
+             return types[type] || type;
+         }
+         
+         function getAppointmentStatusText(status) {
+             const statuses = {
+                 'scheduled': 'Planlandı',
+                 'completed': 'Tamamlandı',
+                 'cancelled': 'İptal',
+                 'no_show': 'Gelmedi'
+             };
+             return statuses[status] || status;
+         }
+        
+        function bulkMarkCompleted() {
+            const selectedIds = getSelectedAppointmentIds();
+            if (selectedIds.length === 0) return;
+            
+            if (confirm(`${selectedIds.length} randevuyu tamamlandı olarak işaretlemek istediğinizden emin misiniz?`)) {
+                selectedIds.forEach(id => {
+                    const appointmentIndex = AppState.appointments.findIndex(a => a.id === id);
+                    if (appointmentIndex > -1) {
+                        AppState.appointments[appointmentIndex].status = 'completed';
+                        AppState.appointments[appointmentIndex].completedAt = new Date().toISOString();
+                    }
+                });
+                
+                Utils.showToast(`${selectedIds.length} randevu tamamlandı olarak işaretlendi`, 'success');
+                clearSelection();
+                loadAppointments();
+            }
+        }
+        
+        function bulkMarkNoShow() {
+            const selectedIds = getSelectedAppointmentIds();
+            if (selectedIds.length === 0) return;
+            
+            if (confirm(`${selectedIds.length} randevuyu gelmedi olarak işaretlemek istediğinizden emin misiniz?`)) {
+                selectedIds.forEach(id => {
+                    const appointmentIndex = AppState.appointments.findIndex(a => a.id === id);
+                    if (appointmentIndex > -1) {
+                        AppState.appointments[appointmentIndex].status = 'no_show';
+                    }
+                });
+                
+                Utils.showToast(`${selectedIds.length} randevu gelmedi olarak işaretlendi`, 'warning');
+                clearSelection();
+                loadAppointments();
+            }
+        }
+        
+        function bulkDelete() {
+            const selectedIds = getSelectedAppointmentIds();
+            if (selectedIds.length === 0) return;
+            
+            if (confirm(`${selectedIds.length} randevuyu silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.`)) {
+                selectedIds.forEach(id => {
+                    AppointmentManager.deleteAppointment(id);
+                });
+                
+                Utils.showToast(`${selectedIds.length} randevu silindi`, 'success');
+                clearSelection();
+                loadAppointments();
+            }
+        }
+        
+        function viewPatient(patientId) {
+            window.location.href = `patient-details.html?id=${patientId}`;
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+    
+    <style>
+        .view-toggle-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #6B7280;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .view-toggle-btn:hover {
+            color: #374151;
+        }
+        
+        .view-toggle-btn.active {
+            background-color: white;
+            color: #2563EB;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .calendar-day {
+            min-height: 120px;
+            border: 1px solid #E5E7EB;
+            padding: 0.5rem;
+            background: white;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .calendar-day:hover {
+            background-color: #F9FAFB;
+        }
+        
+        .calendar-day.other-month {
+            background-color: #F9FAFB;
+            color: #9CA3AF;
+        }
+        
+        .calendar-day.today {
+            background-color: #EFF6FF;
+            border-color: #2563EB;
+        }
+        
+        .day-number {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .day-appointments {
+            space-y: 1px;
+        }
+        
+        .appointment-item {
+            font-size: 0.75rem;
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+            margin-bottom: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .appointment-item.status-scheduled {
+            background-color: #DBEAFE;
+            color: #1E40AF;
+        }
+        
+        .appointment-item.status-completed {
+            background-color: #D1FAE5;
+            color: #065F46;
+        }
+        
+        .appointment-item.status-no_show {
+            background-color: #FEE2E2;
+            color: #991B1B;
+        }
+        
+        .appointment-item.status-cancelled {
+            background-color: #F3F4F6;
+            color: #6B7280;
+        }
+        
+        .appointment-time {
+            font-weight: 600;
+        }
+        
+        .appointment-patient {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .more-appointments {
+            font-size: 0.75rem;
+            color: #6B7280;
+            text-align: center;
+            padding: 0.125rem;
+        }
+        
+        .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        
+        .appointment-checkbox {
+            margin-right: 0.5rem;
+        }
+        
+        #bulkActionsBar {
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+</html>

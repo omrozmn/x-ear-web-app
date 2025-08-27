@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayarlar - X-Ear CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',
+                        'light-gray': '#F9FAFB'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light-gray">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar-nav">
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-8">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold text-gray-900">X-Ear CRM</h1>
+            </div>
+            
+            <ul class="space-y-2">
+                <li><a href="dashboard.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                    </svg>
+                    Dashboard
+                </a></li>
+                <li><a href="patients.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                    </svg>
+                    Hastalar
+                </a></li>
+                <li><a href="appointments.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                    </svg>
+                    Randevular
+                </a></li>
+                <li><a href="inventory.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 112 0 1 1 0 01-2 0zm6 0a1 1 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/>
+                    </svg>
+                    Stok
+                </a></li>
+                <li><a href="campaigns.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                    </svg>
+                    Kampanyalar
+                </a></li>
+                <li><a href="reports.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                    </svg>
+                    Raporlar
+                </a></li>
+                <li><a href="settings.html" class="nav-item active">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                    </svg>
+                    Ayarlar
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button class="lg:hidden" data-menu-toggle>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-gray-900">Sistem Ayarları</h2>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%232563EB'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='Arial' font-size='14' font-weight='bold'%3EAD%3C/text%3E%3C/svg%3E" alt="Admin" class="w-8 h-8 rounded-full">
+                    <span class="text-sm font-medium text-gray-700">Admin User</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6">
+            <!-- Settings Tabs -->
+            <div class="mb-6">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8">
+                        <button class="tab-button active" data-tab="general" onclick="switchTab('general')">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                            </svg>
+                            Genel Ayarlar
+                        </button>
+                        <button class="tab-button" data-tab="users" onclick="switchTab('users')">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                            </svg>
+                            Kullanıcı Yönetimi
+                        </button>
+                        <button class="tab-button" data-tab="branches" onclick="switchTab('branches')">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h12v8H4V6z" clip-rule="evenodd"/>
+                            </svg>
+                            Şube Yönetimi
+                        </button>
+                        <button class="tab-button" data-tab="integrations" onclick="switchTab('integrations')">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                            Entegrasyonlar
+                        </button>
+                        <button class="tab-button" data-tab="automation" onclick="switchTab('automation')">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+                            </svg>
+                            Otomasyon
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- General Settings Tab -->
+            <div id="generalTab" class="tab-content">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Company Information -->
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Şirket Bilgileri</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Şirket Adı</label>
+                                <input type="text" class="form-input" value="X-Ear İşitme Merkezi" id="companyName">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Adres</label>
+                                <textarea class="form-input" rows="3" id="companyAddress">Atatürk Cad. No: 123\nKadıköy, İstanbul</textarea>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
+                                    <input type="tel" class="form-input" value="+90 216 555 0123" id="companyPhone">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">E-posta</label>
+                                    <input type="email" class="form-input" value="info@x-ear.com" id="companyEmail">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Vergi No</label>
+                                <input type="text" class="form-input" value="1234567890" id="taxNumber">
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- System Preferences -->
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Sistem Tercihleri</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Varsayılan Dil</label>
+                                <select class="form-input" id="defaultLanguage">
+                                    <option value="tr" selected>Türkçe</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Saat Dilimi</label>
+                                <select class="form-input" id="timezone">
+                                    <option value="Europe/Istanbul" selected>İstanbul (UTC+3)</option>
+                                    <option value="Europe/London">Londra (UTC+0)</option>
+                                    <option value="America/New_York">New York (UTC-5)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Para Birimi</label>
+                                <select class="form-input" id="currency">
+                                    <option value="TRY" selected>Türk Lirası (₺)</option>
+                                    <option value="USD">US Dollar ($)</option>
+                                    <option value="EUR">Euro (€)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Tarih Formatı</label>
+                                <select class="form-input" id="dateFormat">
+                                    <option value="DD/MM/YYYY" selected>DD/MM/YYYY</option>
+                                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                    <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Notification Settings -->
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Bildirim Ayarları</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <label class="text-sm font-medium text-gray-700">E-posta Bildirimleri</label>
+                                    <p class="text-xs text-gray-500">Yeni hasta ve randevu bildirimleri</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked id="emailNotifications">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <label class="text-sm font-medium text-gray-700">SMS Bildirimleri</label>
+                                    <p class="text-xs text-gray-500">Acil durum ve hatırlatmalar</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked id="smsNotifications">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <label class="text-sm font-medium text-gray-700">Masaüstü Bildirimleri</label>
+                                    <p class="text-xs text-gray-500">Tarayıcı bildirimleri</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="desktopNotifications">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Settings -->
+                    <div class="card p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Güvenlik Ayarları</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <label class="text-sm font-medium text-gray-700">İki Faktörlü Doğrulama</label>
+                                    <p class="text-xs text-gray-500">Ekstra güvenlik katmanı</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="twoFactorAuth">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Oturum Süresi (dakika)</label>
+                                <input type="number" class="form-input" value="480" min="30" max="1440" id="sessionTimeout">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Minimum Şifre Uzunluğu</label>
+                                <input type="number" class="form-input" value="8" min="6" max="20" id="minPasswordLength">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button class="btn-secondary" onclick="resetGeneralSettings()">Sıfırla</button>
+                    <button class="btn-primary" onclick="saveGeneralSettings()">Kaydet</button>
+                </div>
+            </div>
+
+            <!-- Users Tab -->
+            <div id="usersTab" class="tab-content hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-lg font-semibold text-gray-900">Kullanıcı Listesi</h3>
+                    <button class="btn-primary" onclick="openAddUserModal()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
+                        </svg>
+                        Yeni Kullanıcı
+                    </button>
+                </div>
+                
+                <div class="card">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kullanıcı</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">E-posta</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rol</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Şube</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Durum</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Son Giriş</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200" id="usersTableBody">
+                                <!-- Users will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Branches Tab -->
+            <div id="branchesTab" class="tab-content hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-lg font-semibold text-gray-900">Şube Listesi</h3>
+                    <button class="btn-primary" onclick="openAddBranchModal()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                        </svg>
+                        Yeni Şube
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="branchesGrid">
+                    <!-- Branches will be populated here -->
+                </div>
+            </div>
+
+            <!-- Integrations Tab -->
+            <div id="integrationsTab" class="tab-content hidden">
+                <div class="space-y-6">
+                    <!-- SGK Integration -->
+                    <div class="card p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-900">SGK Entegrasyonu</h4>
+                                    <p class="text-sm text-gray-600">Sosyal Güvenlik Kurumu ile entegrasyon</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="status-badge status-active">Aktif</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked id="sgkIntegration">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span class="text-gray-600">API Endpoint:</span>
+                                <span class="font-medium">https://api.sgk.gov.tr/v1</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-600">Son Senkronizasyon:</span>
+                                <span class="font-medium">2 saat önce</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SMS Provider -->
+                    <div class="card p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-900">SMS Sağlayıcısı</h4>
+                                    <p class="text-sm text-gray-600">Toplu SMS gönderimi için entegrasyon</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="status-badge status-active">Aktif</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked id="smsProvider">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span class="text-gray-600">Sağlayıcı:</span>
+                                <span class="font-medium">NetGSM</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-600">Kalan Kredi:</span>
+                                <span class="font-medium">2,450 SMS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email Provider -->
+                    <div class="card p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-900">E-posta Sağlayıcısı</h4>
+                                    <p class="text-sm text-gray-600">E-posta gönderimi için SMTP ayarları</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="status-badge status-warning">Test</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="emailProvider">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span class="text-gray-600">SMTP Sunucu:</span>
+                                <span class="font-medium">smtp.gmail.com</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-600">Port:</span>
+                                <span class="font-medium">587</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Automation Tab -->
+            <div id="automationTab" class="tab-content hidden">
+                <div class="space-y-6">
+                    <!-- Automation Rules -->
+                    <div class="card p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-semibold text-gray-900">Otomasyon Kuralları</h3>
+                            <button class="btn-primary" onclick="openAddAutomationModal()">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                                </svg>
+                                Yeni Kural
+                            </button>
+                        </div>
+                        
+                        <div class="space-y-4" id="automationRules">
+                            <!-- Automation rules will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Yeni Kullanıcı Ekle</h3>
+                <button class="modal-close" onclick="closeModal('addUserModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ad</label>
+                            <input type="text" class="form-input" id="userFirstName" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Soyad</label>
+                            <input type="text" class="form-input" id="userLastName" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">E-posta</label>
+                        <input type="email" class="form-input" id="userEmail" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
+                        <input type="tel" class="form-input" id="userPhone">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Rol</label>
+                            <select class="form-input" id="userRole" required>
+                                <option value="">Rol Seçin</option>
+                                <option value="admin">Yönetici</option>
+                                <option value="doctor">Doktor</option>
+                                <option value="assistant">Asistan</option>
+                                <option value="receptionist">Resepsiyon</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Şube</label>
+                            <select class="form-input" id="userBranch" required>
+                                <option value="">Şube Seçin</option>
+                                <option value="merkez">Merkez Şube</option>
+                                <option value="kadikoy">Kadıköy Şube</option>
+                                <option value="besiktas">Beşiktaş Şube</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Geçici Şifre</label>
+                        <input type="password" class="form-input" id="userPassword" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('addUserModal')">İptal</button>
+                <button class="btn-primary" onclick="addUser()">Kullanıcı Ekle</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Branch Modal -->
+    <div id="addBranchModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Yeni Şube Ekle</h3>
+                <button class="modal-close" onclick="closeModal('addBranchModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addBranchForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Şube Adı</label>
+                        <input type="text" class="form-input" id="branchName" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Adres</label>
+                        <textarea class="form-input" rows="3" id="branchAddress" required></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
+                            <input type="tel" class="form-input" id="branchPhone" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">E-posta</label>
+                            <input type="email" class="form-input" id="branchEmail">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Şube Müdürü</label>
+                        <select class="form-input" id="branchManager">
+                            <option value="">Müdür Seçin</option>
+                            <option value="1">Dr. Mehmet Yılmaz</option>
+                            <option value="2">Dr. Ayşe Kaya</option>
+                            <option value="3">Dr. Ali Demir</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('addBranchModal')">İptal</button>
+                <button class="btn-primary" onclick="addBranch()">Şube Ekle</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Automation Rule Modal -->
+    <div id="addAutomationModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Yeni Otomasyon Kuralı</h3>
+                <button class="modal-close" onclick="closeModal('addAutomationModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addAutomationForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kural Adı</label>
+                        <input type="text" class="form-input" id="automationName" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Açıklama</label>
+                        <textarea class="form-input" rows="3" id="automationDescription" required></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Tetikleyici</label>
+                        <select class="form-input" id="automationTrigger" required>
+                            <option value="">Tetikleyici seçin</option>
+                            <option value="appointment_missed">Randevu kaçırma</option>
+                            <option value="trial_completed">Deneme tamamlanma</option>
+                            <option value="battery_change">Pil değişim tarihi</option>
+                            <option value="post_sale">Satış sonrası takip</option>
+                            <option value="birthday">Doğum günü</option>
+                            <option value="no_contact">Uzun süre iletişimsizlik</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Aksiyon</label>
+                        <select class="form-input" id="automationAction" required>
+                            <option value="">Aksiyon seçin</option>
+                            <option value="send_sms">SMS Gönder</option>
+                            <option value="send_email">E-posta Gönder</option>
+                            <option value="create_task">Görev Oluştur</option>
+                            <option value="schedule_call">Arama Planla</option>
+                        </select>
+                    </div>
+                    <div id="smsTemplateSection" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">SMS Şablonu</label>
+                        <textarea class="form-input" rows="3" id="smsTemplate" placeholder="Merhaba {patient_name}, randevunuzu kaçırdınız. Yeni randevu için bizi arayın."></textarea>
+                    </div>
+                    <div id="emailTemplateSection" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">E-posta Şablonu</label>
+                        <input type="text" class="form-input mb-2" id="emailSubject" placeholder="E-posta konusu">
+                        <textarea class="form-input" rows="4" id="emailTemplate" placeholder="E-posta içeriği..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Gecikme (dakika)</label>
+                        <input type="number" class="form-input" id="automationDelay" value="0" min="0">
+                        <small class="text-gray-500">Tetikleyici olaydan kaç dakika sonra çalışsın</small>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="automationActive" class="mr-2" checked>
+                        <label for="automationActive" class="text-sm text-gray-700">Aktif</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('addAutomationModal')">İptal</button>
+                <button class="btn-primary" onclick="addAutomationRule()">Kural Ekle</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/app.js"></script>
+    <script src="../assets/data.js"></script>
+    <script>
+        function initPage() {
+            loadUsers();
+            loadBranches();
+            loadAutomationRules();
+        }
+
+        function loadUsers() {
+            const users = [
+                { id: 1, name: 'Admin User', email: 'admin@x-ear.com', role: 'Yönetici', branch: 'Merkez', status: 'Aktif', lastLogin: '2024-01-15 09:30' },
+                { id: 2, name: 'Dr. Mehmet Yılmaz', email: 'mehmet@x-ear.com', role: 'Doktor', branch: 'Merkez', status: 'Aktif', lastLogin: '2024-01-15 08:45' },
+                { id: 3, name: 'Ayşe Kaya', email: 'ayse@x-ear.com', role: 'Asistan', branch: 'Kadıköy', status: 'Aktif', lastLogin: '2024-01-14 17:20' },
+                { id: 4, name: 'Ali Demir', email: 'ali@x-ear.com', role: 'Resepsiyon', branch: 'Beşiktaş', status: 'Pasif', lastLogin: '2024-01-10 14:15' }
+            ];
+            
+            const tbody = document.getElementById('usersTableBody');
+            tbody.innerHTML = users.map(user => `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23${user.status === 'Aktif' ? '10B981' : '6B7280'}'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='Arial' font-size='12' font-weight='bold'%3E${user.name.split(' ').map(n => n[0]).join('')}%3C/text%3E%3C/svg%3E" alt="${user.name}" class="w-8 h-8 rounded-full">
+                            <div class="ml-3">
+                                <div class="text-sm font-medium text-gray-900">${user.name}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.email}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.role}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.branch}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="status-badge ${user.status === 'Aktif' ? 'status-active' : 'status-inactive'}">${user.status}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.lastLogin}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button class="text-blue-600 hover:text-blue-900 mr-3" onclick="editUser(${user.id})">Düzenle</button>
+                        <button class="text-red-600 hover:text-red-900" onclick="deleteUser(${user.id})">Sil</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function loadBranches() {
+            const branches = [
+                { id: 1, name: 'Merkez Şube', address: 'Atatürk Cad. No: 123, Kadıköy, İstanbul', phone: '+90 216 555 0123', manager: 'Dr. Mehmet Yılmaz', status: 'Aktif' },
+                { id: 2, name: 'Kadıköy Şube', address: 'Bağdat Cad. No: 456, Kadıköy, İstanbul', phone: '+90 216 555 0124', manager: 'Dr. Ayşe Kaya', status: 'Aktif' },
+                { id: 3, name: 'Beşiktaş Şube', address: 'Barbaros Blv. No: 789, Beşiktaş, İstanbul', phone: '+90 212 555 0125', manager: 'Dr. Ali Demir', status: 'Aktif' }
+            ];
+            
+            const grid = document.getElementById('branchesGrid');
+            grid.innerHTML = branches.map(branch => `
+                <div class="card p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-lg font-semibold text-gray-900">${branch.name}</h4>
+                        <span class="status-badge status-active">${branch.status}</span>
+                    </div>
+                    <div class="space-y-2 text-sm text-gray-600">
+                        <div class="flex items-start">
+                            <svg class="w-4 h-4 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>${branch.address}</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                            </svg>
+                            <span>${branch.phone}</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                            </svg>
+                            <span>${branch.manager}</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex space-x-2">
+                        <button class="btn-secondary text-xs" onclick="editBranch(${branch.id})">Düzenle</button>
+                        <button class="btn-secondary text-xs text-red-600" onclick="deleteBranch(${branch.id})">Sil</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadAutomationRules() {
+            let rules = Storage.load('automationRules') || [];
+            
+            // Initialize with default rules if none exist
+            if (rules.length === 0) {
+                rules = [
+                    { id: 1, name: 'No-Show Takibi', description: 'Randevuya gelmeyen hastalara otomatik SMS gönder', trigger: 'appointment_missed', action: 'send_sms', status: 'Aktif', lastRun: '2 saat önce', smsTemplate: 'Merhaba {patient_name}, randevunuzu kaçırdınız. Yeni randevu için bizi arayın.', delay: 30 },
+                    { id: 2, name: 'Deneme Takibi', description: 'Deneme sonrası satış yapılmayan hastalara takip', trigger: 'trial_completed', action: 'send_sms', status: 'Aktif', lastRun: '1 gün önce', smsTemplate: 'Merhaba {patient_name}, deneme cihazınız hakkında görüşmek için bizi arayın.', delay: 1440 },
+                    { id: 3, name: 'Pil Hatırlatması', description: 'Yıllık pil değişimi hatırlatması', trigger: 'battery_change', action: 'send_sms', status: 'Aktif', lastRun: '1 hafta önce', smsTemplate: 'Merhaba {patient_name}, cihazınızın pil değişim zamanı geldi. Randevu için bizi arayın.', delay: 0 },
+                    { id: 4, name: 'Kontrol Randevusu', description: 'Satış sonrası kontrol randevusu hatırlatması', trigger: 'post_sale', action: 'send_sms', status: 'Pasif', lastRun: 'Hiç çalışmadı', smsTemplate: 'Merhaba {patient_name}, kontrol randevunuz için bizi arayın.', delay: 43200 }
+                ];
+                Storage.save('automationRules', rules);
+            }
+            
+            const container = document.getElementById('automationRules');
+            
+            if (rules.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+                        </svg>
+                        <p>Henüz otomasyon kuralı bulunmuyor</p>
+                        <button onclick="openAddAutomationModal()" class="btn btn-primary mt-4">
+                            İlk Kuralı Oluştur
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = rules.map(rule => {
+                const triggerText = getTriggerText(rule.trigger);
+                const actionText = getActionText(rule.action);
+                
+                return `
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="text-lg font-medium text-gray-900">${rule.name}</h4>
+                            <div class="flex items-center space-x-2">
+                                <span class="status-badge ${rule.status === 'Aktif' ? 'status-active' : 'status-inactive'}">${rule.status}</span>
+                                <label class="switch">
+                                    <input type="checkbox" ${rule.status === 'Aktif' ? 'checked' : ''} onchange="toggleAutomationRule(${rule.id})">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">${rule.description}</p>
+                        <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
+                            <span>Tetikleyici: ${triggerText}</span>
+                            <span>Aksiyon: ${actionText}</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <span>Gecikme: ${rule.delay || 0} dakika</span>
+                            <span>Son çalışma: ${rule.lastRun}</span>
+                        </div>
+                        <div class="mt-3 flex space-x-2">
+                            <button class="btn-secondary text-xs" onclick="editAutomationRule(${rule.id})">Düzenle</button>
+                            <button class="btn-secondary text-xs" onclick="testAutomationRule(${rule.id})">Test Et</button>
+                            <button class="btn-secondary text-xs text-red-600" onclick="deleteAutomationRule(${rule.id})">Sil</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function getTriggerText(trigger) {
+            const triggers = {
+                'appointment_missed': 'Randevu kaçırma',
+                'trial_completed': 'Deneme tamamlanma',
+                'battery_change': 'Pil değişim tarihi',
+                'post_sale': 'Satış sonrası takip',
+                'birthday': 'Doğum günü',
+                'no_contact': 'Uzun süre iletişimsizlik'
+            };
+            return triggers[trigger] || trigger;
+        }
+        
+        function getActionText(action) {
+            const actions = {
+                'send_sms': 'SMS Gönder',
+                'send_email': 'E-posta Gönder',
+                'create_task': 'Görev Oluştur',
+                'schedule_call': 'Arama Planla'
+            };
+            return actions[action] || action;
+        }
+
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + 'Tab').classList.remove('hidden');
+            
+            // Add active class to selected tab button
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+        }
+
+        function saveGeneralSettings() {
+            const settings = {
+                companyName: document.getElementById('companyName').value,
+                companyAddress: document.getElementById('companyAddress').value,
+                companyPhone: document.getElementById('companyPhone').value,
+                companyEmail: document.getElementById('companyEmail').value,
+                taxNumber: document.getElementById('taxNumber').value,
+                defaultLanguage: document.getElementById('defaultLanguage').value,
+                timezone: document.getElementById('timezone').value,
+                currency: document.getElementById('currency').value,
+                dateFormat: document.getElementById('dateFormat').value,
+                emailNotifications: document.getElementById('emailNotifications').checked,
+                smsNotifications: document.getElementById('smsNotifications').checked,
+                desktopNotifications: document.getElementById('desktopNotifications').checked,
+                twoFactorAuth: document.getElementById('twoFactorAuth').checked,
+                sessionTimeout: document.getElementById('sessionTimeout').value,
+                minPasswordLength: document.getElementById('minPasswordLength').value
+            };
+            
+            localStorage.setItem('systemSettings', JSON.stringify(settings));
+            Utils.showToast('Ayarlar başarıyla kaydedildi', 'success');
+        }
+
+        function resetGeneralSettings() {
+            if (confirm('Tüm ayarları varsayılan değerlere sıfırlamak istediğinizden emin misiniz?')) {
+                localStorage.removeItem('systemSettings');
+                location.reload();
+            }
+        }
+
+        function openAddUserModal() {
+            document.getElementById('addUserModal').classList.remove('hidden');
+        }
+
+        function addUser() {
+            const userData = {
+                firstName: document.getElementById('userFirstName').value,
+                lastName: document.getElementById('userLastName').value,
+                email: document.getElementById('userEmail').value,
+                phone: document.getElementById('userPhone').value,
+                role: document.getElementById('userRole').value,
+                branch: document.getElementById('userBranch').value,
+                password: document.getElementById('userPassword').value
+            };
+            
+            // Validate required fields
+            if (!userData.firstName || !userData.lastName || !userData.email || !userData.role || !userData.branch || !userData.password) {
+                Utils.showToast('Lütfen tüm zorunlu alanları doldurun', 'error');
+                return;
+            }
+            
+            // Add user logic here
+            Utils.showToast('Kullanıcı başarıyla eklendi', 'success');
+            closeModal('addUserModal');
+            loadUsers();
+        }
+
+        function openAddBranchModal() {
+            document.getElementById('addBranchModal').classList.remove('hidden');
+        }
+
+        function addBranch() {
+            const branchData = {
+                name: document.getElementById('branchName').value,
+                address: document.getElementById('branchAddress').value,
+                phone: document.getElementById('branchPhone').value,
+                email: document.getElementById('branchEmail').value,
+                manager: document.getElementById('branchManager').value
+            };
+            
+            // Validate required fields
+            if (!branchData.name || !branchData.address || !branchData.phone) {
+                Utils.showToast('Lütfen tüm zorunlu alanları doldurun', 'error');
+                return;
+            }
+            
+            // Add branch logic here
+            Utils.showToast('Şube başarıyla eklendi', 'success');
+            closeModal('addBranchModal');
+            loadBranches();
+        }
+
+        function editUser(userId) {
+            Utils.showToast('Kullanıcı düzenleme özelliği yakında eklenecek', 'info');
+        }
+
+        function deleteUser(userId) {
+            if (confirm('Bu kullanıcıyı silmek istediğinizden emin misiniz?')) {
+                Utils.showToast('Kullanıcı başarıyla silindi', 'success');
+                loadUsers();
+            }
+        }
+
+        function editBranch(branchId) {
+            Utils.showToast('Şube düzenleme özelliği yakında eklenecek', 'info');
+        }
+
+        function deleteBranch(branchId) {
+            if (confirm('Bu şubeyi silmek istediğinizden emin misiniz?')) {
+                Utils.showToast('Şube başarıyla silindi', 'success');
+                loadBranches();
+            }
+        }
+
+        function toggleAutomationRule(ruleId) {
+            let rules = Storage.load('automationRules') || [];
+            const rule = rules.find(r => r.id === ruleId);
+            if (rule) {
+                rule.status = rule.status === 'Aktif' ? 'Pasif' : 'Aktif';
+                Storage.save('automationRules', rules);
+                loadAutomationRules();
+                Utils.showToast('Otomasyon kuralı durumu güncellendi', 'success');
+            }
+        }
+
+        function editAutomationRule(ruleId) {
+            const rules = Storage.load('automationRules') || [];
+            const rule = rules.find(r => r.id === ruleId);
+            if (rule) {
+                // Populate form with existing data
+                document.getElementById('automationName').value = rule.name;
+                document.getElementById('automationDescription').value = rule.description;
+                document.getElementById('automationTrigger').value = rule.trigger;
+                document.getElementById('automationAction').value = rule.action;
+                document.getElementById('automationDelay').value = rule.delay || 0;
+                document.getElementById('automationActive').checked = rule.status === 'Aktif';
+                
+                if (rule.smsTemplate) {
+                    document.getElementById('smsTemplate').value = rule.smsTemplate;
+                }
+                if (rule.emailSubject) {
+                    document.getElementById('emailSubject').value = rule.emailSubject;
+                }
+                if (rule.emailTemplate) {
+                    document.getElementById('emailTemplate').value = rule.emailTemplate;
+                }
+                
+                // Show appropriate template sections
+                handleAutomationActionChange();
+                
+                // Change modal title and button
+                document.querySelector('#addAutomationModal .modal-title').textContent = 'Otomasyon Kuralını Düzenle';
+                document.querySelector('#addAutomationModal .btn-primary').textContent = 'Güncelle';
+                document.getElementById('addAutomationForm').dataset.editId = ruleId;
+                
+                openAddAutomationModal();
+            }
+        }
+
+        function testAutomationRule(ruleId) {
+            const rules = Storage.load('automationRules') || [];
+            const rule = rules.find(r => r.id === ruleId);
+            if (rule) {
+                Utils.showToast(`"${rule.name}" kuralı test ediliyor...`, 'info');
+                
+                // Simulate test execution
+                setTimeout(() => {
+                    Utils.showToast(`Test tamamlandı: ${rule.action === 'send_sms' ? 'SMS gönderildi' : rule.action === 'send_email' ? 'E-posta gönderildi' : 'Aksiyon gerçekleştirildi'}`, 'success');
+                }, 2000);
+            }
+        }
+
+        function deleteAutomationRule(ruleId) {
+            if (confirm('Bu otomasyon kuralını silmek istediğinizden emin misiniz?')) {
+                let rules = Storage.load('automationRules') || [];
+                rules = rules.filter(r => r.id !== ruleId);
+                Storage.save('automationRules', rules);
+                loadAutomationRules();
+                Utils.showToast('Otomasyon kuralı başarıyla silindi', 'success');
+            }
+        }
+
+        function openAddAutomationModal() {
+            // Reset form
+            document.getElementById('addAutomationForm').reset();
+            delete document.getElementById('addAutomationForm').dataset.editId;
+            
+            // Reset modal title and button
+            document.querySelector('#addAutomationModal .modal-title').textContent = 'Yeni Otomasyon Kuralı';
+            document.querySelector('#addAutomationModal .btn-primary').textContent = 'Kural Ekle';
+            
+            // Hide template sections
+            document.getElementById('smsTemplateSection').classList.add('hidden');
+            document.getElementById('emailTemplateSection').classList.add('hidden');
+            
+            document.getElementById('addAutomationModal').classList.remove('hidden');
+        }
+
+        function addAutomationRule() {
+            const form = document.getElementById('addAutomationForm');
+            const editId = form.dataset.editId;
+            
+            const ruleData = {
+                name: document.getElementById('automationName').value,
+                description: document.getElementById('automationDescription').value,
+                trigger: document.getElementById('automationTrigger').value,
+                action: document.getElementById('automationAction').value,
+                delay: parseInt(document.getElementById('automationDelay').value) || 0,
+                status: document.getElementById('automationActive').checked ? 'Aktif' : 'Pasif',
+                createdAt: new Date().toISOString(),
+                lastRun: 'Hiç çalışmadı'
+            };
+            
+            // Add template data based on action
+            if (ruleData.action === 'send_sms') {
+                ruleData.smsTemplate = document.getElementById('smsTemplate').value;
+            } else if (ruleData.action === 'send_email') {
+                ruleData.emailSubject = document.getElementById('emailSubject').value;
+                ruleData.emailTemplate = document.getElementById('emailTemplate').value;
+            }
+            
+            // Validate required fields
+            if (!ruleData.name || !ruleData.description || !ruleData.trigger || !ruleData.action) {
+                Utils.showToast('Lütfen tüm zorunlu alanları doldurun', 'error');
+                return;
+            }
+            
+            let rules = Storage.load('automationRules') || [];
+            
+            if (editId) {
+                // Update existing rule
+                const index = rules.findIndex(r => r.id === parseInt(editId));
+                if (index !== -1) {
+                    ruleData.id = parseInt(editId);
+                    ruleData.lastRun = rules[index].lastRun; // Keep existing lastRun
+                    rules[index] = ruleData;
+                    Utils.showToast('Otomasyon kuralı başarıyla güncellendi', 'success');
+                }
+            } else {
+                // Add new rule
+                ruleData.id = Date.now();
+                rules.push(ruleData);
+                Utils.showToast('Otomasyon kuralı başarıyla eklendi', 'success');
+            }
+            
+            Storage.save('automationRules', rules);
+            closeModal('addAutomationModal');
+            loadAutomationRules();
+        }
+
+        function handleAutomationActionChange() {
+            const action = document.getElementById('automationAction').value;
+            const smsSection = document.getElementById('smsTemplateSection');
+            const emailSection = document.getElementById('emailTemplateSection');
+            
+            // Hide all template sections
+            smsSection.classList.add('hidden');
+            emailSection.classList.add('hidden');
+            
+            // Show relevant template section
+            if (action === 'send_sms') {
+                smsSection.classList.remove('hidden');
+            } else if (action === 'send_email') {
+                emailSection.classList.remove('hidden');
+            }
+        }
+
+        // Add event listener for action change
+        document.addEventListener('DOMContentLoaded', function() {
+            const actionSelect = document.getElementById('automationAction');
+            if (actionSelect) {
+                actionSelect.addEventListener('change', handleAutomationActionChange);
+            }
+        });
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>

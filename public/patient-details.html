@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasta Detayları - X-Ear CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',
+                        'light-gray': '#F9FAFB'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light-gray">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar-nav">
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-8">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold text-gray-900">X-Ear CRM</h1>
+            </div>
+            
+            <ul class="space-y-2">
+                <li><a href="dashboard.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                    </svg>
+                    Dashboard
+                </a></li>
+                <li><a href="patients.html" class="nav-item active">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                    </svg>
+                    Hastalar
+                </a></li>
+                <li><a href="appointments.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                    </svg>
+                    Randevular
+                </a></li>
+                <li><a href="inventory.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/>
+                    </svg>
+                    Stok
+                </a></li>
+                <li><a href="campaigns.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                    </svg>
+                    Kampanyalar
+                </a></li>
+                <li><a href="reports.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                    </svg>
+                    Raporlar
+                </a></li>
+                <li><a href="settings.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                    </svg>
+                    Ayarlar
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button class="lg:hidden" data-menu-toggle>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <button onclick="history.back()" class="text-gray-600 hover:text-gray-800">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-gray-900" id="patientName">Hasta Detayları</h2>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="btn-primary" onclick="addAppointment()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                        </svg>
+                        Randevu Ekle
+                    </button>
+                    <button class="btn-secondary" onclick="sendSMS()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                        </svg>
+                        SMS Gönder
+                    </button>
+                    
+                    <div class="flex items-center space-x-3">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%232563EB'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='Arial' font-size='14' font-weight='bold'%3EAD%3C/text%3E%3C/svg%3E" alt="Admin" class="w-8 h-8 rounded-full">
+                        <span class="text-sm font-medium text-gray-700">Admin User</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Patient Profile Section -->
+        <div class="p-6">
+            <div class="card p-6 mb-6">
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center space-x-6">
+                        <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center text-white text-2xl font-bold" id="patientAvatar">
+                            AY
+                        </div>
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-900" id="patientFullName">Ahmet Yılmaz</h1>
+                            <div class="flex items-center space-x-4 mt-2 text-sm text-gray-600">
+                                <span id="patientTC">TC: 12345678901</span>
+                                <span id="patientPhone">Tel: 0532 123 4567</span>
+                                <span id="patientAge">Yaş: 49</span>
+                            </div>
+                            <div class="flex items-center space-x-3 mt-3">
+                                <span class="status-badge" id="patientStatus">Aktif</span>
+                                <span class="px-2 py-1 text-xs font-medium rounded-full" id="patientSegment">Deneme</span>
+                                <span class="status-badge" id="sgkStatus">SGK Onaylı</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-gray-600">Son Ziyaret</p>
+                        <p class="text-lg font-semibold" id="lastVisit">15 Ocak 2024</p>
+                        <button class="btn-secondary mt-2" onclick="editPatient()">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                            </svg>
+                            Düzenle
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div class="card p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Toplam Randevu</p>
+                            <p class="text-2xl font-bold text-gray-900" id="totalAppointments">5</p>
+                        </div>
+                        <div class="p-2 bg-blue-100 rounded-lg">
+                            <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Cihaz Sayısı</p>
+                            <p class="text-2xl font-bold text-gray-900" id="totalDevices">1</p>
+                        </div>
+                        <div class="p-2 bg-green-100 rounded-lg">
+                            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Toplam Harcama</p>
+                            <p class="text-2xl font-bold text-gray-900" id="totalSpent">₺15.000</p>
+                        </div>
+                        <div class="p-2 bg-yellow-100 rounded-lg">
+                            <svg class="w-5 h-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Müşteri Süresi</p>
+                            <p class="text-2xl font-bold text-gray-900" id="customerDuration">2 ay</p>
+                        </div>
+                        <div class="p-2 bg-purple-100 rounded-lg">
+                            <svg class="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="card">
+                <div class="border-b border-gray-200">
+                    <nav class="flex space-x-8 px-6" id="tabNavigation">
+                        <button class="tab-button active" data-tab="overview">Genel Bakış</button>
+                        <button class="tab-button" data-tab="appointments">Randevular</button>
+                        <button class="tab-button" data-tab="devices">Cihazlar</button>
+                        <button class="tab-button" data-tab="payments">Ödemeler</button>
+                        <button class="tab-button" data-tab="documents">Belgeler</button>
+                        <button class="tab-button" data-tab="communications">İletişim</button>
+                        <button class="tab-button" data-tab="notes">Notlar</button>
+                        <button class="tab-button" data-tab="sgk">SGK</button>
+                        <button class="tab-button" data-tab="timeline">Zaman Çizelgesi</button>
+                    </nav>
+                </div>
+
+                <!-- Tab Contents -->
+                <div class="p-6">
+                    <!-- Overview Tab -->
+                    <div id="overview" class="tab-content">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="text-lg font-semibold mb-4">Kişisel Bilgiler</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Ad Soyad:</span>
+                                        <span class="font-medium" id="overviewName">Ahmet Yılmaz</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">TC Kimlik:</span>
+                                        <span class="font-medium" id="overviewTC">12345678901</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Telefon:</span>
+                                        <span class="font-medium" id="overviewPhone">0532 123 4567</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">E-posta:</span>
+                                        <span class="font-medium" id="overviewEmail">ahmet.yilmaz@email.com</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Doğum Tarihi:</span>
+                                        <span class="font-medium" id="overviewBirthDate">15 Mart 1975</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Adres:</span>
+                                        <span class="font-medium" id="overviewAddress">Kadıköy, İstanbul</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold mb-4">Hasta Notları</h3>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <p class="text-gray-700" id="overviewNotes">Sol kulak işitme kaybı, deneme cihazı kullanıyor</p>
+                                </div>
+                                <button class="btn-secondary mt-3" onclick="editNotes()">
+                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                                    </svg>
+                                    Notları Düzenle
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appointments Tab -->
+                    <div id="appointments" class="tab-content hidden">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold">Randevular</h3>
+                            <button class="btn-primary" onclick="addAppointment()">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                                </svg>
+                                Yeni Randevu
+                            </button>
+                        </div>
+                        <div class="space-y-4" id="appointmentsList">
+                            <!-- Appointments will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Devices Tab -->
+                    <div id="devices" class="tab-content hidden">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold">Cihazlar</h3>
+                            <button class="btn-primary" onclick="addDevice()">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                                </svg>
+                                Cihaz Ekle
+                            </button>
+                        </div>
+                        <div class="space-y-4" id="devicesList">
+                            <!-- Devices will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Payments Tab -->
+                    <div id="payments" class="tab-content hidden">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold">Ödemeler</h3>
+                            <button class="btn-primary" onclick="addPayment()">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                                </svg>
+                                Ödeme Ekle
+                            </button>
+                        </div>
+                        <div class="text-center py-8 text-gray-500">
+                            <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"/>
+                            </svg>
+                            <p>Henüz ödeme kaydı bulunmuyor</p>
+                        </div>
+                    </div>
+
+                    <!-- Documents Tab -->
+                    <div id="documents" class="tab-content hidden">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold">Belgeler</h3>
+                            <button class="btn-primary" onclick="uploadDocument()">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                                Belge Yükle
+                            </button>
+                        </div>
+                        <div class="text-center py-8 text-gray-500">
+                            <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+                            </svg>
+                            <p>Henüz belge yüklenmemiş</p>
+                        </div>
+                    </div>
+
+                    <!-- Communications Tab -->
+                    <div id="communications" class="tab-content hidden">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold">İletişim Geçmişi</h3>
+                            <button class="btn-primary" onclick="sendSMS()">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                                </svg>
+                                SMS Gönder
+                            </button>
+                        </div>
+                        <div class="text-center py-8 text-gray-500">
+                            <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                            </svg>
+                            <p>Henüz iletişim kaydı bulunmuyor</p>
+                        </div>
+                    </div>
+
+                    <!-- Notes Tab -->
+                    <div id="notes" class="tab-content hidden">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold">Notlar</h3>
+                            <button class="btn-primary" onclick="addNote()">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                                </svg>
+                                Not Ekle
+                            </button>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-medium text-gray-900">İlk Değerlendirme</h4>
+                                    <span class="text-sm text-gray-500">15 Ocak 2024</span>
+                                </div>
+                                <p class="text-gray-700">Sol kulak işitme kaybı tespit edildi. Deneme cihazı önerildi.</p>
+                                <div class="mt-2 text-sm text-gray-500">Dr. Elif Yıldız</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SGK Tab -->
+                    <div id="sgk" class="tab-content hidden">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-semibold">SGK Bilgileri</h3>
+                            <button class="btn-primary" onclick="updateSGK()">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+                                </svg>
+                                SGK Güncelle
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">SGK Durumu:</span>
+                                    <span class="status-badge status-active">Onaylı</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Rapor Tarihi:</span>
+                                    <span class="font-medium">05 Ocak 2024</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Rapor No:</span>
+                                    <span class="font-medium">SGK-2024-001234</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Geçerlilik:</span>
+                                    <span class="font-medium">2 Yıl</span>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Katkı Payı:</span>
+                                    <span class="font-medium">₺1.500</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">SGK Karşılama:</span>
+                                    <span class="font-medium">₺8.500</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Toplam Tutar:</span>
+                                    <span class="font-medium">₺10.000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Tab -->
+                    <div id="timeline" class="tab-content hidden">
+                        <h3 class="text-lg font-semibold mb-4">Hasta Zaman Çizelgesi</h3>
+                        <div class="space-y-6" id="timelineList">
+                            <!-- Timeline will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Device Modal -->
+    <div id="addDeviceModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Cihaz Ekle</h3>
+                <button class="modal-close" onclick="closeAddDeviceModal()">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="addDeviceForm" class="modal-body space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Cihaz Türü *</label>
+                        <select class="form-input" id="deviceType" required>
+                            <option value="">Tür seçin</option>
+                            <option value="hearing_aid">İşitme Cihazı</option>
+                            <option value="cochlear_implant">Koklear İmplant</option>
+                            <option value="bone_anchored">Kemik Ankrajlı</option>
+                            <option value="fm_system">FM Sistemi</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Marka *</label>
+                        <input type="text" class="form-input" id="deviceBrand" required placeholder="Cihaz markası">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Model *</label>
+                        <input type="text" class="form-input" id="deviceModel" required placeholder="Cihaz modeli">
+                    </div>
+                    <div>
+                        <label class="form-label">Seri No</label>
+                        <input type="text" class="form-input" id="deviceSerial" placeholder="Seri numarası">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Kulak</label>
+                        <select class="form-input" id="deviceEar">
+                            <option value="left">Sol</option>
+                            <option value="right">Sağ</option>
+                            <option value="both">Her İki Kulak</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Durum</label>
+                        <select class="form-input" id="deviceStatus">
+                            <option value="trial">Deneme</option>
+                            <option value="purchased">Satın Alındı</option>
+                            <option value="returned">İade Edildi</option>
+                            <option value="maintenance">Bakımda</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Fiyat</label>
+                        <input type="number" class="form-input" id="devicePrice" min="0" step="0.01" placeholder="0.00">
+                    </div>
+                    <div>
+                        <label class="form-label">Teslim Tarihi</label>
+                        <input type="date" class="form-input" id="deviceDeliveryDate">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="form-label">Notlar</label>
+                    <textarea class="form-input" id="deviceNotes" rows="3" placeholder="Cihaz hakkında notlar..."></textarea>
+                </div>
+            </form>
+            
+            <div class="modal-footer">
+                <button type="button" onclick="closeAddDeviceModal()" class="btn btn-secondary">
+                    İptal
+                </button>
+                <button type="submit" form="addDeviceForm" class="btn btn-primary">
+                    Cihaz Ekle
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Payment Modal -->
+    <div id="addPaymentModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Ödeme Ekle</h3>
+                <button class="modal-close" onclick="closeAddPaymentModal()">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="addPaymentForm" class="modal-body space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Ödeme Türü *</label>
+                        <select class="form-input" id="paymentType" required>
+                            <option value="">Tür seçin</option>
+                            <option value="cash">Nakit</option>
+                            <option value="credit_card">Kredi Kartı</option>
+                            <option value="bank_transfer">Havale/EFT</option>
+                            <option value="installment">Taksit</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Tutar *</label>
+                        <input type="number" class="form-input" id="paymentAmount" required min="0" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Ödeme Tarihi *</label>
+                        <input type="date" class="form-input" id="paymentDate" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Fatura No</label>
+                        <input type="text" class="form-input" id="invoiceNumber" placeholder="Fatura numarası">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="form-label">Açıklama</label>
+                    <textarea class="form-input" id="paymentDescription" rows="3" placeholder="Ödeme açıklaması..."></textarea>
+                </div>
+            </form>
+            
+            <div class="modal-footer">
+                <button type="button" onclick="closeAddPaymentModal()" class="btn btn-secondary">
+                    İptal
+                </button>
+                <button type="submit" form="addPaymentForm" class="btn btn-primary">
+                    Ödeme Ekle
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Document Modal -->
+    <div id="uploadDocumentModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Belge Yükle</h3>
+                <button class="modal-close" onclick="closeUploadDocumentModal()">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="uploadDocumentForm" class="modal-body space-y-4">
+                <div>
+                    <label class="form-label">Belge Türü *</label>
+                    <select class="form-input" id="documentType" required>
+                        <option value="">Tür seçin</option>
+                        <option value="audiogram">Odyogram</option>
+                        <option value="medical_report">Tıbbi Rapor</option>
+                        <option value="sgk_report">SGK Raporu</option>
+                        <option value="invoice">Fatura</option>
+                        <option value="warranty">Garanti Belgesi</option>
+                        <option value="prescription">Reçete</option>
+                        <option value="other">Diğer</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="form-label">Belge Adı *</label>
+                    <input type="text" class="form-input" id="documentName" required placeholder="Belge adını girin">
+                </div>
+                
+                <div>
+                    <label class="form-label">Dosya Seç *</label>
+                    <input type="file" class="form-input" id="documentFile" required accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                    <p class="text-sm text-gray-500 mt-1">Desteklenen formatlar: PDF, JPG, PNG, DOC, DOCX (Maks. 10MB)</p>
+                </div>
+                
+                <div>
+                    <label class="form-label">Açıklama</label>
+                    <textarea class="form-input" id="documentDescription" rows="3" placeholder="Belge açıklaması..."></textarea>
+                </div>
+            </form>
+            
+            <div class="modal-footer">
+                <button type="button" onclick="closeUploadDocumentModal()" class="btn btn-secondary">
+                    İptal
+                </button>
+                <button type="submit" form="uploadDocumentForm" class="btn btn-primary">
+                    Belge Yükle
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Note Modal -->
+    <div id="addNoteModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Not Ekle</h3>
+                <button class="modal-close" onclick="closeAddNoteModal()">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="addNoteForm" class="modal-body space-y-4">
+                <div>
+                    <label class="form-label">Not Başlığı *</label>
+                    <input type="text" class="form-input" id="noteTitle" required placeholder="Not başlığını girin">
+                </div>
+                
+                <div>
+                    <label class="form-label">Kategori</label>
+                    <select class="form-input" id="noteCategory">
+                        <option value="general">Genel</option>
+                        <option value="medical">Tıbbi</option>
+                        <option value="technical">Teknik</option>
+                        <option value="financial">Mali</option>
+                        <option value="follow_up">Takip</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="form-label">Not İçeriği *</label>
+                    <textarea class="form-input" id="noteContent" required rows="5" placeholder="Not içeriğini yazın..."></textarea>
+                </div>
+                
+                <div>
+                    <label class="form-label">Öncelik</label>
+                    <select class="form-input" id="notePriority">
+                        <option value="low">Düşük</option>
+                        <option value="medium" selected>Orta</option>
+                        <option value="high">Yüksek</option>
+                    </select>
+                </div>
+            </form>
+            
+            <div class="modal-footer">
+                <button type="button" onclick="closeAddNoteModal()" class="btn btn-secondary">
+                    İptal
+                </button>
+                <button type="submit" form="addNoteForm" class="btn btn-primary">
+                    Not Ekle
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Notes Modal -->
+    <div id="editNotesModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Hasta Notlarını Düzenle</h3>
+                <button class="modal-close" onclick="closeEditNotesModal()">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="editNotesForm" class="modal-body space-y-4">
+                <div>
+                    <label class="form-label">Hasta Notları</label>
+                    <textarea class="form-input" id="editNotesContent" rows="6" placeholder="Hasta hakkında notlar..."></textarea>
+                </div>
+            </form>
+            
+            <div class="modal-footer">
+                <button type="button" onclick="closeEditNotesModal()" class="btn btn-secondary">
+                    İptal
+                </button>
+                <button type="submit" form="editNotesForm" class="btn btn-primary">
+                    Kaydet
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/app.js"></script>
+    <script src="../assets/data.js"></script>
+    <script>
+        let currentPatient = null;
+        let patientId = null;
+        let currentPatientId = null;
+
+        function initPage() {
+            // Get patient ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            patientId = urlParams.get('id');
+            currentPatientId = patientId; // Set global variable for other functions
+            
+            if (patientId) {
+                loadPatientData();
+                setupTabs();
+                setupFormListeners();
+                
+                // Load all tab data
+                loadDevices();
+                loadPayments();
+                loadDocuments();
+                loadNotes();
+                loadCommunications();
+            } else {
+                Utils.showToast('Hasta bulunamadı', 'error');
+                window.location.href = 'patients.html';
+            }
+        }
+
+        function setupFormListeners() {
+            // Device form
+            document.getElementById('addDeviceForm').addEventListener('submit', handleAddDevice);
+            
+            // Payment form
+            document.getElementById('addPaymentForm').addEventListener('submit', handleAddPayment);
+            
+            // Document form
+            document.getElementById('uploadDocumentForm').addEventListener('submit', handleUploadDocument);
+            
+            // Note form
+            document.getElementById('addNoteForm').addEventListener('submit', handleAddNote);
+            
+            // Edit notes form
+            document.getElementById('editNotesForm').addEventListener('submit', handleEditNotes);
+        }
+
+        function loadPatientData() {
+            currentPatient = PatientManager.getPatient(patientId);
+            
+            if (!currentPatient) {
+                Utils.showToast('Hasta bulunamadı', 'error');
+                window.location.href = 'patients.html';
+                return;
+            }
+
+            // Update header
+            document.getElementById('patientName').textContent = currentPatient.name;
+            
+            // Update profile section
+            const initials = currentPatient.name.split(' ').map(n => n[0]).join('').substring(0, 2);
+            document.getElementById('patientAvatar').textContent = initials;
+            document.getElementById('patientFullName').textContent = currentPatient.name;
+            document.getElementById('patientTC').textContent = `TC: ${currentPatient.tcNumber}`;
+            document.getElementById('patientPhone').textContent = `Tel: ${currentPatient.phone}`;
+            
+            // Calculate age
+            if (currentPatient.birthDate) {
+                const age = new Date().getFullYear() - new Date(currentPatient.birthDate).getFullYear();
+                document.getElementById('patientAge').textContent = `Yaş: ${age}`;
+            }
+            
+            document.getElementById('lastVisit').textContent = Utils.formatDate(currentPatient.lastVisit);
+            
+            // Update status badges
+            const statusElement = document.getElementById('patientStatus');
+            statusElement.className = `status-badge status-${currentPatient.status}`;
+            statusElement.textContent = currentPatient.status === 'active' ? 'Aktif' : 
+                                     currentPatient.status === 'pending' ? 'Beklemede' : 'Pasif';
+            
+            const segmentElement = document.getElementById('patientSegment');
+            segmentElement.className = `px-2 py-1 text-xs font-medium rounded-full ${
+                currentPatient.segment === 'lead' ? 'bg-blue-100 text-blue-800' :
+                currentPatient.segment === 'trial' ? 'bg-yellow-100 text-yellow-800' :
+                currentPatient.segment === 'purchased' ? 'bg-green-100 text-green-800' :
+                'bg-purple-100 text-purple-800'
+            }`;
+            segmentElement.textContent = currentPatient.segment === 'lead' ? 'Lead' : 
+                                       currentPatient.segment === 'trial' ? 'Deneme' :
+                                       currentPatient.segment === 'purchased' ? 'Satın Aldı' : 'Takip';
+            
+            const sgkElement = document.getElementById('sgkStatus');
+            sgkElement.className = `status-badge ${
+                currentPatient.sgkStatus === 'approved' ? 'status-active' :
+                currentPatient.sgkStatus === 'pending' ? 'status-pending' : 'status-inactive'
+            }`;
+            sgkElement.textContent = currentPatient.sgkStatus === 'approved' ? 'SGK Onaylı' : 
+                                   currentPatient.sgkStatus === 'pending' ? 'SGK Beklemede' : 'SGK Reddedildi';
+            
+            // Update summary cards
+            const patientAppointments = AppState.appointments.filter(apt => apt.patientId === patientId);
+            document.getElementById('totalAppointments').textContent = patientAppointments.length;
+            document.getElementById('totalDevices').textContent = currentPatient.devices ? currentPatient.devices.length : 0;
+            
+            // Calculate customer duration
+            const createdDate = new Date(currentPatient.createdAt);
+            const now = new Date();
+            const monthsDiff = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24 * 30));
+            document.getElementById('customerDuration').textContent = `${monthsDiff} ay`;
+            
+            // Update overview tab
+            updateOverviewTab();
+            updateAppointmentsTab();
+            updateDevicesTab();
+            updateTimelineTab();
+        }
+
+        function updateOverviewTab() {
+            document.getElementById('overviewName').textContent = currentPatient.name;
+            document.getElementById('overviewTC').textContent = currentPatient.tcNumber;
+            document.getElementById('overviewPhone').textContent = currentPatient.phone;
+            document.getElementById('overviewEmail').textContent = currentPatient.email || '-';
+            document.getElementById('overviewBirthDate').textContent = currentPatient.birthDate ? 
+                Utils.formatDate(currentPatient.birthDate) : '-';
+            document.getElementById('overviewAddress').textContent = currentPatient.address || '-';
+            document.getElementById('overviewNotes').textContent = currentPatient.notes || 'Not bulunmuyor';
+        }
+
+        function updateAppointmentsTab() {
+            const patientAppointments = AppState.appointments.filter(apt => apt.patientId === patientId);
+            const appointmentsList = document.getElementById('appointmentsList');
+            
+            if (patientAppointments.length === 0) {
+                appointmentsList.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                        </svg>
+                        <p>Henüz randevu bulunmuyor</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            appointmentsList.innerHTML = patientAppointments.map(appointment => `
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-medium text-gray-900">${appointment.type}</h4>
+                        <span class="status-badge status-${appointment.status}">
+                            ${appointment.status === 'scheduled' ? 'Planlandı' : 
+                              appointment.status === 'completed' ? 'Tamamlandı' : 
+                              appointment.status === 'no_show' ? 'Gelmedi' : appointment.status}
+                        </span>
+                    </div>
+                    <div class="text-sm text-gray-600 space-y-1">
+                        <p><strong>Tarih:</strong> ${Utils.formatDate(appointment.date)} ${appointment.time}</p>
+                        <p><strong>Klinisyen:</strong> ${appointment.clinician}</p>
+                        <p><strong>Şube:</strong> ${appointment.branch}</p>
+                        ${appointment.notes ? `<p><strong>Notlar:</strong> ${appointment.notes}</p>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateDevicesTab() {
+            const devicesList = document.getElementById('devicesList');
+            
+            if (!currentPatient.devices || currentPatient.devices.length === 0) {
+                devicesList.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <p>Henüz cihaz bulunmuyor</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            devicesList.innerHTML = currentPatient.devices.map(device => `
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-medium text-gray-900">${device.brand} ${device.model}</h4>
+                        <span class="status-badge ${
+                            device.status === 'trial' ? 'status-pending' :
+                            device.status === 'purchased' ? 'status-active' : 'status-inactive'
+                        }">
+                            ${device.status === 'trial' ? 'Deneme' : 
+                              device.status === 'purchased' ? 'Satın Alındı' : device.status}
+                        </span>
+                    </div>
+                    <div class="text-sm text-gray-600 space-y-1">
+                        <p><strong>Seri No:</strong> ${device.serialNumber}</p>
+                        <p><strong>Kulak:</strong> ${device.ear === 'left' ? 'Sol' : device.ear === 'right' ? 'Sağ' : 'İkisi'}</p>
+                        ${device.trialStartDate ? `<p><strong>Deneme Başlangıç:</strong> ${Utils.formatDate(device.trialStartDate)}</p>` : ''}
+                        ${device.trialEndDate ? `<p><strong>Deneme Bitiş:</strong> ${Utils.formatDate(device.trialEndDate)}</p>` : ''}
+                        ${device.purchaseDate ? `<p><strong>Satın Alma:</strong> ${Utils.formatDate(device.purchaseDate)}</p>` : ''}
+                        ${device.warrantyEndDate ? `<p><strong>Garanti Bitiş:</strong> ${Utils.formatDate(device.warrantyEndDate)}</p>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateTimelineTab() {
+            const timelineList = document.getElementById('timelineList');
+            
+            // Combine appointments and other activities
+            const patientAppointments = AppState.appointments.filter(apt => apt.patientId === patientId);
+            const timeline = [];
+            
+            // Add appointments to timeline
+            patientAppointments.forEach(apt => {
+                timeline.push({
+                    date: apt.date,
+                    type: 'appointment',
+                    title: apt.type,
+                    description: `${apt.clinician} - ${apt.status}`,
+                    icon: 'calendar'
+                });
+            });
+            
+            // Add patient creation
+            timeline.push({
+                date: currentPatient.createdAt,
+                type: 'patient',
+                title: 'Hasta Kaydı Oluşturuldu',
+                description: 'Sisteme yeni hasta olarak eklendi',
+                icon: 'user'
+            });
+            
+            // Sort by date
+            timeline.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            timelineList.innerHTML = timeline.map(item => `
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0 w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            ${item.icon === 'calendar' ? 
+                                '<path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>' :
+                                '<path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>'}
+                        </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-medium text-gray-900">${item.title}</h4>
+                            <span class="text-sm text-gray-500">${Utils.formatDate(item.date)}</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">${item.description}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setupTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.dataset.tab;
+                    
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.add('hidden'));
+                    
+                    // Add active class to clicked button and show corresponding content
+                    button.classList.add('active');
+                    document.getElementById(tabId).classList.remove('hidden');
+                });
+            });
+        }
+
+        // Action functions
+        function editPatient() {
+            Utils.showToast('Hasta düzenleme özelliği yakında eklenecek', 'info');
+        }
+
+        function addAppointment() {
+            window.location.href = `appointments.html?action=add&patientId=${patientId}`;
+        }
+
+        // Communications Management
+        function sendSMS() {
+            const message = prompt('SMS mesajını girin:');
+            if (message && message.trim()) {
+                const smsData = {
+                    id: Date.now().toString(),
+                    type: 'sms',
+                    direction: 'outgoing',
+                    content: message.trim(),
+                    timestamp: new Date().toISOString(),
+                    status: 'sent'
+                };
+
+                let communications = Storage.load(`patient_${currentPatientId}_communications`) || [];
+                communications.push(smsData);
+                Storage.save(`patient_${currentPatientId}_communications`, communications);
+
+                loadCommunications();
+                Utils.showToast(`${currentPatient.name} adlı hastaya SMS gönderildi`, 'success');
+            }
+        }
+
+        function loadCommunications() {
+            const communications = Storage.load(`patient_${currentPatientId}_communications`) || [];
+            const container = document.querySelector('#communications .space-y-4');
+            
+            if (communications.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                        </svg>
+                        <p>Henüz iletişim kaydı bulunmuyor</p>
+                        <button onclick="sendSMS()" class="btn btn-primary mt-4">
+                            İlk SMS'i Gönder
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort communications by timestamp (newest first)
+            communications.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            container.innerHTML = communications.map(comm => `
+                <div class="bg-white border rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 rounded-full ${getCommunicationIconClass(comm.type, comm.direction)} flex items-center justify-center">
+                                    ${getCommunicationIcon(comm.type)}
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2">
+                                    <span class="font-medium text-gray-900">${getCommunicationTypeText(comm.type)}</span>
+                                    <span class="px-2 py-1 text-xs rounded-full ${getCommunicationDirectionClass(comm.direction)}">
+                                        ${getCommunicationDirectionText(comm.direction)}
+                                    </span>
+                                    <span class="px-2 py-1 text-xs rounded-full ${getCommunicationStatusClass(comm.status)}">
+                                        ${getCommunicationStatusText(comm.status)}
+                                    </span>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">${comm.content}</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500">${new Date(comm.timestamp).toLocaleString('tr-TR')}</span>
+                    </div>
+                    <div class="flex justify-end space-x-2">
+                        <button onclick="deleteCommunication('${comm.id}')" class="text-red-600 hover:text-red-800 text-sm">
+                            Sil
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getCommunicationTypeText(type) {
+            const types = {
+                'sms': 'SMS',
+                'call': 'Arama',
+                'email': 'E-posta',
+                'whatsapp': 'WhatsApp'
+            };
+            return types[type] || type;
+        }
+
+        function getCommunicationDirectionText(direction) {
+            const directions = {
+                'incoming': 'Gelen',
+                'outgoing': 'Giden'
+            };
+            return directions[direction] || direction;
+        }
+
+        function getCommunicationDirectionClass(direction) {
+            const classes = {
+                'incoming': 'bg-blue-100 text-blue-800',
+                'outgoing': 'bg-green-100 text-green-800'
+            };
+            return classes[direction] || 'bg-gray-100 text-gray-800';
+        }
+
+        function getCommunicationStatusText(status) {
+            const statuses = {
+                'sent': 'Gönderildi',
+                'delivered': 'Teslim Edildi',
+                'read': 'Okundu',
+                'failed': 'Başarısız'
+            };
+            return statuses[status] || status;
+        }
+
+        function getCommunicationStatusClass(status) {
+            const classes = {
+                'sent': 'bg-green-100 text-green-800',
+                'delivered': 'bg-blue-100 text-blue-800',
+                'read': 'bg-purple-100 text-purple-800',
+                'failed': 'bg-red-100 text-red-800'
+            };
+            return classes[status] || 'bg-gray-100 text-gray-800';
+        }
+
+        function getCommunicationIconClass(type, direction) {
+            if (direction === 'incoming') {
+                return 'bg-blue-100 text-blue-600';
+            } else {
+                return 'bg-green-100 text-green-600';
+            }
+        }
+
+        function getCommunicationIcon(type) {
+            const icons = {
+                'sms': '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>',
+                'call': '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>',
+                'email': '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>',
+                'whatsapp': '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>'
+            };
+            return icons[type] || icons['sms'];
+        }
+
+        function deleteCommunication(commId) {
+            if (confirm('Bu iletişim kaydını silmek istediğinizden emin misiniz?')) {
+                let communications = Storage.load(`patient_${currentPatientId}_communications`) || [];
+                communications = communications.filter(comm => comm.id !== commId);
+                Storage.save(`patient_${currentPatientId}_communications`, communications);
+                loadCommunications();
+                Utils.showToast('İletişim kaydı silindi', 'success');
+            }
+        }
+
+        function editNotes() {
+            const currentNotes = currentPatient?.notes || '';
+            document.getElementById('editNotesText').value = currentNotes;
+            document.getElementById('editNotesModal').classList.remove('hidden');
+        }
+
+        function saveEditedNotes() {
+            const newNotes = document.getElementById('editNotesText').value;
+            if (currentPatient) {
+                currentPatient.notes = newNotes;
+                Storage.save(`patient_${currentPatientId}`, currentPatient);
+                
+                // Update display
+                document.getElementById('overviewNotes').textContent = newNotes || 'Not bulunmuyor';
+                Utils.showToast('Hasta notları güncellendi', 'success');
+                closeModal('editNotesModal');
+            }
+        }
+
+        // Device Management
+        function addDevice() {
+            document.getElementById('addDeviceModal').classList.remove('hidden');
+        }
+
+        function closeAddDeviceModal() {
+            document.getElementById('addDeviceModal').classList.add('hidden');
+            document.getElementById('addDeviceForm').reset();
+        }
+
+        function handleAddDevice(event) {
+            event.preventDefault();
+            
+            const deviceData = {
+                id: Date.now().toString(),
+                type: document.getElementById('deviceType').value,
+                brand: document.getElementById('deviceBrand').value,
+                model: document.getElementById('deviceModel').value,
+                serial: document.getElementById('deviceSerial').value,
+                ear: document.getElementById('deviceEar').value,
+                status: document.getElementById('deviceStatus').value,
+                price: parseFloat(document.getElementById('devicePrice').value) || 0,
+                deliveryDate: document.getElementById('deviceDeliveryDate').value,
+                notes: document.getElementById('deviceNotes').value,
+                createdAt: new Date().toISOString()
+            };
+
+            // Get existing devices or initialize empty array
+            let devices = Storage.load(`patient_${currentPatientId}_devices`) || [];
+            devices.push(deviceData);
+            Storage.save(`patient_${currentPatientId}_devices`, devices);
+
+            closeAddDeviceModal();
+            loadDevices();
+            Utils.showToast('Cihaz başarıyla eklendi', 'success');
+        }
+
+        function loadDevices() {
+            const devices = Storage.load(`patient_${currentPatientId}_devices`) || [];
+            const container = document.querySelector('#devices .space-y-4');
+            
+            if (devices.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <p>Henüz cihaz kaydı bulunmuyor</p>
+                        <button onclick="addDevice()" class="btn btn-primary mt-4">
+                            İlk Cihazı Ekle
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = devices.map(device => `
+                <div class="bg-white border rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="font-medium text-gray-900">${getDeviceTypeText(device.type)}</h4>
+                            <p class="text-sm text-gray-600">${device.brand} ${device.model}</p>
+                        </div>
+                        <span class="px-2 py-1 text-xs rounded-full ${getDeviceStatusClass(device.status)}">
+                            ${getDeviceStatusText(device.status)}
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-gray-500">Kulak:</span>
+                            <span class="ml-2">${getEarText(device.ear)}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">Seri No:</span>
+                            <span class="ml-2">${device.serial || 'Belirtilmemiş'}</span>
+                        </div>
+                        ${device.price > 0 ? `
+                        <div>
+                            <span class="text-gray-500">Fiyat:</span>
+                            <span class="ml-2">${device.price.toLocaleString('tr-TR')} ₺</span>
+                        </div>
+                        ` : ''}
+                        ${device.deliveryDate ? `
+                        <div>
+                            <span class="text-gray-500">Teslim:</span>
+                            <span class="ml-2">${new Date(device.deliveryDate).toLocaleDateString('tr-TR')}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    ${device.notes ? `
+                    <div class="mt-3 pt-3 border-t">
+                        <p class="text-sm text-gray-600">${device.notes}</p>
+                    </div>
+                    ` : ''}
+                    <div class="mt-3 flex justify-end space-x-2">
+                        <button onclick="editDevice('${device.id}')" class="text-blue-600 hover:text-blue-800 text-sm">
+                            Düzenle
+                        </button>
+                        <button onclick="deleteDevice('${device.id}')" class="text-red-600 hover:text-red-800 text-sm">
+                            Sil
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getDeviceTypeText(type) {
+            const types = {
+                'hearing_aid': 'İşitme Cihazı',
+                'cochlear_implant': 'Koklear İmplant',
+                'bone_anchored': 'Kemik Ankrajlı',
+                'fm_system': 'FM Sistemi'
+            };
+            return types[type] || type;
+        }
+
+        function getDeviceStatusText(status) {
+            const statuses = {
+                'trial': 'Deneme',
+                'purchased': 'Satın Alındı',
+                'returned': 'İade Edildi',
+                'maintenance': 'Bakımda'
+            };
+            return statuses[status] || status;
+        }
+
+        function getDeviceStatusClass(status) {
+            const classes = {
+                'trial': 'bg-yellow-100 text-yellow-800',
+                'purchased': 'bg-green-100 text-green-800',
+                'returned': 'bg-red-100 text-red-800',
+                'maintenance': 'bg-blue-100 text-blue-800'
+            };
+            return classes[status] || 'bg-gray-100 text-gray-800';
+        }
+
+        function getEarText(ear) {
+            const ears = {
+                'left': 'Sol',
+                'right': 'Sağ',
+                'both': 'Her İki Kulak'
+            };
+            return ears[ear] || ear;
+        }
+
+        function editDevice(deviceId) {
+            Utils.showToast('Cihaz düzenleme özelliği yakında eklenecek', 'info');
+        }
+
+        function deleteDevice(deviceId) {
+            if (confirm('Bu cihazı silmek istediğinizden emin misiniz?')) {
+                let devices = Storage.load(`patient_${currentPatientId}_devices`) || [];
+                devices = devices.filter(device => device.id !== deviceId);
+                Storage.save(`patient_${currentPatientId}_devices`, devices);
+                loadDevices();
+                Utils.showToast('Cihaz silindi', 'success');
+            }
+        }
+
+        // Payment Management
+        function addPayment() {
+            document.getElementById('addPaymentModal').classList.remove('hidden');
+            // Set today's date as default
+            document.getElementById('paymentDate').value = new Date().toISOString().split('T')[0];
+        }
+
+        function closeAddPaymentModal() {
+            document.getElementById('addPaymentModal').classList.add('hidden');
+            document.getElementById('addPaymentForm').reset();
+        }
+
+        function handleAddPayment(event) {
+            event.preventDefault();
+            
+            const paymentData = {
+                id: Date.now().toString(),
+                type: document.getElementById('paymentType').value,
+                amount: parseFloat(document.getElementById('paymentAmount').value),
+                date: document.getElementById('paymentDate').value,
+                invoiceNumber: document.getElementById('invoiceNumber').value,
+                description: document.getElementById('paymentDescription').value,
+                createdAt: new Date().toISOString()
+            };
+
+            let payments = Storage.load(`patient_${currentPatientId}_payments`) || [];
+            payments.push(paymentData);
+            Storage.save(`patient_${currentPatientId}_payments`, payments);
+
+            closeAddPaymentModal();
+            loadPayments();
+            Utils.showToast('Ödeme kaydı eklendi', 'success');
+        }
+
+        function loadPayments() {
+            const payments = Storage.load(`patient_${currentPatientId}_payments`) || [];
+            const container = document.querySelector('#payments .space-y-4');
+            
+            if (payments.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <p>Henüz ödeme kaydı bulunmuyor</p>
+                        <button onclick="addPayment()" class="btn btn-primary mt-4">
+                            İlk Ödemeyi Ekle
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort payments by date (newest first)
+            payments.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            container.innerHTML = payments.map(payment => `
+                <div class="bg-white border rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="font-medium text-gray-900">${payment.amount.toLocaleString('tr-TR')} ₺</h4>
+                            <p class="text-sm text-gray-600">${getPaymentTypeText(payment.type)}</p>
+                        </div>
+                        <span class="text-sm text-gray-500">${new Date(payment.date).toLocaleDateString('tr-TR')}</span>
+                    </div>
+                    ${payment.invoiceNumber ? `
+                    <div class="mb-2">
+                        <span class="text-sm text-gray-500">Fatura No:</span>
+                        <span class="ml-2 text-sm">${payment.invoiceNumber}</span>
+                    </div>
+                    ` : ''}
+                    ${payment.description ? `
+                    <div class="mb-3">
+                        <p class="text-sm text-gray-600">${payment.description}</p>
+                    </div>
+                    ` : ''}
+                    <div class="flex justify-end space-x-2">
+                        <button onclick="deletePayment('${payment.id}')" class="text-red-600 hover:text-red-800 text-sm">
+                            Sil
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getPaymentTypeText(type) {
+            const types = {
+                'cash': 'Nakit',
+                'credit_card': 'Kredi Kartı',
+                'bank_transfer': 'Havale/EFT',
+                'installment': 'Taksit'
+            };
+            return types[type] || type;
+        }
+
+        function deletePayment(paymentId) {
+            if (confirm('Bu ödeme kaydını silmek istediğinizden emin misiniz?')) {
+                let payments = Storage.load(`patient_${currentPatientId}_payments`) || [];
+                payments = payments.filter(payment => payment.id !== paymentId);
+                Storage.save(`patient_${currentPatientId}_payments`, payments);
+                loadPayments();
+                Utils.showToast('Ödeme kaydı silindi', 'success');
+            }
+        }
+
+        // Document Management
+        function uploadDocument() {
+            document.getElementById('uploadDocumentModal').classList.remove('hidden');
+        }
+
+        function closeUploadDocumentModal() {
+            document.getElementById('uploadDocumentModal').classList.add('hidden');
+            document.getElementById('uploadDocumentForm').reset();
+        }
+
+        function handleUploadDocument(event) {
+            event.preventDefault();
+            
+            const file = document.getElementById('documentFile').files[0];
+            if (!file) {
+                Utils.showToast('Lütfen bir dosya seçin', 'error');
+                return;
+            }
+
+            // Check file size (10MB limit)
+            if (file.size > 10 * 1024 * 1024) {
+                Utils.showToast('Dosya boyutu 10MB\'dan büyük olamaz', 'error');
+                return;
+            }
+
+            const documentData = {
+                id: Date.now().toString(),
+                type: document.getElementById('documentType').value,
+                name: document.getElementById('documentName').value,
+                fileName: file.name,
+                fileSize: file.size,
+                description: document.getElementById('documentDescription').value,
+                uploadDate: new Date().toISOString()
+            };
+
+            let documents = Storage.load(`patient_${currentPatientId}_documents`) || [];
+            documents.push(documentData);
+            Storage.save(`patient_${currentPatientId}_documents`, documents);
+
+            closeUploadDocumentModal();
+            loadDocuments();
+            Utils.showToast('Belge başarıyla yüklendi', 'success');
+        }
+
+        function loadDocuments() {
+            const documents = Storage.load(`patient_${currentPatientId}_documents`) || [];
+            const container = document.querySelector('#documents .space-y-4');
+            
+            if (documents.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 001 1h6a1 1 0 001-1V3a2 2 0 012 2v6.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L16 11.586V5a2 2 0 00-2-2v1a1 1 0 01-1 1H7a1 1 0 01-1-1V3a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-1a1 1 0 10-2 0v1H6V5z" clip-rule="evenodd"/>
+                        </svg>
+                        <p>Henüz belge bulunmuyor</p>
+                        <button onclick="uploadDocument()" class="btn btn-primary mt-4">
+                            İlk Belgeyi Yükle
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort documents by upload date (newest first)
+            documents.sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate));
+
+            container.innerHTML = documents.map(doc => `
+                <div class="bg-white border rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0">
+                                <svg class="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-900">${doc.name}</h4>
+                                <p class="text-sm text-gray-600">${getDocumentTypeText(doc.type)}</p>
+                                <p class="text-xs text-gray-500">${doc.fileName} (${formatFileSize(doc.fileSize)})</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500">${new Date(doc.uploadDate).toLocaleDateString('tr-TR')}</span>
+                    </div>
+                    ${doc.description ? `
+                    <div class="mb-3">
+                        <p class="text-sm text-gray-600">${doc.description}</p>
+                    </div>
+                    ` : ''}
+                    <div class="flex justify-end space-x-2">
+                        <button onclick="downloadDocument('${doc.id}')" class="text-blue-600 hover:text-blue-800 text-sm">
+                            İndir
+                        </button>
+                        <button onclick="deleteDocument('${doc.id}')" class="text-red-600 hover:text-red-800 text-sm">
+                            Sil
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getDocumentTypeText(type) {
+            const types = {
+                'audiogram': 'Odyogram',
+                'medical_report': 'Tıbbi Rapor',
+                'sgk_report': 'SGK Raporu',
+                'invoice': 'Fatura',
+                'warranty': 'Garanti Belgesi',
+                'prescription': 'Reçete',
+                'other': 'Diğer'
+            };
+            return types[type] || type;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function downloadDocument(docId) {
+            Utils.showToast('Belge indirme özelliği yakında eklenecek', 'info');
+        }
+
+        function deleteDocument(docId) {
+            if (confirm('Bu belgeyi silmek istediğinizden emin misiniz?')) {
+                let documents = Storage.load(`patient_${currentPatientId}_documents`) || [];
+                documents = documents.filter(doc => doc.id !== docId);
+                Storage.save(`patient_${currentPatientId}_documents`, documents);
+                loadDocuments();
+                Utils.showToast('Belge silindi', 'success');
+            }
+        }
+
+        // Note Management
+        function addNote() {
+            document.getElementById('addNoteModal').classList.remove('hidden');
+        }
+
+        function closeAddNoteModal() {
+            document.getElementById('addNoteModal').classList.add('hidden');
+            document.getElementById('addNoteForm').reset();
+        }
+
+        function handleAddNote(event) {
+            event.preventDefault();
+            
+            const noteData = {
+                id: Date.now().toString(),
+                title: document.getElementById('noteTitle').value,
+                category: document.getElementById('noteCategory').value,
+                content: document.getElementById('noteContent').value,
+                priority: document.getElementById('notePriority').value,
+                createdAt: new Date().toISOString()
+            };
+
+            let notes = Storage.load(`patient_${currentPatientId}_notes`) || [];
+            notes.push(noteData);
+            Storage.save(`patient_${currentPatientId}_notes`, notes);
+
+            closeAddNoteModal();
+            loadNotes();
+            Utils.showToast('Not eklendi', 'success');
+        }
+
+        function loadNotes() {
+            const notes = Storage.load(`patient_${currentPatientId}_notes`) || [];
+            const container = document.querySelector('#notes .space-y-4');
+            
+            if (notes.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 001 1h6a1 1 0 001-1V3a2 2 0 012 2v6.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L16 11.586V5a2 2 0 00-2-2v1a1 1 0 01-1 1H7a1 1 0 01-1-1V3a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-1a1 1 0 10-2 0v1H6V5z" clip-rule="evenodd"/>
+                        </svg>
+                        <p>Henüz not bulunmuyor</p>
+                        <button onclick="addNote()" class="btn btn-primary mt-4">
+                            İlk Notu Ekle
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sort notes by creation date (newest first)
+            notes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            container.innerHTML = notes.map(note => `
+                <div class="bg-white border rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h4 class="font-medium text-gray-900">${note.title}</h4>
+                            <div class="flex items-center space-x-2 mt-1">
+                                <span class="px-2 py-1 text-xs rounded-full ${getNoteCategoryClass(note.category)}">
+                                    ${getNoteCategoryText(note.category)}
+                                </span>
+                                <span class="px-2 py-1 text-xs rounded-full ${getNotePriorityClass(note.priority)}">
+                                    ${getNotePriorityText(note.priority)}
+                                </span>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500">${new Date(note.createdAt).toLocaleDateString('tr-TR')}</span>
+                    </div>
+                    <div class="mb-3">
+                        <p class="text-sm text-gray-600 whitespace-pre-wrap">${note.content}</p>
+                    </div>
+                    <div class="flex justify-end space-x-2">
+                        <button onclick="editNote('${note.id}')" class="text-blue-600 hover:text-blue-800 text-sm">
+                            Düzenle
+                        </button>
+                        <button onclick="deleteNote('${note.id}')" class="text-red-600 hover:text-red-800 text-sm">
+                            Sil
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getNoteCategoryText(category) {
+            const categories = {
+                'general': 'Genel',
+                'medical': 'Tıbbi',
+                'technical': 'Teknik',
+                'financial': 'Mali',
+                'follow_up': 'Takip'
+            };
+            return categories[category] || category;
+        }
+
+        function getNoteCategoryClass(category) {
+            const classes = {
+                'general': 'bg-gray-100 text-gray-800',
+                'medical': 'bg-red-100 text-red-800',
+                'technical': 'bg-blue-100 text-blue-800',
+                'financial': 'bg-green-100 text-green-800',
+                'follow_up': 'bg-yellow-100 text-yellow-800'
+            };
+            return classes[category] || 'bg-gray-100 text-gray-800';
+        }
+
+        function getNotePriorityText(priority) {
+            const priorities = {
+                'low': 'Düşük',
+                'medium': 'Orta',
+                'high': 'Yüksek'
+            };
+            return priorities[priority] || priority;
+        }
+
+        function getNotePriorityClass(priority) {
+            const classes = {
+                'low': 'bg-green-100 text-green-800',
+                'medium': 'bg-yellow-100 text-yellow-800',
+                'high': 'bg-red-100 text-red-800'
+            };
+            return classes[priority] || 'bg-gray-100 text-gray-800';
+        }
+
+        function editNote(noteId) {
+            Utils.showToast('Not düzenleme özelliği yakında eklenecek', 'info');
+        }
+
+        function deleteNote(noteId) {
+            if (confirm('Bu notu silmek istediğinizden emin misiniz?')) {
+                let notes = Storage.load(`patient_${currentPatientId}_notes`) || [];
+                notes = notes.filter(note => note.id !== noteId);
+                Storage.save(`patient_${currentPatientId}_notes`, notes);
+                loadNotes();
+                Utils.showToast('Not silindi', 'success');
+            }
+        }
+
+        // Edit Notes functionality
+        function editNotes() {
+            const patient = Storage.load(`patient_${currentPatientId}`);
+            if (patient) {
+                document.getElementById('editNotesContent').value = patient.notes || '';
+                document.getElementById('editNotesModal').classList.remove('hidden');
+            }
+        }
+
+        function closeEditNotesModal() {
+            document.getElementById('editNotesModal').classList.add('hidden');
+        }
+
+        function handleEditNotes(event) {
+            event.preventDefault();
+            
+            const newNotes = document.getElementById('editNotesContent').value;
+            const patient = Storage.load(`patient_${currentPatientId}`);
+            
+            if (patient) {
+                patient.notes = newNotes;
+                Storage.save(`patient_${currentPatientId}`, patient);
+                
+                // Update the notes display in the profile
+                const notesElement = document.querySelector('.patient-notes');
+                if (notesElement) {
+                    notesElement.textContent = newNotes || 'Henüz not eklenmemiş';
+                }
+                
+                closeEditNotesModal();
+                Utils.showToast('Hasta notları güncellendi', 'success');
+            }
+        }
+
+        function updateSGK() {
+            Utils.showToast('SGK güncelleme özelliği yakında eklenecek', 'info');
+        }
+    </script>
+    
+    <style>
+        .tab-button {
+            padding: 1rem 0;
+            border-bottom: 2px solid transparent;
+            color: #6B7280;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .tab-button:hover {
+            color: #374151;
+        }
+        
+        .tab-button.active {
+            color: #2563EB;
+            border-bottom-color: #2563EB;
+        }
+    </style>
+</body>
+</html>

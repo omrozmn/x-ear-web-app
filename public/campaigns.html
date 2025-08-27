@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS Kampanyaları - X-Ear CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',
+                        'light-gray': '#F9FAFB'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light-gray">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar-nav">
+        <div class="p-6">
+            <div class="flex items-center space-x-3 mb-8">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold text-gray-900">X-Ear CRM</h1>
+            </div>
+            
+            <ul class="space-y-2">
+                <li><a href="dashboard.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                    </svg>
+                    Dashboard
+                </a></li>
+                <li><a href="patients.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                    </svg>
+                    Hastalar
+                </a></li>
+                <li><a href="appointments.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                    </svg>
+                    Randevular
+                </a></li>
+                <li><a href="inventory.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/>
+                    </svg>
+                    Stok
+                </a></li>
+                <li><a href="campaigns.html" class="nav-item active">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                    </svg>
+                    Kampanyalar
+                </a></li>
+                <li><a href="reports.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                    </svg>
+                    Raporlar
+                </a></li>
+                <li><a href="settings.html" class="nav-item">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                    </svg>
+                    Ayarlar
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button class="lg:hidden" data-menu-toggle>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <h2 class="text-2xl font-bold text-gray-900">SMS Kampanyaları</h2>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Kampanya ara..." class="search-input" id="searchInput">
+                        <svg class="search-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    
+                    <button class="btn-primary" onclick="openCreateCampaignModal()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                        </svg>
+                        Yeni Kampanya
+                    </button>
+                    
+                    <div class="flex items-center space-x-3">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%232563EB'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='Arial' font-size='14' font-weight='bold'%3EAD%3C/text%3E%3C/svg%3E" alt="Admin" class="w-8 h-8 rounded-full">
+                        <span class="text-sm font-medium text-gray-700">Admin User</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div class="card p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Toplam Kampanya</p>
+                            <p class="text-2xl font-bold text-gray-900" id="totalCampaigns">0</p>
+                        </div>
+                        <div class="p-3 bg-blue-100 rounded-lg">
+                            <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Aktif Kampanya</p>
+                            <p class="text-2xl font-bold text-green-600" id="activeCampaigns">0</p>
+                        </div>
+                        <div class="p-3 bg-green-100 rounded-lg">
+                            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Gönderilen SMS</p>
+                            <p class="text-2xl font-bold text-gray-900" id="totalSent">0</p>
+                        </div>
+                        <div class="p-3 bg-purple-100 rounded-lg">
+                            <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Açılma Oranı</p>
+                            <p class="text-2xl font-bold text-yellow-600" id="openRate">0%</p>
+                        </div>
+                        <div class="p-3 bg-yellow-100 rounded-lg">
+                            <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="card p-4 mb-6">
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-gray-700">Durum:</label>
+                        <select class="filter-select" id="statusFilter">
+                            <option value="">Tümü</option>
+                            <option value="draft">Taslak</option>
+                            <option value="scheduled">Planlandı</option>
+                            <option value="active">Aktif</option>
+                            <option value="completed">Tamamlandı</option>
+                            <option value="paused">Duraklatıldı</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-gray-700">Tür:</label>
+                        <select class="filter-select" id="typeFilter">
+                            <option value="">Tümü</option>
+                            <option value="promotional">Promosyon</option>
+                            <option value="reminder">Hatırlatma</option>
+                            <option value="follow_up">Takip</option>
+                            <option value="appointment">Randevu</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-gray-700">Tarih:</label>
+                        <input type="date" class="filter-select" id="dateFilter">
+                    </div>
+                    
+                    <button class="btn-secondary" onclick="clearFilters()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                        Filtreleri Temizle
+                    </button>
+                    
+                    <button class="btn-secondary ml-auto" onclick="exportCampaigns()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                        Dışa Aktar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Campaigns Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6" id="campaignsGrid">
+                <!-- Campaign cards will be populated here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Create Campaign Modal -->
+    <div id="createCampaignModal" class="modal hidden">
+        <div class="modal-content max-w-4xl">
+            <div class="modal-header">
+                <h3 class="modal-title">Yeni SMS Kampanyası</h3>
+                <button class="modal-close" onclick="closeCreateCampaignModal()">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="createCampaignForm" class="modal-body space-y-6">
+                <!-- Campaign Basic Info -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Kampanya Adı *</label>
+                        <input type="text" class="form-input" id="campaignName" required placeholder="Kampanya adını girin">
+                    </div>
+                    
+                    <div>
+                        <label class="form-label">Kampanya Türü *</label>
+                        <select class="form-input" id="campaignType" required>
+                            <option value="">Tür seçin</option>
+                            <option value="promotional">Promosyon</option>
+                            <option value="reminder">Hatırlatma</option>
+                            <option value="follow_up">Takip</option>
+                            <option value="appointment">Randevu</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Message Content -->
+                <div>
+                    <label class="form-label">SMS Mesajı *</label>
+                    <textarea class="form-input" id="campaignMessage" required rows="4" 
+                              placeholder="SMS mesajınızı yazın... (Maksimum 160 karakter)"
+                              maxlength="160"></textarea>
+                    <div class="flex justify-between text-sm text-gray-500 mt-1">
+                        <span>Değişkenler: {ad}, {soyad}, {randevu_tarihi}, {klinik_adi}</span>
+                        <span id="messageLength">0/160</span>
+                    </div>
+                </div>
+                
+                <!-- Target Audience -->
+                <div>
+                    <label class="form-label">Hedef Kitle *</label>
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" id="allPatients" name="targetAudience" value="all" class="form-radio">
+                            <label for="allPatients" class="text-sm font-medium text-gray-700">Tüm Hastalar</label>
+                        </div>
+                        
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" id="segmentedPatients" name="targetAudience" value="segmented" class="form-radio">
+                            <label for="segmentedPatients" class="text-sm font-medium text-gray-700">Belirli Hasta Grupları</label>
+                        </div>
+                        
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" id="customList" name="targetAudience" value="custom" class="form-radio">
+                            <label for="customList" class="text-sm font-medium text-gray-700">Özel Liste</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Segmentation Options -->
+                    <div id="segmentationOptions" class="mt-4 p-4 bg-gray-50 rounded-lg hidden">
+                        <h4 class="font-medium text-gray-900 mb-3">Hasta Segmentasyonu</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">Yaş Aralığı</label>
+                                <div class="flex space-x-2">
+                                    <input type="number" class="form-input" placeholder="Min" id="minAge">
+                                    <input type="number" class="form-input" placeholder="Max" id="maxAge">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="form-label">Hasta Durumu</label>
+                                <select class="form-input" id="patientStatus">
+                                    <option value="">Tümü</option>
+                                    <option value="active">Aktif</option>
+                                    <option value="trial">Deneme</option>
+                                    <option value="inactive">Pasif</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="form-label">Son Ziyaret</label>
+                                <select class="form-input" id="lastVisit">
+                                    <option value="">Tümü</option>
+                                    <option value="30">Son 30 gün</option>
+                                    <option value="90">Son 3 ay</option>
+                                    <option value="180">Son 6 ay</option>
+                                    <option value="365">Son 1 yıl</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="form-label">Şube</label>
+                                <select class="form-input" id="branchFilter">
+                                    <option value="">Tüm Şubeler</option>
+                                    <option value="merkez">Merkez Şube</option>
+                                    <option value="kadikoy">Kadıköy Şube</option>
+                                    <option value="besiktas">Beşiktaş Şube</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Custom List Options -->
+                    <div id="customListOptions" class="mt-4 p-4 bg-gray-50 rounded-lg hidden">
+                        <h4 class="font-medium text-gray-900 mb-3">Özel Hasta Listesi</h4>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="form-label">Telefon Numaraları</label>
+                                <textarea class="form-input" id="phoneNumbers" rows="4" 
+                                          placeholder="Her satıra bir telefon numarası yazın...\n+905551234567\n+905559876543"></textarea>
+                            </div>
+                            <p class="text-sm text-gray-500">Her satıra bir telefon numarası yazın. Uluslararası format kullanın (+90...).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Scheduling -->
+                <div>
+                    <label class="form-label">Gönderim Zamanlaması *</label>
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" id="sendNow" name="scheduling" value="now" class="form-radio" checked>
+                            <label for="sendNow" class="text-sm font-medium text-gray-700">Hemen Gönder</label>
+                        </div>
+                        
+                        <div class="flex items-center space-x-3">
+                            <input type="radio" id="scheduleDate" name="scheduling" value="scheduled" class="form-radio">
+                            <label for="scheduleDate" class="text-sm font-medium text-gray-700">Tarih ve Saat Belirle</label>
+                        </div>
+                    </div>
+                    
+                    <div id="schedulingOptions" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 hidden">
+                        <div>
+                            <label class="form-label">Gönderim Tarihi</label>
+                            <input type="date" class="form-input" id="sendDate">
+                        </div>
+                        
+                        <div>
+                            <label class="form-label">Gönderim Saati</label>
+                            <input type="time" class="form-input" id="sendTime">
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeCreateCampaignModal()">İptal</button>
+                <button type="button" class="btn-secondary" onclick="saveDraft()">Taslak Kaydet</button>
+                <button type="submit" form="createCampaignForm" class="btn-primary">Kampanya Oluştur</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Campaign Details Modal -->
+    <div id="campaignDetailsModal" class="modal hidden">
+        <div class="modal-content max-w-4xl">
+            <div class="modal-header">
+                <h3 class="modal-title" id="campaignDetailsTitle">Kampanya Detayları</h3>
+                <button class="modal-close" onclick="closeCampaignDetailsModal()">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="modal-body" id="campaignDetailsContent">
+                <!-- Campaign details will be populated here -->
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeCampaignDetailsModal()">Kapat</button>
+                <button type="button" class="btn-primary" id="campaignActionBtn">İşlem</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/app.js"></script>
+    <script src="../assets/data.js"></script>
+    <script>
+        let filteredCampaigns = [];
+        let currentEditingCampaign = null;
+
+        function initPage() {
+            loadCampaigns();
+            setupFilters();
+            setupForms();
+            updateStats();
+        }
+
+        function loadCampaigns() {
+            filteredCampaigns = [...AppState.campaigns];
+            applyFilters();
+            renderCampaigns();
+        }
+
+        function setupFilters() {
+            const filters = ['statusFilter', 'typeFilter', 'dateFilter'];
+            filters.forEach(filterId => {
+                document.getElementById(filterId).addEventListener('change', applyFilters);
+            });
+            
+            document.getElementById('searchInput').addEventListener('input', applyFilters);
+        }
+
+        function setupForms() {
+            document.getElementById('createCampaignForm').addEventListener('submit', handleCreateCampaign);
+            
+            // Message length counter
+            document.getElementById('campaignMessage').addEventListener('input', updateMessageLength);
+            
+            // Target audience radio buttons
+            document.querySelectorAll('input[name="targetAudience"]').forEach(radio => {
+                radio.addEventListener('change', handleTargetAudienceChange);
+            });
+            
+            // Scheduling radio buttons
+            document.querySelectorAll('input[name="scheduling"]').forEach(radio => {
+                radio.addEventListener('change', handleSchedulingChange);
+            });
+        }
+
+        function updateMessageLength() {
+            const message = document.getElementById('campaignMessage').value;
+            document.getElementById('messageLength').textContent = `${message.length}/160`;
+        }
+
+        function handleTargetAudienceChange() {
+            const selectedValue = document.querySelector('input[name="targetAudience"]:checked').value;
+            
+            document.getElementById('segmentationOptions').classList.toggle('hidden', selectedValue !== 'segmented');
+            document.getElementById('customListOptions').classList.toggle('hidden', selectedValue !== 'custom');
+        }
+
+        function handleSchedulingChange() {
+            const selectedValue = document.querySelector('input[name="scheduling"]:checked').value;
+            
+            document.getElementById('schedulingOptions').classList.toggle('hidden', selectedValue !== 'scheduled');
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+
+            filteredCampaigns = AppState.campaigns.filter(campaign => {
+                const matchesSearch = !searchTerm || 
+                    campaign.name.toLowerCase().includes(searchTerm) ||
+                    campaign.message.toLowerCase().includes(searchTerm);
+                
+                const matchesStatus = !statusFilter || campaign.status === statusFilter;
+                const matchesType = !typeFilter || campaign.type === typeFilter;
+                
+                let matchesDate = true;
+                if (dateFilter) {
+                    const filterDate = new Date(dateFilter);
+                    const campaignDate = new Date(campaign.createdAt);
+                    matchesDate = campaignDate.toDateString() === filterDate.toDateString();
+                }
+                
+                return matchesSearch && matchesStatus && matchesType && matchesDate;
+            });
+            
+            renderCampaigns();
+            updateStats();
+        }
+
+        function renderCampaigns() {
+            const grid = document.getElementById('campaignsGrid');
+            
+            if (filteredCampaigns.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full flex flex-col items-center py-12">
+                        <svg class="w-16 h-16 text-gray-300 mb-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                        </svg>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">Kampanya bulunamadı</h3>
+                        <p class="text-gray-500 mb-4">Henüz hiç kampanya oluşturulmamış.</p>
+                        <button class="btn-primary" onclick="openCreateCampaignModal()">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+                            </svg>
+                            İlk Kampanyayı Oluştur
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = filteredCampaigns.map(campaign => {
+                const statusClass = {
+                    'draft': 'status-inactive',
+                    'scheduled': 'status-warning',
+                    'active': 'status-active',
+                    'completed': 'status-success',
+                    'paused': 'status-pending'
+                }[campaign.status] || 'status-inactive';
+                
+                const statusText = {
+                    'draft': 'Taslak',
+                    'scheduled': 'Planlandı',
+                    'active': 'Aktif',
+                    'completed': 'Tamamlandı',
+                    'paused': 'Duraklatıldı'
+                }[campaign.status] || campaign.status;
+                
+                const typeText = {
+                    'promotional': 'Promosyon',
+                    'reminder': 'Hatırlatma',
+                    'follow_up': 'Takip',
+                    'appointment': 'Randevu'
+                }[campaign.type] || campaign.type;
+                
+                return `
+                    <div class="card p-6 hover:shadow-lg transition-shadow cursor-pointer" onclick="viewCampaignDetails('${campaign.id}')">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-1">${campaign.name}</h3>
+                                <p class="text-sm text-gray-500">${typeText}</p>
+                            </div>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <p class="text-sm text-gray-600 line-clamp-2">${campaign.message}</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+                            <div>
+                                <span class="text-gray-500">Hedef:</span>
+                                <span class="font-medium text-gray-900">${campaign.targetCount || 0} kişi</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">Gönderilen:</span>
+                                <span class="font-medium text-gray-900">${campaign.sentCount || 0}</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">Açılma:</span>
+                                <span class="font-medium text-gray-900">${campaign.openRate || 0}%</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">Tıklama:</span>
+                                <span class="font-medium text-gray-900">${campaign.clickRate || 0}%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <span>${Utils.formatDate(campaign.createdAt)}</span>
+                            ${campaign.scheduledAt ? `<span>Planlandı: ${Utils.formatDate(campaign.scheduledAt)}</span>` : ''}
+                        </div>
+                        
+                        <div class="flex items-center space-x-2 mt-4" onclick="event.stopPropagation()">
+                            ${campaign.status === 'draft' ? `
+                                <button class="btn-sm btn-primary" onclick="editCampaign('${campaign.id}')">Düzenle</button>
+                                <button class="btn-sm btn-secondary" onclick="launchCampaign('${campaign.id}')">Başlat</button>
+                            ` : ''}
+                            
+                            ${campaign.status === 'active' ? `
+                                <button class="btn-sm btn-secondary" onclick="pauseCampaign('${campaign.id}')">Duraklat</button>
+                            ` : ''}
+                            
+                            ${campaign.status === 'paused' ? `
+                                <button class="btn-sm btn-primary" onclick="resumeCampaign('${campaign.id}')">Devam Et</button>
+                            ` : ''}
+                            
+                            <button class="btn-sm btn-secondary" onclick="duplicateCampaign('${campaign.id}')">Kopyala</button>
+                            
+                            ${campaign.status === 'draft' ? `
+                                <button class="btn-sm text-red-600 hover:bg-red-50" onclick="deleteCampaign('${campaign.id}')">Sil</button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateStats() {
+            const totalCampaigns = AppState.campaigns.length;
+            const activeCampaigns = AppState.campaigns.filter(c => c.status === 'active').length;
+            const totalSent = AppState.campaigns.reduce((sum, c) => sum + (c.sentCount || 0), 0);
+            const totalOpened = AppState.campaigns.reduce((sum, c) => sum + (c.openedCount || 0), 0);
+            const openRate = totalSent > 0 ? Math.round((totalOpened / totalSent) * 100) : 0;
+            
+            document.getElementById('totalCampaigns').textContent = totalCampaigns;
+            document.getElementById('activeCampaigns').textContent = activeCampaigns;
+            document.getElementById('totalSent').textContent = totalSent;
+            document.getElementById('openRate').textContent = `${openRate}%`;
+        }
+
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('typeFilter').value = '';
+            document.getElementById('dateFilter').value = '';
+            applyFilters();
+        }
+
+        function openCreateCampaignModal() {
+            document.getElementById('createCampaignModal').classList.remove('hidden');
+        }
+
+        function closeCreateCampaignModal() {
+            document.getElementById('createCampaignModal').classList.add('hidden');
+            document.getElementById('createCampaignForm').reset();
+            updateMessageLength();
+            
+            // Reset visibility of conditional sections
+            document.getElementById('segmentationOptions').classList.add('hidden');
+            document.getElementById('customListOptions').classList.add('hidden');
+            document.getElementById('schedulingOptions').classList.add('hidden');
+        }
+
+        function handleCreateCampaign(e) {
+            e.preventDefault();
+            
+            const campaignData = {
+                name: document.getElementById('campaignName').value,
+                type: document.getElementById('campaignType').value,
+                message: document.getElementById('campaignMessage').value,
+                targetAudience: document.querySelector('input[name="targetAudience"]:checked').value,
+                scheduling: document.querySelector('input[name="scheduling"]:checked').value,
+                status: document.querySelector('input[name="scheduling"]:checked').value === 'now' ? 'active' : 'scheduled',
+                createdAt: new Date().toISOString()
+            };
+            
+            // Add scheduling data if scheduled
+            if (campaignData.scheduling === 'scheduled') {
+                const sendDate = document.getElementById('sendDate').value;
+                const sendTime = document.getElementById('sendTime').value;
+                if (sendDate && sendTime) {
+                    campaignData.scheduledAt = new Date(`${sendDate}T${sendTime}`).toISOString();
+                }
+            }
+            
+            // Add segmentation data if applicable
+            if (campaignData.targetAudience === 'segmented') {
+                campaignData.segmentation = {
+                    minAge: document.getElementById('minAge').value,
+                    maxAge: document.getElementById('maxAge').value,
+                    patientStatus: document.getElementById('patientStatus').value,
+                    lastVisit: document.getElementById('lastVisit').value,
+                    branch: document.getElementById('branchFilter').value
+                };
+            }
+            
+            // Add custom list if applicable
+            if (campaignData.targetAudience === 'custom') {
+                const phoneNumbers = document.getElementById('phoneNumbers').value
+                    .split('\n')
+                    .map(num => num.trim())
+                    .filter(num => num.length > 0);
+                campaignData.customList = phoneNumbers;
+                campaignData.targetCount = phoneNumbers.length;
+            }
+            
+            // Create campaign
+            const newCampaign = {
+                id: 'campaign_' + Date.now(),
+                ...campaignData,
+                sentCount: 0,
+                openedCount: 0,
+                clickedCount: 0,
+                openRate: 0,
+                clickRate: 0
+            };
+            
+            AppState.campaigns.push(newCampaign);
+            Storage.save('campaigns', AppState.campaigns);
+            
+            closeCreateCampaignModal();
+            loadCampaigns();
+            
+            const actionText = campaignData.status === 'active' ? 'başlatıldı' : 'oluşturuldu';
+            Utils.showToast(`${campaignData.name} kampanyası ${actionText}`, 'success');
+        }
+
+        function saveDraft() {
+            // Similar to handleCreateCampaign but with status 'draft'
+            Utils.showToast('Taslak kaydetme özelliği yakında eklenecek', 'info');
+        }
+
+        function viewCampaignDetails(campaignId) {
+            const campaign = AppState.campaigns.find(c => c.id === campaignId);
+            if (!campaign) return;
+            
+            document.getElementById('campaignDetailsTitle').textContent = campaign.name;
+            
+            const statusText = {
+                'draft': 'Taslak',
+                'scheduled': 'Planlandı',
+                'active': 'Aktif',
+                'completed': 'Tamamlandı',
+                'paused': 'Duraklatıldı'
+            }[campaign.status] || campaign.status;
+            
+            const typeText = {
+                'promotional': 'Promosyon',
+                'reminder': 'Hatırlatma',
+                'follow_up': 'Takip',
+                'appointment': 'Randevu'
+            }[campaign.type] || campaign.type;
+            
+            document.getElementById('campaignDetailsContent').innerHTML = `
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-medium text-gray-900 mb-2">Kampanya Bilgileri</h4>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500">Durum:</span>
+                                        <span class="font-medium">${statusText}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500">Tür:</span>
+                                        <span class="font-medium">${typeText}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500">Oluşturulma:</span>
+                                        <span class="font-medium">${Utils.formatDate(campaign.createdAt)}</span>
+                                    </div>
+                                    ${campaign.scheduledAt ? `
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-500">Planlandı:</span>
+                                            <span class="font-medium">${Utils.formatDate(campaign.scheduledAt)}</span>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-medium text-gray-900 mb-2">Mesaj İçeriği</h4>
+                                <div class="p-3 bg-gray-50 rounded-lg text-sm">
+                                    ${campaign.message}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-medium text-gray-900 mb-2">İstatistikler</h4>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="text-center p-3 bg-blue-50 rounded-lg">
+                                        <div class="text-2xl font-bold text-blue-600">${campaign.targetCount || 0}</div>
+                                        <div class="text-xs text-blue-600">Hedef</div>
+                                    </div>
+                                    <div class="text-center p-3 bg-green-50 rounded-lg">
+                                        <div class="text-2xl font-bold text-green-600">${campaign.sentCount || 0}</div>
+                                        <div class="text-xs text-green-600">Gönderilen</div>
+                                    </div>
+                                    <div class="text-center p-3 bg-yellow-50 rounded-lg">
+                                        <div class="text-2xl font-bold text-yellow-600">${campaign.openRate || 0}%</div>
+                                        <div class="text-xs text-yellow-600">Açılma</div>
+                                    </div>
+                                    <div class="text-center p-3 bg-purple-50 rounded-lg">
+                                        <div class="text-2xl font-bold text-purple-600">${campaign.clickRate || 0}%</div>
+                                        <div class="text-xs text-purple-600">Tıklama</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('campaignDetailsModal').classList.remove('hidden');
+        }
+
+        function closeCampaignDetailsModal() {
+            document.getElementById('campaignDetailsModal').classList.add('hidden');
+        }
+
+        function editCampaign(campaignId) {
+            Utils.showToast('Kampanya düzenleme özelliği yakında eklenecek', 'info');
+        }
+
+        function launchCampaign(campaignId) {
+            const campaign = AppState.campaigns.find(c => c.id === campaignId);
+            if (!campaign) return;
+            
+            if (confirm(`${campaign.name} kampanyasını başlatmak istediğinizden emin misiniz?`)) {
+                campaign.status = 'active';
+                Storage.save('campaigns', AppState.campaigns);
+                loadCampaigns();
+                Utils.showToast('Kampanya başlatıldı', 'success');
+            }
+        }
+
+        function pauseCampaign(campaignId) {
+            const campaign = AppState.campaigns.find(c => c.id === campaignId);
+            if (!campaign) return;
+            
+            campaign.status = 'paused';
+            Storage.save('campaigns', AppState.campaigns);
+            loadCampaigns();
+            Utils.showToast('Kampanya duraklatıldı', 'info');
+        }
+
+        function resumeCampaign(campaignId) {
+            const campaign = AppState.campaigns.find(c => c.id === campaignId);
+            if (!campaign) return;
+            
+            campaign.status = 'active';
+            Storage.save('campaigns', AppState.campaigns);
+            loadCampaigns();
+            Utils.showToast('Kampanya devam ettirildi', 'success');
+        }
+
+        function duplicateCampaign(campaignId) {
+            const campaign = AppState.campaigns.find(c => c.id === campaignId);
+            if (!campaign) return;
+            
+            const duplicatedCampaign = {
+                ...campaign,
+                id: 'campaign_' + Date.now(),
+                name: campaign.name + ' (Kopya)',
+                status: 'draft',
+                createdAt: new Date().toISOString(),
+                sentCount: 0,
+                openedCount: 0,
+                clickedCount: 0,
+                openRate: 0,
+                clickRate: 0
+            };
+            
+            AppState.campaigns.push(duplicatedCampaign);
+            Storage.save('campaigns', AppState.campaigns);
+            loadCampaigns();
+            Utils.showToast('Kampanya kopyalandı', 'success');
+        }
+
+        function deleteCampaign(campaignId) {
+            const campaign = AppState.campaigns.find(c => c.id === campaignId);
+            if (!campaign) return;
+            
+            if (confirm(`${campaign.name} kampanyasını silmek istediğinizden emin misiniz?`)) {
+                AppState.campaigns = AppState.campaigns.filter(c => c.id !== campaignId);
+                Storage.save('campaigns', AppState.campaigns);
+                loadCampaigns();
+                Utils.showToast('Kampanya silindi', 'success');
+            }
+        }
+
+        function exportCampaigns() {
+            Utils.showToast('Dışa aktarma özelliği yakında eklenecek', 'info');
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
