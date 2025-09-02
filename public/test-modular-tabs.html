@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Modular Tabs - X-Ear CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="shared/module-loader.js"></script>
+    <script src="assets/js/patient-details-tab-loader.js"></script>
+    <script src="assets/widgets/tab-navigation.js"></script>
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .tab-nav-item {
+            padding: 12px 24px;
+            border-bottom: 2px solid transparent;
+            color: #6B7280;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .tab-nav-item.active {
+            color: #2563EB;
+            border-bottom-color: #2563EB;
+        }
+        .tab-nav-item:hover {
+            color: #1D4ED8;
+        }
+        .loading-spinner {
+            border: 2px solid #f3f4f6;
+            border-top: 2px solid #3B82F6;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen p-8">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">Test: Modular Tab System</h1>
+            
+            <!-- Test Tab Container -->
+            <div id="tabs-container"></div>
+            
+            <!-- Test Results -->
+            <div class="mt-8 p-4 bg-white rounded-lg shadow">
+                <h2 class="text-lg font-semibold mb-4">Test Results</h2>
+                <div id="test-results">
+                    <p class="text-gray-600">Running tests...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test function
+        async function runTests() {
+            const testResults = document.getElementById('test-results');
+            const results = [];
+            
+            try {
+                // Test 1: Check if ModuleLoader is available
+                if (typeof window.ModuleLoader !== 'undefined') {
+                    results.push('✅ ModuleLoader is available');
+                } else {
+                    results.push('❌ ModuleLoader is not available');
+                    testResults.innerHTML = results.join('<br>');
+                    return;
+                }
+                
+                // Test 2: Check if PatientDetailsTabLoader is available
+                if (typeof window.PatientDetailsTabLoader !== 'undefined') {
+                    results.push('✅ PatientDetailsTabLoader is available');
+                } else {
+                    results.push('❌ PatientDetailsTabLoader is not available');
+                }
+                
+                // Test 3: Check if TabNavigationWidget is available
+                if (typeof window.TabNavigationWidget !== 'undefined') {
+                    results.push('✅ TabNavigationWidget is available');
+                } else {
+                    results.push('❌ TabNavigationWidget is not available');
+                }
+                
+                // Test 4: Try to create tab navigation
+                if (window.TabNavigationWidget) {
+                    try {
+                        const mockPatient = { id: 'test', name: 'Test Patient' };
+                        const tabNavigation = window.TabNavigationWidget.createPatientDetailsTabs('tabs-container', mockPatient);
+                        tabNavigation.render();
+                        results.push('✅ Tab navigation created and rendered');
+                        
+                        // Test 5: Try to load a tab
+                        setTimeout(async () => {
+                            try {
+                                await tabNavigation.switchTab('general');
+                                results.push('✅ Tab switching works');
+                                testResults.innerHTML = results.join('<br>');
+                            } catch (error) {
+                                results.push('❌ Tab switching failed: ' + error.message);
+                                testResults.innerHTML = results.join('<br>');
+                            }
+                        }, 1000);
+                        
+                    } catch (error) {
+                        results.push('❌ Failed to create tab navigation: ' + error.message);
+                    }
+                } else {
+                    results.push('❌ Cannot test tab navigation - TabNavigationWidget not available');
+                }
+                
+                testResults.innerHTML = results.join('<br>');
+                
+            } catch (error) {
+                results.push('❌ Test failed with error: ' + error.message);
+                testResults.innerHTML = results.join('<br>');
+            }
+        }
+        
+        // Run tests when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(runTests, 500);
+        });
+    </script>
+</body>
+</html>

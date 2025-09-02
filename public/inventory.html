@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lan>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stok Yönetimi - X-Ear CRM</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="assets/style.css">
     <script>
         tailwind.config = {
             theme: {
@@ -21,64 +21,7 @@
 </head>
 <body class="bg-light-gray">
     <!-- Sidebar Navigation -->
-    <nav class="sidebar-nav">
-        <div class="p-6">
-            <div class="flex items-center space-x-3 mb-8">
-                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                </div>
-                <h1 class="text-xl font-bold text-gray-900">X-Ear CRM</h1>
-            </div>
-            
-            <ul class="space-y-2">
-                <li><a href="dashboard.html" class="nav-item">
-                    <svg fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
-                    </svg>
-                    Dashboard
-                </a></li>
-                <li><a href="patients.html" class="nav-item">
-                    <svg fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
-                    </svg>
-                    Hastalar
-                </a></li>
-                <li><a href="appointments.html" class="nav-item">
-                    <svg fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
-                    </svg>
-                    Randevular
-                </a></li>
-                <li><a href="inventory.html" class="nav-item active">
-                    <svg fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/>
-                    </svg>
-                    Stok
-                </a></li>
-                <li><a href="campaigns.html" class="nav-item">
-                    <svg fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-                    </svg>
-                    Kampanyalar
-                </a></li>
-                <li><a href="reports.html" class="nav-item">
-                    <svg fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
-                    </svg>
-                    Raporlar
-                </a></li>
-                <li><a href="settings.html" class="nav-item">
-                    <svg fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
-                    </svg>
-                    Ayarlar
-                </a></li>
-            </ul>
-        </div>
-    </nav>
+    <div id="sidebar-container"></div>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -107,6 +50,13 @@
                             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
                         </svg>
                         Ürün Ekle
+                    </button>
+                    
+                    <button class="btn-secondary" onclick="openBulkUploadModal()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                        Toplu Ürün Yükleme
                     </button>
                     
                     <div class="flex items-center space-x-3">
@@ -185,10 +135,10 @@
                         <label class="text-sm font-medium text-gray-700">Kategori:</label>
                         <select class="filter-select" id="categoryFilter">
                             <option value="">Tümü</option>
-                            <option value="hearing_aid">İşitme Cihazı</option>
-                            <option value="accessory">Aksesuar</option>
-                            <option value="battery">Pil</option>
-                            <option value="maintenance">Bakım</option>
+                            <option value="isitme_cihazi">İşitme Cihazı</option>
+                            <option value="aksesuar">Aksesuar</option>
+                            <option value="pil">Pil</option>
+                            <option value="bakim">Bakım</option>
                         </select>
                     </div>
                     
@@ -227,6 +177,21 @@
                         </svg>
                         Dışa Aktar
                     </button>
+                    
+                    <button class="btn-secondary" onclick="openBulkActionsModal()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a1 1 0 011-1h12a1 1 0 110 2H3a1 1 0 01-1-1z"/>
+                        </svg>
+                        Toplu İşlemler
+                    </button>
+                    
+                    <button class="btn-secondary" onclick="generateStockReport()">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 001 1h6a1 1 0 001-1V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                        </svg>
+                        Stok Raporu
+                    </button>
                 </div>
             </div>
 
@@ -239,11 +204,40 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     <input type="checkbox" id="selectAll" class="rounded border-gray-300">
                                 </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ürün</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stok</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fiyat</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onclick="sortTable('name')">
+                                    <div class="flex items-center">
+                                        Ürün
+                                        <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M5 12a1 1 0 102 0V6.414l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L5 6.414V12zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z"/>
+                                        </svg>
+                                    </div>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onclick="sortTable('category')">
+                                    <div class="flex items-center">
+                                        Kategori
+                                        <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M5 12a1 1 0 102 0V6.414l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L5 6.414V12zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z"/>
+                                        </svg>
+                                    </div>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onclick="sortTable('stock')">
+                                    <div class="flex items-center">
+                                        Stok
+                                        <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M5 12a1 1 0 102 0V6.414l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L5 6.414V12zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z"/>
+                                        </svg>
+                                    </div>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onclick="sortTable('price')">
+                                    <div class="flex items-center">
+                                        Fiyat
+                                        <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M5 12a1 1 0 102 0V6.414l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L5 6.414V12zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z"/>
+                                        </svg>
+                                    </div>
+                                </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durum</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Son Güncelleme</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
                             </tr>
                         </thead>
@@ -257,8 +251,8 @@
     </main>
 
     <!-- Add Item Modal -->
-    <div id="addItemModal" class="modal hidden">
-        <div class="modal-content">
+    <div id="addItemModal" class="modal-overlay hidden">
+    <div class="modal-container">
             <div class="modal-header">
                 <h3 class="modal-title">Yeni Ürün Ekle</h3>
                 <button class="modal-close" onclick="closeAddItemModal()">
@@ -297,16 +291,21 @@
                         <label class="form-label">Kategori *</label>
                         <select class="form-input" id="itemCategory" required>
                             <option value="">Kategori seçin</option>
-                            <option value="hearing_aid">İşitme Cihazı</option>
-                            <option value="accessory">Aksesuar</option>
-                            <option value="battery">Pil</option>
-                            <option value="maintenance">Bakım</option>
+                            <option value="isitme_cihazi">İşitme Cihazı</option>
+                            <option value="aksesuar">Aksesuar</option>
+                            <option value="pil">Pil</option>
+                            <option value="bakim">Bakım</option>
                         </select>
                     </div>
                     
                     <div>
                         <label class="form-label">Seri Numarası</label>
                         <input type="text" class="form-input" id="itemSerial" placeholder="Seri numarasını girin">
+                    </div>
+                    
+                    <div>
+                        <label class="form-label">Barkod No</label>
+                        <input type="text" class="form-input" id="itemBarcode" placeholder="Barkod numarasını girin">
                     </div>
                     
                     <div>
@@ -349,8 +348,8 @@
     </div>
 
     <!-- Stock Update Modal -->
-    <div id="stockUpdateModal" class="modal hidden">
-        <div class="modal-content">
+    <div id="stockUpdateModal" class="modal-overlay hidden">
+    <div class="modal-container">
             <div class="modal-header">
                 <h3 class="modal-title">Stok Güncelle</h3>
                 <button class="modal-close" onclick="closeStockUpdateModal()">
@@ -396,18 +395,258 @@
         </div>
     </div>
 
-    <script src="../assets/app.js"></script>
-    <script src="../assets/data.js"></script>
+    <!-- Bulk Actions Modal -->
+    <div id="bulkActionsModal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">Toplu İşlemler</h3>
+                <button class="modal-close" onclick="closeBulkActionsModal()">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="modal-body space-y-4">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <p class="text-sm text-blue-800">
+                        <span id="selectedItemsCount">0</span> ürün seçildi
+                    </p>
+                </div>
+                
+                <div class="space-y-3">
+                    <button class="w-full btn-secondary text-left" onclick="bulkUpdateCategory()">
+                        <svg class="w-4 h-4 mr-2 inline" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a1 1 0 011-1h12a1 1 0 110 2H3a1 1 0 01-1-1z"/>
+                        </svg>
+                        Kategori Güncelle
+                    </button>
+                    
+                    <button class="w-full btn-secondary text-left" onclick="bulkUpdatePrice()">
+                        <svg class="w-4 h-4 mr-2 inline" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                        </svg>
+                        Fiyat Güncelle
+                    </button>
+                    
+                    <button class="w-full btn-secondary text-left" onclick="bulkUpdateSupplier()">
+                        <svg class="w-4 h-4 mr-2 inline" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Tedarikçi Güncelle
+                    </button>
+                    
+                    <button class="w-full btn-danger text-left" onclick="bulkDeleteItems()">
+                        <svg class="w-4 h-4 mr-2 inline" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd"/>
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L7.586 12l-1.293 1.293a1 1 0 101.414 1.414L9 13.414l2.293 2.293a1 1 0 001.414-1.414L11.414 12l1.293-1.293z" clip-rule="evenodd"/>
+                        </svg>
+                        Seçili Ürünleri Sil
+                    </button>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeBulkActionsModal()">İptal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stock Report Modal -->
+    <div id="stockReportModal" class="modal-overlay hidden">
+        <div class="modal-container max-w-4xl">
+            <div class="modal-header">
+                <h3 class="modal-title">Stok Raporu</h3>
+                <button class="modal-close" onclick="closeStockReportModal()">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-blue-50 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-blue-800" id="reportTotalItems">0</div>
+                        <div class="text-sm text-blue-600">Toplam Ürün Çeşidi</div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-green-800" id="reportTotalValue">₺0</div>
+                        <div class="text-sm text-green-600">Toplam Stok Değeri</div>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-red-800" id="reportLowStockItems">0</div>
+                        <div class="text-sm text-red-600">Düşük Stok Ürünü</div>
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Kategori Bazında Dağılım</h4>
+                        <div id="categoryDistribution" class="space-y-2"></div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Marka Bazında Dağılım</h4>
+                        <div id="brandDistribution" class="space-y-2"></div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Düşük Stok Uyarıları</h4>
+                        <div id="lowStockWarnings" class="space-y-2"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeStockReportModal()">Kapat</button>
+                <button type="button" class="btn-primary" onclick="exportStockReport()">Raporu İndir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk Upload Modal -->
+    <div id="bulkUploadModal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">Toplu Ürün Yükleme</h3>
+                <button class="modal-close" onclick="closeBulkUploadModal()">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="modal-body space-y-6">
+                <!-- Instructions -->
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div class="flex items-start space-x-3">
+                        <svg class="w-5 h-5 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                        </svg>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-medium text-blue-900 mb-2">Nasıl Kullanılır?</h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li>1. Önce örnek dosyayı indirin</li>
+                                <li>2. Excel/CSV dosyasını doldurun</li>
+                                <li>3. Dosyayı yükleyin ve verileri kontrol edin</li>
+                                <li>4. Onaylayın ve ürünleri sisteme ekleyin</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sample File Download -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2 bg-green-100 rounded-lg">
+                                <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-900">Örnek Dosya</h4>
+                                <p class="text-sm text-gray-500">Doğru format için örnek Excel dosyasını indirin</p>
+                            </div>
+                        </div>
+                        <button class="btn-secondary" onclick="downloadSampleFile()">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                            Örnek Dosyayı İndir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- File Upload -->
+                <div class="space-y-4">
+                    <label class="form-label">Excel/CSV Dosyası Yükle</label>
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
+                        <input type="file" id="bulkUploadFile" accept=".xlsx,.xls,.csv" class="hidden" onchange="handleFileSelect(event)">
+                        <label for="bulkUploadFile" class="cursor-pointer">
+                            <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"/>
+                            </svg>
+                            <p class="text-sm text-gray-600">
+                                <span class="font-medium text-primary">Dosya seçmek için tıklayın</span> veya sürükleyin
+                            </p>
+                            <p class="text-xs text-gray-500 mt-2">Excel (.xlsx, .xls) veya CSV dosyası</p>
+                        </label>
+                    </div>
+                    
+                    <!-- Selected file info -->
+                    <div id="selectedFileInfo" class="hidden bg-green-50 border border-green-200 rounded-lg p-3">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-sm text-green-800" id="selectedFileName">Dosya seçildi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview area (will be populated after file upload) -->
+                <div id="uploadPreview" class="hidden space-y-4">
+                    <div class="border-t pt-4">
+                        <h4 class="text-sm font-medium text-gray-900 mb-3">Önizleme (İlk 5 satır)</h4>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full border border-gray-200 rounded-lg">
+                                <thead id="previewTableHead" class="bg-gray-50">
+                                    <!-- Preview headers will be populated here -->
+                                </thead>
+                                <tbody id="previewTableBody" class="bg-white">
+                                    <!-- Preview rows will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">
+                            Toplam <span id="totalRowsCount">0</span> satır bulundu
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeBulkUploadModal()">İptal</button>
+                <button type="button" class="btn-primary" onclick="processBulkUpload()" id="uploadBtn" disabled>
+                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                    Ürünleri Yükle
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/category-helper.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/data.js"></script>
+    <script src="assets/widgets/sidebar.js"></script>
+    <script>
+        // Initialize sidebar widget
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarContainer = document.getElementById('sidebar-container');
+            if (sidebarContainer && typeof SidebarWidget !== 'undefined') {
+                const sidebar = new SidebarWidget('inventory');
+                sidebarContainer.innerHTML = sidebar.render();
+            }
+        });
+    </script>
     <script>
         let filteredInventory = [];
         let selectedItems = new Set();
         let currentEditingItem = null;
+        let currentSortField = null;
+        let currentSortDirection = 'asc';
 
         function initPage() {
             loadInventory();
             setupFilters();
             setupForms();
             updateStats();
+            setupTableSorting();
         }
 
         function loadInventory() {
@@ -429,6 +668,63 @@
         function setupForms() {
             document.getElementById('addItemForm').addEventListener('submit', handleAddItem);
             document.getElementById('stockUpdateForm').addEventListener('submit', handleStockUpdate);
+        }
+
+        function setupTableSorting() {
+            // Add sorting indicators
+            updateSortIndicators();
+        }
+
+        function sortTable(field) {
+            if (currentSortField === field) {
+                currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSortField = field;
+                currentSortDirection = 'asc';
+            }
+
+            filteredInventory.sort((a, b) => {
+                let aVal = a[field];
+                let bVal = b[field];
+
+                // Handle different data types
+                if (field === 'price' || field === 'stock') {
+                    aVal = Number(aVal);
+                    bVal = Number(bVal);
+                } else if (typeof aVal === 'string') {
+                    aVal = aVal.toLowerCase();
+                    bVal = bVal.toLowerCase();
+                }
+
+                if (currentSortDirection === 'asc') {
+                    return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+                } else {
+                    return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+                }
+            });
+
+            renderInventory();
+            updateSortIndicators();
+        }
+
+        function updateSortIndicators() {
+            // Update sort arrows in headers
+            document.querySelectorAll('th[onclick]').forEach(th => {
+                const svg = th.querySelector('svg');
+                if (svg) {
+                    svg.classList.remove('text-blue-500');
+                }
+            });
+
+            if (currentSortField) {
+                const header = document.querySelector(`th[onclick="sortTable('${currentSortField}')"]`);
+                if (header) {
+                    const svg = header.querySelector('svg');
+                    if (svg) {
+                        svg.classList.add('text-blue-500');
+                    }
+                }
+            }
         }
 
         function applyFilters() {
@@ -467,7 +763,7 @@
             if (filteredInventory.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="7" class="px-6 py-8 text-center">
+                        <td colspan="8" class="px-6 py-8 text-center">
                             <div class="flex flex-col items-center">
                                 <svg class="w-12 h-12 text-gray-300 mb-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/>
@@ -505,6 +801,8 @@
                     stockText = `${item.onTrial} Denemede`;
                 }
                 
+                const lastUpdated = item.lastUpdated ? Utils.formatDate(item.lastUpdated) : 'Bilinmiyor';
+                
                 return `
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -513,16 +811,18 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div>
-                                <div class="text-sm font-medium text-gray-900">${item.name}</div>
+                                <div class="text-sm font-medium text-gray-900">
+                                    <a href="product-details.html?id=${item.id}" class="text-primary hover:text-primary-700 hover:underline cursor-pointer transition-colors">${item.name}</a>
+                                </div>
                                 <div class="text-sm text-gray-500">${item.brand}${item.model ? ` ${item.model}` : ''}</div>
                                 ${item.serialNumber ? `<div class="text-xs text-gray-400">SN: ${item.serialNumber}</div>` : ''}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 py-1 text-xs font-medium rounded-full ${
-                                item.category === 'hearing_aid' ? 'bg-blue-100 text-blue-800' :
-                                item.category === 'accessory' ? 'bg-green-100 text-green-800' :
-                                item.category === 'battery' ? 'bg-yellow-100 text-yellow-800' :
+                                item.category === 'isitme_cihazi' ? 'bg-blue-100 text-blue-800' :
+                                item.category === 'aksesuar' ? 'bg-green-100 text-green-800' :
+                                item.category === 'pil' ? 'bg-yellow-100 text-yellow-800' :
                                 'bg-purple-100 text-purple-800'
                             }">
                                 ${getCategoryText(item.category)}
@@ -531,12 +831,16 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">${item.stock}</div>
                             ${item.minStock ? `<div class="text-xs text-gray-500">Min: ${item.minStock}</div>` : ''}
+                            ${item.onTrial > 0 ? `<div class="text-xs text-orange-600">${item.onTrial} denemede</div>` : ''}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">${Utils.formatCurrency(item.price)}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="status-badge ${stockBadgeClass}">${stockText}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${lastUpdated}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <div class="flex items-center space-x-2">
@@ -549,6 +853,13 @@
                                 <button class="btn-icon" onclick="editItem('${item.id}')" title="Düzenle">
                                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                                    </svg>
+                                </button>
+                                
+                                <button class="btn-icon" onclick="viewItemDetails('${item.id}')" title="Detaylar">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
                                     </svg>
                                 </button>
                                 
@@ -572,10 +883,10 @@
 
         function getCategoryText(category) {
             const categoryMap = {
-                'hearing_aid': 'İşitme Cihazı',
-                'accessory': 'Aksesuar',
-                'battery': 'Pil',
-                'maintenance': 'Bakım'
+                'isitme_cihazi': 'İşitme Cihazı',
+                'aksesuar': 'Aksesuar',
+                'pil': 'Pil',
+                'bakim': 'Bakım'
             };
             return categoryMap[category] || category;
         }
@@ -610,6 +921,8 @@
                     selectedItems.delete(checkbox.value);
                 }
             });
+            
+            updateBulkActionsButton();
         }
 
         function handleItemSelection(e) {
@@ -627,8 +940,295 @@
             
             selectAll.checked = checkedCount === checkboxes.length;
             selectAll.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
+            
+            updateBulkActionsButton();
         }
 
+        function updateBulkActionsButton() {
+            // Enable/disable bulk actions button based on selection
+            const bulkButton = document.querySelector('button[onclick="openBulkActionsModal()"]');
+            if (bulkButton) {
+                bulkButton.disabled = selectedItems.size === 0;
+                bulkButton.classList.toggle('opacity-50', selectedItems.size === 0);
+            }
+        }
+
+        // Enhanced Functions
+        function openBulkActionsModal() {
+            if (selectedItems.size === 0) {
+                Utils.showToast('Lütfen işlem yapmak için ürün seçin', 'warning');
+                return;
+            }
+            
+            document.getElementById('selectedItemsCount').textContent = selectedItems.size;
+            document.getElementById('bulkActionsModal').classList.remove('hidden');
+        }
+
+        function closeBulkActionsModal() {
+            document.getElementById('bulkActionsModal').classList.add('hidden');
+        }
+
+        function generateStockReport() {
+            // Calculate report data
+            const totalItems = AppState.inventory.length;
+            const totalValue = AppState.inventory.reduce((sum, item) => sum + (item.stock * item.price), 0);
+            const lowStockItems = AppState.inventory.filter(item => item.stock <= (item.minStock || 5) && item.stock > 0).length;
+
+            // Update report modal
+            document.getElementById('reportTotalItems').textContent = totalItems;
+            document.getElementById('reportTotalValue').textContent = Utils.formatCurrency(totalValue);
+            document.getElementById('reportLowStockItems').textContent = lowStockItems;
+
+            // Category distribution
+            const categoryStats = {};
+            AppState.inventory.forEach(item => {
+                const category = getCategoryText(item.category);
+                if (!categoryStats[category]) {
+                    categoryStats[category] = { count: 0, value: 0 };
+                }
+                categoryStats[category].count++;
+                categoryStats[category].value += item.stock * item.price;
+            });
+
+            const categoryHtml = Object.entries(categoryStats).map(([category, stats]) => `
+                <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                    <span class="font-medium">${category}</span>
+                    <div class="text-right">
+                        <div class="text-sm">${stats.count} ürün</div>
+                        <div class="text-xs text-gray-600">${Utils.formatCurrency(stats.value)}</div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('categoryDistribution').innerHTML = categoryHtml;
+
+            // Brand distribution
+            const brandStats = {};
+            AppState.inventory.forEach(item => {
+                if (!brandStats[item.brand]) {
+                    brandStats[item.brand] = { count: 0, value: 0 };
+                }
+                brandStats[item.brand].count++;
+                brandStats[item.brand].value += item.stock * item.price;
+            });
+
+            const brandHtml = Object.entries(brandStats).map(([brand, stats]) => `
+                <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                    <span class="font-medium">${brand}</span>
+                    <div class="text-right">
+                        <div class="text-sm">${stats.count} ürün</div>
+                        <div class="text-xs text-gray-600">${Utils.formatCurrency(stats.value)}</div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('brandDistribution').innerHTML = brandHtml;
+
+            // Low stock warnings
+            const lowStockProducts = AppState.inventory.filter(item => item.stock <= (item.minStock || 5));
+            const warningsHtml = lowStockProducts.length > 0 ? lowStockProducts.map(item => `
+                <div class="flex justify-between items-center p-2 bg-red-50 rounded border border-red-200">
+                    <div>
+                        <div class="font-medium text-red-800">${item.name}</div>
+                        <div class="text-sm text-red-600">${item.brand} ${item.model}</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm font-semibold text-red-800">${item.stock} adet</div>
+                        <div class="text-xs text-red-600">Min: ${item.minStock || 5}</div>
+                    </div>
+                </div>
+            `).join('') : '<p class="text-gray-500 text-center py-4">Düşük stoklu ürün bulunmuyor</p>';
+            document.getElementById('lowStockWarnings').innerHTML = warningsHtml;
+
+            document.getElementById('stockReportModal').classList.remove('hidden');
+        }
+
+        function closeStockReportModal() {
+            document.getElementById('stockReportModal').classList.add('hidden');
+        }
+
+        function exportStockReport() {
+            // Generate CSV data
+            const headers = ['Ürün Adı', 'Marka', 'Model', 'Kategori', 'Stok', 'Min Stok', 'Fiyat', 'Toplam Değer', 'Durum'];
+            const csvContent = [
+                headers.join(','),
+                ...AppState.inventory.map(item => {
+                    const status = item.stock === 0 ? 'Tükendi' : 
+                                 item.stock <= (item.minStock || 5) ? 'Düşük Stok' : 'Stokta';
+                    return [
+                        `"${item.name}"`,
+                        `"${item.brand}"`,
+                        `"${item.model || ''}"`,
+                        `"${getCategoryText(item.category)}"`,
+                        item.stock,
+                        item.minStock || 5,
+                        item.price,
+                        item.stock * item.price,
+                        `"${status}"`
+                    ].join(',');
+                })
+            ].join('\n');
+
+            // Create and download file
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `stok_raporu_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+
+            Utils.showToast('Stok raporu indirildi', 'success');
+        }
+
+        // Bulk operations
+        function bulkUpdateCategory() {
+            const newCategory = prompt('Yeni kategori seçin:\n1. hearing_aid (İşitme Cihazı)\n2. accessory (Aksesuar)\n3. battery (Pil)\n4. maintenance (Bakım)');
+            if (newCategory && ['hearing_aid', 'accessory', 'battery', 'maintenance'].includes(newCategory)) {
+                selectedItems.forEach(itemId => {
+                    const item = AppState.inventory.find(i => i.id === itemId);
+                    if (item) {
+                        item.category = newCategory;
+                        item.lastUpdated = new Date().toISOString();
+                    }
+                });
+                Storage.save('inventory', AppState.inventory);
+                loadInventory();
+                Utils.showToast(`${selectedItems.size} ürünün kategorisi güncellendi`, 'success');
+                closeBulkActionsModal();
+            }
+        }
+
+        function bulkUpdatePrice() {
+            const multiplier = prompt('Fiyat çarpanı girin (örn: 1.1 = %10 artış, 0.9 = %10 indirim):');
+            if (multiplier && !isNaN(multiplier) && multiplier > 0) {
+                selectedItems.forEach(itemId => {
+                    const item = AppState.inventory.find(i => i.id === itemId);
+                    if (item) {
+                        item.price = Math.round(item.price * parseFloat(multiplier));
+                        item.lastUpdated = new Date().toISOString();
+                    }
+                });
+                Storage.save('inventory', AppState.inventory);
+                loadInventory();
+                Utils.showToast(`${selectedItems.size} ürünün fiyatı güncellendi`, 'success');
+                closeBulkActionsModal();
+            }
+        }
+
+        function bulkUpdateSupplier() {
+            const newSupplier = prompt('Yeni tedarikçi adını girin:');
+            if (newSupplier && newSupplier.trim()) {
+                selectedItems.forEach(itemId => {
+                    const item = AppState.inventory.find(i => i.id === itemId);
+                    if (item) {
+                        item.supplier = newSupplier.trim();
+                        item.lastUpdated = new Date().toISOString();
+                    }
+                });
+                Storage.save('inventory', AppState.inventory);
+                loadInventory();
+                Utils.showToast(`${selectedItems.size} ürünün tedarikçisi güncellendi`, 'success');
+                closeBulkActionsModal();
+            }
+        }
+
+        function bulkDeleteItems() {
+            if (confirm(`Seçili ${selectedItems.size} ürünü silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.`)) {
+                selectedItems.forEach(itemId => {
+                    const index = AppState.inventory.findIndex(i => i.id === itemId);
+                    if (index !== -1) {
+                        AppState.inventory.splice(index, 1);
+                    }
+                });
+                Storage.save('inventory', AppState.inventory);
+                selectedItems.clear();
+                loadInventory();
+                Utils.showToast('Seçili ürünler silindi', 'success');
+                closeBulkActionsModal();
+            }
+        }
+
+        function viewItemDetails(itemId) {
+            const item = AppState.inventory.find(i => i.id === itemId);
+            if (!item) return;
+
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-container max-w-2xl">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Ürün Detayları</h3>
+                        <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="modal-body space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Ürün Adı</label>
+                                <p class="text-gray-900">${item.name}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Marka & Model</label>
+                                <p class="text-gray-900">${item.brand} ${item.model || ''}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Kategori</label>
+                                <p class="text-gray-900">${getCategoryText(item.category)}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Seri Numarası</label>
+                                <p class="text-gray-900">${item.serialNumber || 'Belirtilmemiş'}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Stok Durumu</label>
+                                <p class="text-gray-900">${item.stock} adet (Min: ${item.minStock || 5})</p>
+                                ${item.onTrial > 0 ? `<p class="text-orange-600 text-sm">${item.onTrial} adet denemede</p>` : ''}
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Fiyat</label>
+                                <p class="text-gray-900">${Utils.formatCurrency(item.price)}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Tedarikçi</label>
+                                <p class="text-gray-900">${item.supplier || 'Belirtilmemiş'}</p>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Garanti Süresi</label>
+                                <p class="text-gray-900">${item.warranty || 0} ay</p>
+                            </div>
+                        </div>
+                        
+                        ${item.description ? `
+                            <div>
+                                <label class="text-sm font-medium text-gray-700">Açıklama</label>
+                                <p class="text-gray-900">${item.description}</p>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
+                            <div>
+                                <label class="font-medium">Oluşturulma Tarihi</label>
+                                <p>${Utils.formatDate(item.createdAt)}</p>
+                            </div>
+                            <div>
+                                <label class="font-medium">Son Güncelleme</label>
+                                <p>${Utils.formatDate(item.lastUpdated)}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">Kapat</button>
+                        <button class="btn-primary" onclick="editItem('${item.id}'); this.closest('.modal-overlay').remove()">Düzenle</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        // Rest of the existing functions remain the same...
         function clearFilters() {
             document.getElementById('searchInput').value = '';
             document.getElementById('categoryFilter').value = '';
@@ -655,6 +1255,7 @@
                 model: document.getElementById('itemModel').value,
                 category: document.getElementById('itemCategory').value,
                 serialNumber: document.getElementById('itemSerial').value,
+                barcode: document.getElementById('itemBarcode').value,
                 stock: parseInt(document.getElementById('itemStock').value),
                 minStock: parseInt(document.getElementById('itemMinStock').value) || 5,
                 price: parseFloat(document.getElementById('itemPrice').value),
@@ -662,7 +1263,8 @@
                 warranty: parseInt(document.getElementById('itemWarranty').value) || 0,
                 description: document.getElementById('itemDescription').value,
                 onTrial: 0,
-                createdAt: new Date().toISOString()
+                createdAt: new Date().toISOString(),
+                lastUpdated: new Date().toISOString()
             };
             
             // Add to inventory
@@ -723,6 +1325,7 @@
             
             // Update item
             currentEditingItem.stock = newStock;
+            currentEditingItem.lastUpdated = new Date().toISOString();
             
             // Save to storage
             Storage.save('inventory', AppState.inventory);
@@ -734,7 +1337,7 @@
         }
 
         function editItem(itemId) {
-            Utils.showToast('Ürün düzenleme özelliği yakında eklenecek', 'info');
+            window.location.href = `product-details.html?id=${itemId}`;
         }
 
         function deleteItem(itemId) {
@@ -750,7 +1353,260 @@
         }
 
         function exportInventory() {
-            Utils.showToast('Dışa aktarma özelliği yakında eklenecek', 'info');
+            const headers = ['ID', 'Ürün Adı', 'Marka', 'Model', 'Kategori', 'Seri No', 'Stok', 'Min Stok', 'Fiyat', 'Tedarikçi', 'Açıklama'];
+            const csvContent = [
+                headers.join(','),
+                ...AppState.inventory.map(item => [
+                    item.id,
+                    `"${item.name}"`,
+                    `"${item.brand}"`,
+                    `"${item.model || ''}"`,
+                    `"${getCategoryText(item.category)}"`,
+                    `"${item.serialNumber || ''}"`,
+                    item.stock,
+                    item.minStock || 5,
+                    item.price,
+                    `"${item.supplier || ''}"`,
+                    `"${item.description || ''}"`
+                ].join(','))
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `envanter_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+
+            Utils.showToast('Envanter listesi indirildi', 'success');
+        }
+
+        // Bulk Upload Functions
+        function openBulkUploadModal() {
+            document.getElementById('bulkUploadModal').classList.remove('hidden');
+        }
+
+        function closeBulkUploadModal() {
+            document.getElementById('bulkUploadModal').classList.add('hidden');
+            // Reset form
+            document.getElementById('bulkUploadFile').value = '';
+            document.getElementById('selectedFileInfo').classList.add('hidden');
+            document.getElementById('uploadPreview').classList.add('hidden');
+            document.getElementById('uploadBtn').disabled = true;
+        }
+
+        function downloadSampleFile() {
+            // Create sample data for Excel file
+            const sampleData = [
+                ['Ürün Adı', 'Marka', 'Model', 'Kategori', 'Seri No', 'Barkod No', 'Stok', 'Min Stok', 'Fiyat', 'Tedarikçi', 'Garanti (Ay)', 'Açıklama'],
+                ['Phonak Audéo Paradise P90', 'Phonak', 'Audéo Paradise P90', 'isitme_cihazi', 'PH001', '1234567890123', '5', '2', '15000', 'Phonak Türkiye', '24', 'Premium işitme cihazı'],
+                ['Oticon More 1', 'Oticon', 'More 1', 'isitme_cihazi', 'OT001', '1234567890124', '3', '1', '18000', 'Oticon Türkiye', '24', 'Yapay zeka destekli'],
+                ['PowerOne Pil 312', 'PowerOne', '312', 'pil', 'PO312', '1234567890125', '100', '20', '5', 'PowerOne', '0', 'İşitme cihazı pili'],
+                ['Wax Guard Filtresi', 'Universal', 'WG-001', 'aksesuar', 'UNI001', '1234567890126', '50', '10', '25', 'Universal', '0', 'Kulak kiri koruma filtresi']
+            ];
+
+            // Convert to CSV format
+            const csvContent = sampleData.map(row => 
+                row.map(field => `"${field}"`).join(',')
+            ).join('\n');
+
+            // Create and download file
+            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'stok_yuklemesi_ornek.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            Utils.showToast('Örnek dosya indirildi', 'success');
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Show selected file info
+            document.getElementById('selectedFileName').textContent = file.name;
+            document.getElementById('selectedFileInfo').classList.remove('hidden');
+
+            // Read file
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    let data;
+                    if (file.name.endsWith('.csv')) {
+                        data = parseCSV(e.target.result);
+                    } else {
+                        // For Excel files, you would need a library like xlsx
+                        Utils.showToast('Excel dosyaları için CSV formatını kullanın', 'warning');
+                        return;
+                    }
+                    
+                    displayPreview(data);
+                    document.getElementById('uploadBtn').disabled = false;
+                } catch (error) {
+                    Utils.showToast('Dosya okuma hatası: ' + error.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n').filter(line => line.trim());
+            const data = [];
+            
+            for (let line of lines) {
+                // Simple CSV parser - handles quoted fields
+                const row = [];
+                let current = '';
+                let inQuotes = false;
+                
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === ',' && !inQuotes) {
+                        row.push(current.trim());
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                row.push(current.trim());
+                data.push(row);
+            }
+            
+            return data;
+        }
+
+        function displayPreview(data) {
+            if (data.length === 0) return;
+
+            const preview = document.getElementById('uploadPreview');
+            const head = document.getElementById('previewTableHead');
+            const body = document.getElementById('previewTableBody');
+            const totalRows = document.getElementById('totalRowsCount');
+
+            // Clear previous content
+            head.innerHTML = '';
+            body.innerHTML = '';
+
+            // Create header
+            const headerRow = document.createElement('tr');
+            data[0].forEach(header => {
+                const th = document.createElement('th');
+                th.className = 'px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b';
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+            head.appendChild(headerRow);
+
+            // Create preview rows (first 5 data rows)
+            const previewRows = data.slice(1, 6);
+            previewRows.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.className = 'px-3 py-2 text-sm text-gray-900 border-b';
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                body.appendChild(tr);
+            });
+
+            totalRows.textContent = data.length - 1; // Exclude header row
+            preview.classList.remove('hidden');
+            
+            // Store data for processing
+            window.bulkUploadData = data;
+        }
+
+        function processBulkUpload() {
+            if (!window.bulkUploadData || window.bulkUploadData.length < 2) {
+                Utils.showToast('Yüklenecek veri bulunamadı', 'error');
+                return;
+            }
+
+            const data = window.bulkUploadData;
+            const headers = data[0];
+            const rows = data.slice(1);
+            
+            // Map headers to expected fields
+            const fieldMapping = {
+                'Ürün Adı': 'name',
+                'Marka': 'brand',
+                'Model': 'model',
+                'Kategori': 'category',
+                'Seri No': 'serialNumber',
+                'Barkod No': 'barcode',
+                'Stok': 'stock',
+                'Min Stok': 'minStock',
+                'Fiyat': 'price',
+                'Tedarikçi': 'supplier',
+                'Garanti (Ay)': 'warranty',
+                'Açıklama': 'description'
+            };
+
+            let successCount = 0;
+            let errorCount = 0;
+            const errors = [];
+
+            rows.forEach((row, index) => {
+                try {
+                    const item = {};
+                    headers.forEach((header, i) => {
+                        const fieldName = fieldMapping[header];
+                        if (fieldName) {
+                            let value = row[i] || '';
+                            
+                            // Convert data types
+                            if (['stock', 'minStock', 'warranty'].includes(fieldName)) {
+                                value = parseInt(value) || 0;
+                            } else if (fieldName === 'price') {
+                                value = parseFloat(value) || 0;
+                            }
+                            
+                            item[fieldName] = value;
+                        }
+                    });
+
+                    // Validate required fields
+                    if (!item.name || !item.brand || !item.category || !item.price) {
+                        throw new Error(`Satır ${index + 2}: Zorunlu alanlar eksik`);
+                    }
+
+                    // Add system fields
+                    const newItem = {
+                        id: 'bulk_' + Date.now() + '_' + index,
+                        ...item,
+                        onTrial: 0,
+                        createdAt: new Date().toISOString(),
+                        lastUpdated: new Date().toISOString()
+                    };
+
+                    AppState.inventory.push(newItem);
+                    successCount++;
+                } catch (error) {
+                    errorCount++;
+                    errors.push(error.message);
+                }
+            });
+
+            // Save to storage
+            Storage.save('inventory', AppState.inventory);
+
+            // Show results
+            if (successCount > 0) {
+                Utils.showToast(`${successCount} ürün başarıyla eklendi`, 'success');
+                loadInventory();
+                updateStats();
+            }
+
+            if (errorCount > 0) {
+                Utils.showToast(`${errorCount} ürün eklenemedi. Hatalar: ${errors.slice(0, 3).join(', ')}`, 'warning');
+            }
+
+            closeBulkUploadModal();
         }
 
         // Initialize page

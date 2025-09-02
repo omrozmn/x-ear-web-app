@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otomasyon Durumu - X-Ear CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#64748b'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .automation-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .automation-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .status-active {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-white shadow-lg z-40">
+        <div class="p-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">XE</span>
+                </div>
+                <span class="text-xl font-bold text-gray-800">X-Ear CRM</span>
+            </div>
+        </div>
+        
+        <nav class="mt-8">
+            <a href="dashboard.html" class="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-50 hover:text-primary transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                </svg>
+                Dashboard
+            </a>
+            <a href="patients.html" class="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-50 hover:text-primary transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                </svg>
+                Hastalar
+            </a>
+            <a href="automation.html" class="flex items-center px-6 py-3 bg-primary text-white rounded-r-lg mr-2">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                Otomasyon
+            </a>
+            <a href="settings.html" class="flex items-center px-6 py-3 text-gray-600 hover:bg-gray-50 hover:text-primary transition-colors">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                Ayarlar
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="ml-64 p-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">Otomasyon Durumu</h1>
+                    <p class="text-gray-600 mt-1">Otomatik iş akışlarının gerçek zamanlı durumu</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-green-500 rounded-full status-active"></div>
+                        <span class="text-sm text-green-600 font-medium">Sistem Aktif</span>
+                    </div>
+                    <button onclick="refreshAutomationStatus()" class="btn-primary">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        Yenile
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-blue-100 rounded-lg">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Aktif Kurallar</p>
+                        <p class="text-2xl font-semibold text-gray-900" id="activeRulesCount">6</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-green-100 rounded-lg">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Bugün Çalışan</p>
+                        <p class="text-2xl font-semibold text-gray-900" id="todayExecutions">23</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-yellow-100 rounded-lg">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">SMS Gönderildi</p>
+                        <p class="text-2xl font-semibold text-gray-900" id="smsSentCount">8</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-purple-100 rounded-lg">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Görev Oluşturuldu</p>
+                        <p class="text-2xl font-semibold text-gray-900" id="tasksCreatedCount">12</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Automation Rules Status -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-6 border-b">
+                    <h3 class="text-lg font-semibold text-gray-900">Otomasyon Kuralları</h3>
+                </div>
+                <div class="p-6">
+                    <div id="automationRulesStatus" class="space-y-4">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-6 border-b">
+                    <h3 class="text-lg font-semibold text-gray-900">Son Aktiviteler</h3>
+                </div>
+                <div class="p-6">
+                    <div id="recentActivities" class="space-y-3">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="bg-white rounded-lg shadow mb-8">
+            <div class="p-6 border-b">
+                <h3 class="text-lg font-semibold text-gray-900">Performans Metrikleri</h3>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-600" id="responseTimeMetric">2.3s</div>
+                        <div class="text-sm text-gray-600">Ortalama Yanıt Süresi</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-green-600" id="successRateMetric">98.5%</div>
+                        <div class="text-sm text-gray-600">Başarı Oranı</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-600" id="processedToday">45</div>
+                        <div class="text-sm text-gray-600">Bugün İşlenen</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Execution Log -->
+        <div class="bg-white rounded-lg shadow">
+            <div class="p-6 border-b">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-gray-900">Çalışma Geçmişi</h3>
+                    <button onclick="clearExecutionLog()" class="text-sm text-red-600 hover:text-red-800">
+                        Geçmişi Temizle
+                    </button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Zaman</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kural</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Hasta</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Durum</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Detay</th>
+                        </tr>
+                    </thead>
+                    <tbody id="executionLogTable" class="bg-white divide-y divide-gray-200">
+                        <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/data.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/automation-engine.js"></script>
+    <script src="assets/js/sgk-automation.js"></script>
+    <script src="assets/js/advanced-automation.js"></script>
+    
+    <script>
+        // Automation Status Page Controller
+        class AutomationStatusPage {
+            constructor() {
+                this.refreshInterval = null;
+                this.init();
+            }
+
+            init() {
+                this.loadAutomationStatus();
+                this.startAutoRefresh();
+            }
+
+            loadAutomationStatus() {
+                this.updateOverviewStats();
+                this.loadAutomationRules();
+                this.loadRecentActivities();
+                this.loadExecutionLog();
+                this.updatePerformanceMetrics();
+            }
+
+            updateOverviewStats() {
+                // Get stats from advanced automation
+                const activeRules = window.advancedAutomation ? advancedAutomation.getActiveRules().filter(r => r.enabled).length : 6;
+                const executionLog = window.advancedAutomation ? advancedAutomation.getRuleExecutionLog() : [];
+                
+                const today = new Date().toISOString().split('T')[0];
+                const todayExecutions = executionLog.filter(log => log.timestamp.startsWith(today)).length;
+                const smsExecutions = executionLog.filter(log => 
+                    log.timestamp.startsWith(today) && 
+                    (log.ruleName.includes('SMS') || log.ruleName.includes('Hatırlatma'))
+                ).length;
+                const taskExecutions = executionLog.filter(log => 
+                    log.timestamp.startsWith(today) && 
+                    (log.ruleName.includes('Takip') || log.ruleName.includes('Görev'))
+                ).length;
+
+                document.getElementById('activeRulesCount').textContent = activeRules;
+                document.getElementById('todayExecutions').textContent = todayExecutions;
+                document.getElementById('smsSentCount').textContent = smsExecutions;
+                document.getElementById('tasksCreatedCount').textContent = taskExecutions;
+            }
+
+            loadAutomationRules() {
+                const container = document.getElementById('automationRulesStatus');
+                
+                let rules = [];
+                if (window.advancedAutomation) {
+                    rules = advancedAutomation.getActiveRules();
+                }
+
+                if (rules.length === 0) {
+                    container.innerHTML = '<p class="text-gray-500 text-center py-4">Otomasyon kuralları yükleniyor...</p>';
+                    return;
+                }
+
+                const rulesHTML = rules.map(rule => {
+                    const statusClass = rule.enabled ? 'text-green-600 bg-green-100' : 'text-gray-600 bg-gray-100';
+                    const statusText = rule.enabled ? 'Aktif' : 'Pasif';
+                    const priorityClass = rule.priority === 'high' ? 'text-red-600' : rule.priority === 'medium' ? 'text-yellow-600' : 'text-gray-600';
+                    
+                    return `
+                        <div class="automation-card border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-medium text-gray-900">${rule.name}</h4>
+                                <div class="flex items-center space-x-2">
+                                    <span class="px-2 py-1 text-xs font-medium rounded-full ${statusClass}">
+                                        ${statusText}
+                                    </span>
+                                    <span class="text-xs ${priorityClass} font-medium uppercase">
+                                        ${rule.priority}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-600 mb-3">
+                                Tetikleyiciler: ${rule.triggers.join(', ')}
+                            </div>
+                            <div class="text-sm text-gray-600">
+                                Aksiyonlar: ${rule.actions.length} adım
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                container.innerHTML = rulesHTML;
+            }
+
+            loadRecentActivities() {
+                const container = document.getElementById('recentActivities');
+                
+                let executionLog = [];
+                if (window.advancedAutomation) {
+                    executionLog = advancedAutomation.getRuleExecutionLog();
+                }
+
+                const recentActivities = executionLog
+                    .filter(log => log.status === 'success')
+                    .slice(-10)
+                    .reverse();
+
+                if (recentActivities.length === 0) {
+                    container.innerHTML = '<p class="text-gray-500 text-center py-4">Henüz aktivite kaydı bulunmuyor.</p>';
+                    return;
+                }
+
+                const activitiesHTML = recentActivities.map(activity => {
+                    const time = new Date(activity.timestamp).toLocaleTimeString('tr-TR', { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                    });
+                    
+                    return `
+                        <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <div class="flex-1">
+                                <div class="text-sm font-medium text-gray-900">${activity.ruleName}</div>
+                                <div class="text-xs text-gray-600">
+                                    ${activity.data?.patientName || 'Sistem'} • ${time}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                container.innerHTML = activitiesHTML;
+            }
+
+            loadExecutionLog() {
+                const container = document.getElementById('executionLogTable');
+                
+                let executionLog = [];
+                if (window.advancedAutomation) {
+                    executionLog = advancedAutomation.getRuleExecutionLog();
+                }
+
+                const recentExecutions = executionLog.slice(-20).reverse();
+
+                if (recentExecutions.length === 0) {
+                    container.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                                Henüz çalışma geçmişi bulunmuyor.
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                const executionsHTML = recentExecutions.map(execution => {
+                    const time = new Date(execution.timestamp).toLocaleString('tr-TR');
+                    const statusClass = execution.status === 'success' ? 'text-green-600 bg-green-100' : 'text-red-600 bg-red-100';
+                    const statusText = execution.status === 'success' ? 'Başarılı' : 'Hata';
+                    
+                    return `
+                        <tr>
+                            <td class="px-6 py-4 text-sm text-gray-900">${time}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">${execution.ruleName}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">${execution.data?.patientName || '-'}</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 text-xs font-medium rounded-full ${statusClass}">
+                                    ${statusText}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-600">${execution.error || 'Başarıyla tamamlandı'}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+                container.innerHTML = executionsHTML;
+            }
+
+            updatePerformanceMetrics() {
+                // Calculate performance metrics
+                let executionLog = [];
+                if (window.advancedAutomation) {
+                    executionLog = advancedAutomation.getRuleExecutionLog();
+                }
+
+                const total = executionLog.length;
+                const successful = executionLog.filter(log => log.status === 'success').length;
+                const successRate = total > 0 ? ((successful / total) * 100).toFixed(1) : 100;
+                
+                const today = new Date().toISOString().split('T')[0];
+                const todayProcessed = executionLog.filter(log => log.timestamp.startsWith(today)).length;
+
+                document.getElementById('responseTimeMetric').textContent = '1.8s'; // Simulated
+                document.getElementById('successRateMetric').textContent = `${successRate}%`;
+                document.getElementById('processedToday').textContent = todayProcessed;
+            }
+
+            startAutoRefresh() {
+                // Refresh every 30 seconds
+                this.refreshInterval = setInterval(() => {
+                    this.loadAutomationStatus();
+                }, 30000);
+            }
+
+            stopAutoRefresh() {
+                if (this.refreshInterval) {
+                    clearInterval(this.refreshInterval);
+                    this.refreshInterval = null;
+                }
+            }
+        }
+
+        // Global functions
+        function refreshAutomationStatus() {
+            if (window.automationStatusPage) {
+                automationStatusPage.loadAutomationStatus();
+                Utils.showToast('Otomasyon durumu güncellendi', 'success');
+            }
+        }
+
+        function clearExecutionLog() {
+            if (confirm('Çalışma geçmişini temizlemek istediğinizden emin misiniz?')) {
+                if (window.advancedAutomation) {
+                    advancedAutomation.executionLog = [];
+                    Storage.save('automationExecutionLog', []);
+                }
+                refreshAutomationStatus();
+                Utils.showToast('Çalışma geçmişi temizlendi', 'success');
+            }
+        }
+
+        // Initialize when DOM is loaded
+        let automationStatusPage;
+        document.addEventListener('DOMContentLoaded', () => {
+            // Wait for automation systems to initialize
+            setTimeout(() => {
+                automationStatusPage = new AutomationStatusPage();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

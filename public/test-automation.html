@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otomasyon Test - X-Ear CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#64748b'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="bg-gray-50 p-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">🧪 Otomasyon Sistemi Test Paneli</h1>
+            
+            <!-- System Status -->
+            <div class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Sistem Durumu</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="border rounded-lg p-4">
+                        <h3 class="font-medium text-gray-900">Automation Engine</h3>
+                        <p id="automationEngineStatus" class="text-sm text-gray-600">Kontrol ediliyor...</p>
+                    </div>
+                    <div class="border rounded-lg p-4">
+                        <h3 class="font-medium text-gray-900">Advanced Automation</h3>
+                        <p id="advancedAutomationStatus" class="text-sm text-gray-600">Kontrol ediliyor...</p>
+                    </div>
+                    <div class="border rounded-lg p-4">
+                        <h3 class="font-medium text-gray-900">SGK Automation</h3>
+                        <p id="sgkAutomationStatus" class="text-sm text-gray-600">Kontrol ediliyor...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Actions -->
+            <div class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Test Aksiyonları</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button onclick="testPatientRegistration()" class="btn-primary text-left p-4">
+                        <h3 class="font-medium">👤 Hasta Kaydı Testi</h3>
+                        <p class="text-sm opacity-90">Yeni hasta kaydı olayını tetikle</p>
+                    </button>
+                    <button onclick="testAppointmentScheduled()" class="btn-primary text-left p-4">
+                        <h3 class="font-medium">📅 Randevu Planlama Testi</h3>
+                        <p class="text-sm opacity-90">Randevu planlama olayını tetikle</p>
+                    </button>
+                    <button onclick="testAppointmentMissed()" class="btn-primary text-left p-4">
+                        <h3 class="font-medium">❌ Randevu Kaçırma Testi</h3>
+                        <p class="text-sm opacity-90">Randevu kaçırma olayını tetikle</p>
+                    </button>
+                    <button onclick="testAppointmentCompleted()" class="btn-primary text-left p-4">
+                        <h3 class="font-medium">✅ Randevu Tamamlama Testi</h3>
+                        <p class="text-sm opacity-90">Randevu tamamlama olayını tetikle</p>
+                    </button>
+                    <button onclick="testSGKPurchase()" class="btn-primary text-left p-4">
+                        <h3 class="font-medium">🛒 SGK Satış Testi</h3>
+                        <p class="text-sm opacity-90">SGK cihaz satış olayını tetikle</p>
+                    </button>
+                    <button onclick="testPriorityCalculation()" class="btn-primary text-left p-4">
+                        <h3 class="font-medium">⚡ Öncelik Hesaplama Testi</h3>
+                        <p class="text-sm opacity-90">Hasta öncelik hesaplamasını test et</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Test Results -->
+            <div class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Test Sonuçları</h2>
+                <div id="testResults" class="bg-gray-50 rounded-lg p-4 h-64 overflow-y-auto">
+                    <p class="text-gray-600 text-sm">Test sonuçları burada görüntülenecek...</p>
+                </div>
+            </div>
+
+            <!-- Automation Rules -->
+            <div class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Aktif Otomasyon Kuralları</h2>
+                <div id="activeRulesList" class="space-y-2">
+                    <!-- Rules will be populated here -->
+                </div>
+            </div>
+
+            <!-- Clear Logs -->
+            <div class="flex space-x-4">
+                <button onclick="clearTestResults()" class="btn-secondary">
+                    🧹 Test Sonuçlarını Temizle
+                </button>
+                <button onclick="clearExecutionLogs()" class="btn-secondary">
+                    📜 Çalışma Loglarını Temizle
+                </button>
+                <button onclick="reloadAutomationSystems()" class="btn-secondary">
+                    🔄 Sistemleri Yeniden Yükle
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/data.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/automation-engine.js"></script>
+    <script src="assets/js/sgk-automation.js"></script>
+    <script src="assets/js/advanced-automation.js"></script>
+
+    <script>
+        // Test Automation System
+        class AutomationTester {
+            constructor() {
+                this.testResults = [];
+                this.init();
+            }
+
+            init() {
+                setTimeout(() => {
+                    this.checkSystemStatus();
+                    this.loadActiveRules();
+                }, 1000);
+            }
+
+            checkSystemStatus() {
+                // Check Automation Engine
+                const engineStatus = window.automationEngine ? '✅ Yüklendi ve aktif' : '❌ Yüklenmedi';
+                document.getElementById('automationEngineStatus').textContent = engineStatus;
+                document.getElementById('automationEngineStatus').className = window.automationEngine ? 'text-sm text-green-600' : 'text-sm text-red-600';
+
+                // Check Advanced Automation
+                const advancedStatus = window.advancedAutomation ? '✅ Yüklendi ve aktif' : '❌ Yüklenmedi';
+                document.getElementById('advancedAutomationStatus').textContent = advancedStatus;
+                document.getElementById('advancedAutomationStatus').className = window.advancedAutomation ? 'text-sm text-green-600' : 'text-sm text-red-600';
+
+                // Check SGK Automation
+                const sgkStatus = window.sgkAutomation ? '✅ Yüklendi ve aktif' : '❌ Yüklenmedi';
+                document.getElementById('sgkAutomationStatus').textContent = sgkStatus;
+                document.getElementById('sgkAutomationStatus').className = window.sgkAutomation ? 'text-sm text-green-600' : 'text-sm text-red-600';
+            }
+
+            loadActiveRules() {
+                const container = document.getElementById('activeRulesList');
+                
+                if (window.advancedAutomation) {
+                    const rules = advancedAutomation.getActiveRules();
+                    if (rules.length > 0) {
+                        container.innerHTML = rules.map(rule => `
+                            <div class="flex items-center justify-between p-3 bg-white border rounded-lg">
+                                <div>
+                                    <h4 class="font-medium text-gray-900">${rule.name}</h4>
+                                    <p class="text-sm text-gray-600">${rule.description}</p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="px-2 py-1 text-xs font-medium rounded-full ${rule.enabled ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+                                        ${rule.enabled ? 'Aktif' : 'Pasif'}
+                                    </span>
+                                    <span class="text-xs text-gray-500">${rule.priority}</span>
+                                </div>
+                            </div>
+                        `).join('');
+                    } else {
+                        container.innerHTML = '<p class="text-gray-600 text-sm">Henüz otomasyon kuralı bulunamadı.</p>';
+                    }
+                } else {
+                    container.innerHTML = '<p class="text-red-600 text-sm">Advanced Automation sistemi yüklenmedi.</p>';
+                }
+            }
+
+            logResult(message, type = 'info') {
+                const timestamp = new Date().toLocaleTimeString('tr-TR');
+                const colors = {
+                    success: 'text-green-600',
+                    error: 'text-red-600',
+                    warning: 'text-yellow-600',
+                    info: 'text-blue-600'
+                };
+
+                this.testResults.push({
+                    timestamp,
+                    message,
+                    type
+                });
+
+                this.updateResultsDisplay();
+            }
+
+            updateResultsDisplay() {
+                const container = document.getElementById('testResults');
+                container.innerHTML = this.testResults.map(result => `
+                    <div class="mb-2">
+                        <span class="text-xs text-gray-500">${result.timestamp}</span>
+                        <span class="ml-2 ${result.type === 'success' ? 'text-green-600' : result.type === 'error' ? 'text-red-600' : result.type === 'warning' ? 'text-yellow-600' : 'text-blue-600'}">${result.message}</span>
+                    </div>
+                `).join('');
+                container.scrollTop = container.scrollHeight;
+            }
+
+            clear() {
+                this.testResults = [];
+                this.updateResultsDisplay();
+            }
+        }
+
+        // Global functions for test buttons
+        function testPatientRegistration() {
+            tester.logResult('🧪 Hasta kaydı testi başlatılıyor...', 'info');
+            
+            const testPatient = {
+                id: 'test-patient-' + Date.now(),
+                name: 'Test Hastası',
+                phone: '+90 555 123 4567',
+                email: 'test@example.com',
+                status: 'active'
+            };
+
+            if (window.automationEngine) {
+                automationEngine.dispatchEvent('patient_registered', {
+                    patient: testPatient,
+                    timestamp: new Date().toISOString()
+                });
+                tester.logResult('✅ Hasta kaydı olayı tetiklendi', 'success');
+            } else {
+                tester.logResult('❌ Automation Engine bulunamadı', 'error');
+            }
+        }
+
+        function testAppointmentScheduled() {
+            tester.logResult('🧪 Randevu planlama testi başlatılıyor...', 'info');
+            
+            const testAppointment = {
+                id: 'test-appointment-' + Date.now(),
+                patientId: 'test-patient-123',
+                date: new Date().toISOString().split('T')[0],
+                time: '14:00',
+                type: 'consultation',
+                status: 'scheduled'
+            };
+
+            if (window.automationEngine) {
+                automationEngine.dispatchEvent('appointment_scheduled', {
+                    appointment: testAppointment,
+                    timestamp: new Date().toISOString()
+                });
+                tester.logResult('✅ Randevu planlama olayı tetiklendi', 'success');
+            } else {
+                tester.logResult('❌ Automation Engine bulunamadı', 'error');
+            }
+        }
+
+        function testAppointmentMissed() {
+            tester.logResult('🧪 Randevu kaçırma testi başlatılıyor...', 'info');
+            
+            const testAppointment = {
+                id: 'test-appointment-missed-' + Date.now(),
+                patientId: 'test-patient-123',
+                date: new Date().toISOString().split('T')[0],
+                time: '14:00',
+                type: 'consultation',
+                status: 'no_show'
+            };
+
+            if (window.automationEngine) {
+                automationEngine.dispatchEvent('appointment_missed', {
+                    appointment: testAppointment,
+                    timestamp: new Date().toISOString()
+                });
+                tester.logResult('✅ Randevu kaçırma olayı tetiklendi', 'success');
+            } else {
+                tester.logResult('❌ Automation Engine bulunamadı', 'error');
+            }
+        }
+
+        function testAppointmentCompleted() {
+            tester.logResult('🧪 Randevu tamamlama testi başlatılıyor...', 'info');
+            
+            const testAppointment = {
+                id: 'test-appointment-completed-' + Date.now(),
+                patientId: 'test-patient-123',
+                date: new Date().toISOString().split('T')[0],
+                time: '14:00',
+                type: 'consultation',
+                status: 'completed'
+            };
+
+            if (window.automationEngine) {
+                automationEngine.dispatchEvent('appointment_completed', {
+                    appointment: testAppointment,
+                    timestamp: new Date().toISOString()
+                });
+                tester.logResult('✅ Randevu tamamlama olayı tetiklendi', 'success');
+            } else {
+                tester.logResult('❌ Automation Engine bulunamadı', 'error');
+            }
+        }
+
+        function testSGKPurchase() {
+            tester.logResult('🧪 SGK satış testi başlatılıyor...', 'info');
+            
+            const testPurchase = {
+                patientId: 'test-patient-123',
+                deviceType: 'hearing_aid',
+                deviceModel: 'Test Model',
+                purchaseDate: new Date().toISOString(),
+                sgkApproval: true
+            };
+
+            if (window.sgkAutomation) {
+                sgkAutomation.handleDevicePurchase(testPurchase);
+                tester.logResult('✅ SGK satış işlemi tetiklendi', 'success');
+            } else {
+                tester.logResult('❌ SGK Automation bulunamadı', 'error');
+            }
+        }
+
+        function testPriorityCalculation() {
+            tester.logResult('🧪 Öncelik hesaplama testi başlatılıyor...', 'info');
+            
+            const testPatient = {
+                id: 'test-patient-priority',
+                name: 'Test Hastası',
+                lastVisit: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString(), // 90 days ago
+                appointments: [
+                    { status: 'no_show', date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString() }
+                ],
+                sgkStatus: 'active',
+                devices: [
+                    { batteryRenewalDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() }
+                ]
+            };
+
+            if (window.PrioritySystem) {
+                const priority = PrioritySystem.calculatePriority(testPatient);
+                tester.logResult(`✅ Öncelik hesaplandı: ${priority.score} (${priority.reasons.join(', ')})`, 'success');
+            } else {
+                tester.logResult('❌ Priority System bulunamadı', 'error');
+            }
+        }
+
+        function clearTestResults() {
+            tester.clear();
+            tester.logResult('🧹 Test sonuçları temizlendi', 'info');
+        }
+
+        function clearExecutionLogs() {
+            if (window.advancedAutomation) {
+                advancedAutomation.executionLog = [];
+                advancedAutomation.saveExecutionLog();
+                tester.logResult('📜 Çalışma logları temizlendi', 'info');
+            } else {
+                tester.logResult('❌ Advanced Automation bulunamadı', 'error');
+            }
+        }
+
+        function reloadAutomationSystems() {
+            tester.logResult('🔄 Sistemler yeniden yükleniyor...', 'info');
+            setTimeout(() => {
+                tester.checkSystemStatus();
+                tester.loadActiveRules();
+                tester.logResult('✅ Sistemler yeniden yüklendi', 'success');
+            }, 1000);
+        }
+
+        // Initialize tester
+        let tester;
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                tester = new AutomationTester();
+            }, 500);
+        });
+    </script>
+</body>
+</html>

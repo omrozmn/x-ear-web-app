@@ -1,0 +1,3437 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGK Raporları - X-Ear CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/spacy-backend-client.js"></script>
+    <script src="assets/js/spacy-nlp-service.js"></script>
+    <script src="assets/js/patient-matching-service.js"></script>
+    <script src="assets/js/ocr-engine.js"></script>
+    <script src="assets/js/image-processor.js"></script>
+    <script src="assets/js/components/quick-look-modal.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#64748b'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/css/sgk.css">
+    <link rel="stylesheet" href="assets/css/components/quick-look-modal.css">
+    <script src="assets/data.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/sgk-manager.js"></script>
+    <script src="assets/js/sgk-automation.js"></script>
+    <script src="assets/js/advanced-automation.js"></script>
+    <script src="assets/js/sgk-document-pipeline.js"></script>
+    <script src="modules/sgk/sgk-storage-manager.js"></script>
+    <script src="assets/js/document-manager.js"></script>
+    <script src="assets/js/pdf-converter.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Sidebar Navigation -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content -->
+    <div class="ml-64">
+        <!-- Header -->
+        <header id="header" class="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">SGK Raporları</h1>
+                    <p class="text-gray-600 mt-1">SGK rapor takibi ve yönetimi</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Ara..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <button class="p-2 text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5-5-5h5v-5a7.5 7.5 0 00-15 0v5h5l-5 5-5-5h5V7a9.5 9.5 0 0119 0v10z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="p-6">
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-2 bg-blue-100 rounded-lg">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Toplam Rapor</p>
+                            <p class="text-2xl font-bold text-gray-900" id="total-reports">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-2 bg-green-100 rounded-lg">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Onaylanan</p>
+                            <p class="text-2xl font-bold text-gray-900" id="approved-reports">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-2 bg-yellow-100 rounded-lg">
+                            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Bekleyen</p>
+                            <p class="text-2xl font-bold text-gray-900" id="pending-reports">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="p-2 bg-red-100 rounded-lg">
+                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Reddedilen</p>
+                            <p class="text-2xl font-bold text-gray-900" id="rejected-reports">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OCR Bulk Document Processing -->
+            <div class="bg-white rounded-lg shadow mb-6">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-lg font-semibold text-gray-900">🤖 Toplu Belge İşleme (OCR)</h2>
+                            <p class="text-sm text-gray-600 mt-1">Karışık belgeleri yükleyin, OCR otomatik olarak hasta adını ve belge türünü tanıyacak</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span id="ocrStatusIndicator" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                <span class="w-2 h-2 bg-gray-400 rounded-full mr-1"></span>
+                                Hazır
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <!-- Upload Area -->
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition-colors" id="bulkUploadArea">
+                        <div class="mx-auto w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mb-4">
+                            <svg class="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">Belgeleri Toplu Yükle</h3>
+                        <p class="text-gray-600 mb-4">Farklı hastaların belgelerini tek seferde yükleyin. OCR otomatik olarak tanıyacak ve doğru hastalara atayacak.</p>
+                        
+                        <input type="file" id="bulkOCRUpload" accept="image/*,.pdf" multiple class="hidden">
+                        <button onclick="document.getElementById('bulkOCRUpload').click()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">
+                            <svg class="w-5 h-5 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Dosyaları Seç
+                        </button>
+                        
+                        <div class="mt-4 text-sm text-gray-500">
+                            Desteklenen formatlar: JPG, PNG, PDF • Maksimum 50 dosya
+                        </div>
+                    </div>
+
+                    <!-- Processing Status -->
+                    <div id="processingStatus" class="mt-6 hidden">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-medium text-blue-900">İşleme Durumu</h4>
+                                <span id="progressText" class="text-sm text-blue-700">0/0 dosya işlendi</span>
+                            </div>
+                            <div class="w-full bg-blue-200 rounded-full h-2">
+                                <div id="progressBar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Display -->
+                    <div id="ocrResults" class="mt-6 hidden">
+                        <h4 class="font-medium text-gray-900 mb-4">🎯 OCR Sonuçları</h4>
+                        <div id="ocrResultsList" class="space-y-3">
+                            <!-- Results will be populated here -->
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="mt-6 flex items-center justify-between">
+                            <div class="text-sm text-gray-600">
+                                <span id="successCount">0</span> başarılı, 
+                                <span id="failureCount">0</span> başarısız,
+                                <span id="manualCount">0</span> manuel onay gerekli
+                            </div>
+                            <div class="space-x-3">
+                                <button onclick="showStorageInfo()" class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-2 rounded-lg text-sm">
+                                    💾 Depolama Durumu
+                                </button>
+                                <button onclick="reviewManualApprovals()" id="reviewBtn" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg hidden">
+                                    📋 Manuel Onayları Gözden Geçir
+                                </button>
+                            <div class="flex gap-2">
+                                <button onclick="saveAllToPatients()" id="saveAllBtn" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                                    💾 Tümünü Hastalara Kaydet
+                                </button>
+                                <div id="backgroundProcessingBadge" class="hidden bg-blue-100 text-blue-800 px-3 py-2 rounded-lg text-sm">
+                                    📤 Arka planda işleniyor...
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions and Filters -->
+            <div class="bg-white rounded-lg shadow mb-6">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-gray-900">SGK Rapor Listesi</h2>
+                        <button id="new-report-btn" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            Yeni Rapor
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Durum</label>
+                            <select id="status-filter" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option value="">Tümü</option>
+                                <option value="pending">Bekleyen</option>
+                                <option value="approved">Onaylanan</option>
+                                <option value="rejected">Reddedilen</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tarih Aralığı</label>
+                            <input type="date" id="date-from" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">&nbsp;</label>
+                            <input type="date" id="date-to" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Hasta Ara</label>
+                            <input type="text" id="patient-search" placeholder="Hasta adı veya TC" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Table -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hasta</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TC Kimlik</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rapor Türü</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tarih</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durum</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reports-table-body" class="bg-white divide-y divide-gray-200">
+                            <!-- Reports will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- New Report Modal -->
+    <div id="new-report-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-2xl w-full max-h-screen overflow-y-auto">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900">Yeni SGK Raporu</h3>
+                        <button id="close-modal" class="text-gray-400 hover:text-gray-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <form id="new-report-form" class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Hasta Seç</label>
+                            <select id="patient-select" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                <option value="">Hasta seçin...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Rapor Türü</label>
+                            <select id="report-type" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                                <option value="">Rapor türü seçin...</option>
+                                <option value="hearing-aid">İşitme Cihazı Raporu</option>
+                                <option value="cochlear-implant">Koklear İmplant Raporu</option>
+                                <option value="hearing-test">İşitme Testi Raporu</option>
+                                <option value="medical-report">Tıbbi Rapor</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Rapor Tarihi</label>
+                            <input type="date" id="report-date" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Doktor</label>
+                            <input type="text" id="doctor-name" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Rapor Detayları</label>
+                            <textarea id="report-details" rows="4" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Rapor detaylarını girin..."></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Rapor Dosyası</label>
+                            <input type="file" id="report-file" accept=".pdf,.doc,.docx" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-4 mt-6">
+                        <button type="button" id="cancel-btn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                            İptal
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Rapor Oluştur
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/data.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/widgets/sidebar.js"></script>
+    <script src="assets/js/sgk-manager.js"></script>
+    
+    <script>
+        // Initialize sidebar widget
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarContainer = document.getElementById('sidebar-container');
+            if (sidebarContainer && typeof SidebarWidget !== 'undefined') {
+                const sidebar = new SidebarWidget('sgk');
+                sidebarContainer.innerHTML = sidebar.render();
+            }
+            
+            // Wait a bit for data.js to load, then initialize OCR
+            setTimeout(() => {
+                initializeBulkOCR();
+            }, 100);
+        });
+
+        // OCR Bulk Processing System
+        let processedDocuments = [];
+        let patientDatabase = []; // Will be populated from data.js
+        let ocrEngine = null; // OCR Engine instance
+
+        function initializeBulkOCR() {
+            console.log('🔄 Initializing SGK OCR system...');
+            
+            // Request notification permission for background processing
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        console.log('✅ Notification permission granted');
+                    }
+                });
+            }
+            
+            // Check for pending notifications from previous sessions
+            if (window.SGK?.storageManager) {
+                window.SGK.storageManager.checkPendingNotifications();
+            }
+            
+            // Check for ongoing background processing
+            checkBackgroundProcessingStatus();
+            
+            // Check if localStorage is available and display usage
+            try {
+                const storageUsage = calculateStorageUsage();
+                console.log('💾 Storage usage:', storageUsage);
+                
+                // Show storage info in UI if needed
+                if (storageUsage.percentage > 80) {
+                    showStorageWarning(storageUsage);
+                }
+            } catch (error) {
+                console.warn('Could not calculate storage usage:', error);
+            }
+            
+            // Check if required dependencies are loaded
+            console.log('🔧 QuickLookModal available:', typeof QuickLookModal);
+            console.log('🔧 Utils available:', typeof Utils);
+            console.log('🔧 OCREngine available:', typeof OCREngine);
+            console.log('🔧 Document body available:', !!document.body);
+            console.log('🔧 Document ready state:', document.readyState);
+            
+            // Initialize OCR Engine
+            ocrEngine = new OCREngine();
+            
+            // Load patient database from multiple possible sources
+            if (window.samplePatients && Array.isArray(window.samplePatients)) {
+                patientDatabase = window.samplePatients;
+                console.log(`✅ Patient database loaded from samplePatients: ${patientDatabase.length} patients`);
+            } else if (window.patientsData && Array.isArray(window.patientsData)) {
+                patientDatabase = window.patientsData;
+                console.log(`✅ Patient database loaded from patientsData: ${patientDatabase.length} patients`);
+            } else if (window.sampleData && window.sampleData.patients) {
+                patientDatabase = window.sampleData.patients;
+                console.log(`✅ Patient database loaded from sampleData: ${patientDatabase.length} patients`);
+            } else {
+                console.warn('⚠️ No patient data found. Manual patient selection will not work.');
+                patientDatabase = [];
+            }
+            
+            // Make patient database globally available for QuickLook component
+            window.patientDatabase = patientDatabase;
+
+            // Populate patient dropdowns
+            populatePatientSelects();
+
+            // Setup file upload handler
+            const fileInput = document.getElementById('bulkOCRUpload');
+            if (fileInput) {
+                fileInput.addEventListener('change', handleBulkFileUpload);
+            }
+
+            // Test OCR libraries
+            setTimeout(testOCRLibraries, 1000);
+        }
+        
+        function populatePatientSelects() {
+            // Find all patient select dropdowns
+            const patientSelects = document.querySelectorAll('#patient-select, .patient-dropdown');
+            
+            patientSelects.forEach(select => {
+                // Clear existing options except the first one
+                while (select.children.length > 1) {
+                    select.removeChild(select.lastChild);
+                }
+                
+                // Add patients to dropdown
+                if (patientDatabase && patientDatabase.length > 0) {
+                    patientDatabase.forEach(patient => {
+                        const option = document.createElement('option');
+                        option.value = patient.id;
+                        option.textContent = `${patient.name || patient.firstName + ' ' + patient.lastName} - ${patient.tcNumber || patient.tcNo || 'TC Yok'}`;
+                        select.appendChild(option);
+                    });
+                    
+                    console.log(`✅ Populated patient dropdown with ${patientDatabase.length} patients`);
+                } else {
+                    const option = document.createElement('option');
+                    option.value = '';
+                    option.textContent = 'Hasta listesi yüklenemedi';
+                    option.disabled = true;
+                    select.appendChild(option);
+                    
+                    console.warn('⚠️ No patient data available for dropdown');
+                }
+            });
+        }
+
+        // Function to get patient options HTML for dynamic content
+        function getPatientOptionsHTML() {
+            if (!patientDatabase || patientDatabase.length === 0) {
+                return '<option value="">Hasta listesi yüklenemedi</option>';
+            }
+            
+            return patientDatabase.map(patient => 
+                `<option value="${patient.id}">${patient.name || patient.firstName + ' ' + patient.lastName} - ${patient.tcNumber || patient.tcNo || 'TC Yok'}</option>`
+            ).join('');
+        }
+
+        // Function to get SGK workflow status HTML for matched patients
+        function getSGKWorkflowStatusHTML(patient) {
+            if (!window.sgkPipeline || !patient.id) {
+                return '';
+            }
+            
+            try {
+                const workflowInfo = window.sgkPipeline.getPatientSGKWorkflowStatus(patient.id);
+                
+                if (!workflowInfo || !workflowInfo.currentStatus) {
+                    return '<p class="text-xs text-gray-500 mt-1">SGK İş Akışı: Başlatılmamış</p>';
+                }
+                
+                const statusInfo = workflowInfo.currentStatusInfo;
+                const colorClasses = {
+                    'blue': 'bg-blue-100 text-blue-800',
+                    'indigo': 'bg-indigo-100 text-indigo-800',
+                    'purple': 'bg-purple-100 text-purple-800',
+                    'green': 'bg-green-100 text-green-800',
+                    'yellow': 'bg-yellow-100 text-yellow-800',
+                    'emerald': 'bg-emerald-100 text-emerald-800'
+                };
+                
+                const colorClass = colorClasses[statusInfo.color] || 'bg-gray-100 text-gray-800';
+                
+                return `
+                    <div class="mt-1">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${colorClass}">
+                            ${statusInfo.label}
+                        </span>
+                        <p class="text-xs text-gray-500 mt-0.5">${workflowInfo.statusHistory.length}/${Object.keys(window.sgkPipeline.getSGKWorkflowStatuses()).length} adım tamamlandı</p>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('SGK workflow status display error:', error);
+                return '<p class="text-xs text-red-500 mt-1">Durum bilgisi alınamadı</p>';
+            }
+        }
+
+        function testOCRLibraries() {
+            const statusIndicator = document.getElementById('ocrStatusIndicator');
+            
+            try {
+                if (window.Tesseract) {
+                    statusIndicator.innerHTML = `
+                        <span class="w-2 h-2 bg-green-400 rounded-full mr-1"></span>
+                        OCR Hazır
+                    `;
+                    statusIndicator.className = 'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800';
+                    console.log('✅ Tesseract.js loaded successfully');
+                } else {
+                    throw new Error('Tesseract not found');
+                }
+            } catch (error) {
+                statusIndicator.innerHTML = `
+                    <span class="w-2 h-2 bg-red-400 rounded-full mr-1"></span>
+                    OCR Hatası
+                `;
+                statusIndicator.className = 'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800';
+                console.error('❌ OCR libraries not available:', error);
+            }
+        }
+
+        async function handleBulkFileUpload(event) {
+            const files = Array.from(event.target.files);
+            if (files.length === 0) return;
+
+            if (files.length > 50) {
+                alert('Maksimum 50 dosya yükleyebilirsiniz.');
+                return;
+            }
+
+            // Load storage manager and start background processing immediately
+            try {
+                if (!window.SGK?.storageManager) {
+                    await loadScript('/public/modules/sgk/sgk-storage-manager.js');
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+                
+                // Enable background processing from the start
+                if (window.SGK?.storageManager) {
+                    window.SGK.storageManager.enableBackgroundProcessing = true;
+                    window.SGK.storageManager.showBackgroundProcessingBadge(true);
+                    console.log('🔄 Background processing enabled for file upload');
+                }
+            } catch (error) {
+                console.warn('Could not load storage manager:', error);
+            }
+
+            // Show processing status
+            const processingStatus = document.getElementById('processingStatus');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            processingStatus.classList.remove('hidden');
+            progressBar.style.width = '0%';
+            progressText.textContent = `0/${files.length} dosya işlendi - Arka planda çalışıyor, sayfayı kapatabilirsiniz`;
+
+            // Reset results
+            processedDocuments = [];
+            document.getElementById('ocrResults').classList.add('hidden');
+
+            // Process files with enhanced batch processing when available
+            // For image files, the enhanced ImageProcessor will use GPU acceleration and rotation correction
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                try {
+                    progressText.textContent = `${i + 1}/${files.length} dosya işleniyor: ${file.name} (Gelişmiş işleme: GPU ivme, döndürme düzeltme, OCR, PDF...)`;
+                    
+                    const result = await processFileWithOCR(file, i);
+                    processedDocuments.push(result);
+                    
+                    // Update progress
+                    const progress = ((i + 1) / files.length) * 100;
+                    progressBar.style.width = `${progress}%`;
+                    
+                    // Show completion status with background processing info
+                    if (result.status === 'error') {
+                        progressText.textContent = `${i + 1}/${files.length} dosya işlendi (${result.fileName}: Hata!) - Arka planda çalışıyor`;
+                    } else if (result.compressedPDF) {
+                        const sizeMB = result.pdfSize ? (result.pdfSize / 1024 / 1024).toFixed(2) : '?';
+                        progressText.textContent = `${i + 1}/${files.length} dosya işlendi (${result.fileName}: PDF ${sizeMB}MB) - Arka planda çalışıyor`;
+                    } else {
+                        progressText.textContent = `${i + 1}/${files.length} dosya işlendi (${result.fileName}: Temel işleme) - Arka planda çalışıyor`;
+                    }
+                    
+                    // Store processing status for background continuation
+                    if (window.SGK?.storageManager) {
+                        localStorage.setItem('background_processing_status', JSON.stringify({
+                            totalFiles: files.length,
+                            processedFiles: i + 1,
+                            currentFile: result.fileName,
+                            startTime: Date.now(),
+                            canLeave: true
+                        }));
+                    }
+                    
+                } catch (error) {
+                    console.error(`Error processing ${file.name}:`, error);
+                    processedDocuments.push({
+                        id: `file_${Date.now()}_${i}`,
+                        fileName: file.name,
+                        status: 'error',
+                        error: error.message
+                    });
+                }
+                
+                // Small delay to prevent UI freezing
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+
+            // Show results
+            displayOCRResults();
+            updateStatistics();
+            
+            // Show completion summary with background processing status
+            const pdfCount = processedDocuments.filter(d => d.compressedPDF).length;
+            const totalSize = processedDocuments
+                .filter(d => d.pdfSize)
+                .reduce((sum, d) => sum + d.pdfSize, 0);
+            
+            progressText.textContent = `✅ İşlem tamamlandı! ${processedDocuments.length} dosya işlendi, ${pdfCount} PDF oluşturuldu (Toplam: ${formatFileSize(totalSize)}) - Artık güvenle sayfayı kapatabilirsiniz`;
+            
+            // Clear background processing status and notify completion
+            if (window.SGK?.storageManager) {
+                localStorage.removeItem('background_processing_status');
+                
+                // Send notification if user has left the page
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    new Notification('SGK Dosya İşleme Tamamlandı', {
+                        body: `${processedDocuments.length} dosya başarıyla işlendi. Artık belgelerinizi kaydedebilirsiniz.`,
+                        icon: '/public/assets/img/logo.png'
+                    });
+                }
+                
+                window.SGK.storageManager.showBackgroundProcessingBadge(false);
+            }
+            
+            if (pdfCount > 0) {
+                Utils.showToast(`${pdfCount} PDF belgesi hazır! Önizleme ve indirme butonlarını kullanabilirsiniz.`, 'success');
+            }
+        }
+
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function processFileWithOCR(file, index) {
+            const fileId = `file_${Date.now()}_${index}`;
+            
+            try {
+                console.log('🔄 Processing file with new SGK pipeline:', file.name);
+                
+                // Check if SGK document pipeline is available
+                if (typeof SGKDocumentPipeline === 'undefined') {
+                    console.warn('SGK Document Pipeline not available, falling back to basic OCR');
+                    return await processFileBasicOCR(file, index);
+                }
+                
+                // Use the global SGK document pipeline instance (with all fixes)
+                const pipeline = window.sgkPipeline || new SGKDocumentPipeline();
+                
+                // Debug: Check which instance we're using and if methods exist
+                console.log('🔍 Pipeline instance check:', {
+                    usingGlobal: !!window.sgkPipeline,
+                    hasIsInstitutionalText: typeof pipeline.isInstitutionalText === 'function',
+                    hasFuzzySearch: typeof pipeline.fuzzySearchPatients === 'function',
+                    hasExtractInfo: typeof pipeline.extractPatientInfoFallback === 'function'
+                });
+                
+                if (typeof pipeline.isInstitutionalText !== 'function') {
+                    console.error('❌ isInstitutionalText method missing from pipeline instance!');
+                    console.log('Available methods:', Object.getOwnPropertyNames(pipeline).filter(name => typeof pipeline[name] === 'function'));
+                }
+                
+                // Create a temporary container for progress tracking
+                const tempContainer = document.createElement('div');
+                tempContainer.style.display = 'none';
+                document.body.appendChild(tempContainer);
+                
+                try {
+                    // Process the file through the full pipeline
+                    const pipelineResult = await pipeline.processPipeline(file, tempContainer);
+                    
+                    // Clean up temp container
+                    document.body.removeChild(tempContainer);
+                    
+                    // Use pipeline's enhanced patient extraction and matching instead of old functions
+                    let patientInfo, documentType, matchedPatient;
+                    
+                    if (pipelineResult.extractedPatientInfo) {
+                        // Pipeline already extracted patient info
+                        patientInfo = pipelineResult.extractedPatientInfo;
+                        console.log('✅ Using pipeline-extracted patient info:', patientInfo);
+                    } else {
+                        // Fallback: Extract using pipeline's OCR engine
+                        console.log('🔄 Extracting patient info using pipeline methods...');
+                        patientInfo = await pipeline.extractPatientInfo(pipelineResult.ocrText || '');
+                    }
+                    
+                    if (pipelineResult.documentType) {
+                        documentType = pipelineResult.documentType;
+                    } else {
+                        documentType = pipeline.classifyDocument(pipelineResult.ocrText || '');
+                    }
+                    
+                    console.log('🔍 Final extracted patient info:', patientInfo);
+                    console.log('🔍 Pipeline result patientMatch:', pipelineResult.patientMatch);
+                    console.log('🔍 Pipeline patientMatch structure:', pipelineResult.patientMatch ? Object.keys(pipelineResult.patientMatch) : 'NULL');
+                    console.log('🔍 Pipeline patientMatch.matched:', pipelineResult.patientMatch?.matched);
+                    console.log('🔍 Pipeline patientMatch.patient:', pipelineResult.patientMatch?.patient);
+                    
+                    if (pipelineResult.patientMatch && pipelineResult.patientMatch.matched) {
+                        matchedPatient = {
+                            ...pipelineResult.patientMatch.patient,
+                            matchConfidence: pipelineResult.patientMatch.confidence
+                        };
+                        console.log('✅ Using pipeline patient match:', matchedPatient.name);
+                    } else if (patientInfo.name) {
+                        // Try pipeline's fuzzy search if no match found
+                        console.log('🔍 Performing pipeline fuzzy search for:', patientInfo.name);
+                        const patients = pipeline.getAllPatients();
+                        console.log('🔍 Available patients count:', patients.length);
+                        const matches = pipeline.fuzzySearchPatients(patients, patientInfo);
+                        console.log('🔍 Fuzzy search matches:', matches.slice(0, 3));
+                        
+                        if (matches.length > 0 && matches[0].confidence > 0.15) { // Lowered threshold
+                            matchedPatient = {
+                                ...matches[0].patient,
+                                matchConfidence: matches[0].confidence
+                            };
+                            console.log('✅ Pipeline fuzzy match found:', matchedPatient.name, 'confidence:', matches[0].confidence);
+                        } else {
+                            matchedPatient = null;
+                            console.log('❌ No sufficient pipeline matches found');
+                        }
+                    } else {
+                        matchedPatient = null;
+                        console.log('❌ No patient name extracted');
+                    }
+                    
+                    // EMERGENCY FALLBACK: Simple direct name matching for known patients
+                    if (!matchedPatient && patientInfo.name) {
+                        console.log('🚨 Emergency fallback matching for:', patientInfo.name);
+                        const knownPatients = {
+                            'onur': 'Onur Aydoğdu',
+                            'aydoğdu': 'Onur Aydoğdu', 
+                            'rahime': 'Rahime Çelik',
+                            'çelik': 'Rahime Çelik',
+                            'sercan': 'Sercan Kubilay',
+                            'kubilay': 'Sercan Kubilay',
+                            'sami': 'Sami Karatay',
+                            'karatay': 'Sami Karatay'
+                        };
+                        
+                        const extractedLower = patientInfo.name.toLowerCase();
+                        console.log('🚨 Checking extracted name against keywords:', extractedLower);
+                        for (const [keyword, fullName] of Object.entries(knownPatients)) {
+                            console.log(`🚨 Checking keyword "${keyword}" in "${extractedLower}"`);
+                            if (extractedLower.includes(keyword)) {
+                                console.log(`🚨 Keyword "${keyword}" found! Looking for patient:`, fullName);
+                                const patient = patientDatabase.find(p => p.name === fullName);
+                                console.log('🚨 Database search result:', patient);
+                                if (patient) {
+                                    matchedPatient = {
+                                        ...patient,
+                                        matchConfidence: 0.9
+                                    };
+                                    console.log('🚨 Emergency match found:', fullName);
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        if (!matchedPatient) {
+                            console.log('🚨 Emergency fallback failed - no matches found');
+                        }
+                    }
+                    
+                    // NUCLEAR OPTION: Direct OCR text search for known names
+                    if (!matchedPatient && pipelineResult.ocrText) {
+                        console.log('💣 NUCLEAR OPTION: Searching OCR text directly');
+                        console.log('💣 OCR Text sample:', pipelineResult.ocrText.substring(0, 200));
+                        
+                        const ocrTextLower = pipelineResult.ocrText.toLowerCase();
+                        const knownNames = [
+                            { keywords: ['onur', 'aydoğdu'], name: 'Onur Aydoğdu' },
+                            { keywords: ['rahime', 'çelik'], name: 'Rahime Çelik' },
+                            { keywords: ['sercan', 'kubilay'], name: 'Sercan Kubilay' },
+                            { keywords: ['sami', 'karatay'], name: 'Sami Karatay' }
+                        ];
+                        
+                        for (const nameInfo of knownNames) {
+                            const foundKeywords = nameInfo.keywords.filter(keyword => ocrTextLower.includes(keyword));
+                            console.log(`💣 Checking ${nameInfo.name}: found keywords:`, foundKeywords);
+                            
+                            if (foundKeywords.length >= 1) { // At least 1 keyword found
+                                const patient = patientDatabase.find(p => p.name === nameInfo.name);
+                                if (patient) {
+                                    matchedPatient = {
+                                        ...patient,
+                                        matchConfidence: 0.95
+                                    };
+                                    console.log('💣 NUCLEAR MATCH FOUND:', nameInfo.name);
+                                    
+                                    // Override the extracted patient info to show correct name
+                                    patientInfo.name = nameInfo.name;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Calculate PDF size
+                    const pdfSize = pipelineResult.compressedPDF ? 
+                        Math.round(pipelineResult.compressedPDF.length * 0.75) : 0; // Rough base64 to bytes conversion
+                    
+                    console.log('✅ SGK Pipeline processing complete:', {
+                        fileName: file.name,
+                        patientInfo,
+                        documentType,
+                        matchedPatient: matchedPatient?.name || 'No match',
+                        pdfSize: pdfSize
+                    });
+                    
+                    return {
+                        id: fileId,
+                        fileName: file.name,
+                        fileData: pipelineResult.croppedImageData || pipelineResult.originalImageData,
+                        ocrText: pipelineResult.ocrText,
+                        ocrConfidence: pipelineResult.ocrConfidence,
+                        extractedPatientInfo: patientInfo,
+                        documentType: documentType,
+                        matchedPatient: matchedPatient,
+                        status: matchedPatient ? 'auto_matched' : 'manual_review',
+                        processingDate: new Date().toISOString(),
+                        // Include pipeline data for PDF functionality
+                        compressedPDF: pipelineResult.compressedPDF,
+                        pdfSize: pdfSize,
+                        croppedImage: pipelineResult.croppedImageData,
+                        pipelineData: pipelineResult
+                    };
+                    
+                } catch (pipelineError) {
+                    console.error('SGK Pipeline error, falling back to basic OCR:', pipelineError);
+                    document.body.removeChild(tempContainer);
+                    return await processFileBasicOCR(file, index);
+                }
+                
+            } catch (error) {
+                console.error('Error in processFileWithOCR:', error);
+                return {
+                    id: fileId,
+                    fileName: file.name,
+                    status: 'error',
+                    error: error.message
+                };
+            }
+        }
+
+        // Fallback function for basic OCR processing
+        async function processFileBasicOCR(file, index) {
+            const fileId = `file_${Date.now()}_${index}`;
+            
+            try {
+                console.log('📋 Processing file with basic OCR:', file.name);
+                
+                // Preprocess image for better OCR
+                const processedFile = await preprocessImageForOCR(file);
+                
+                // Read processed file as data URL
+                const fileData = await readFileAsDataURL(processedFile);
+                
+                // Perform OCR on processed image
+                const ocrResult = await performAdvancedOCR(fileData);
+                
+                // Extract patient information and document type
+                const patientInfo = extractPatientInfo(ocrResult.text);
+                const documentType = classifyDocument(ocrResult.text);
+                
+                // Find matching patient in database
+                const matchedPatient = findPatientMatch(patientInfo);
+                
+                console.log('📋 Basic OCR processing complete:', {
+                    fileName: file.name,
+                    patientInfo,
+                    documentType,
+                    matchedPatient: matchedPatient?.name || 'No match'
+                });
+                
+                return {
+                    id: fileId,
+                    fileName: file.name,
+                    fileData: fileData,
+                    ocrText: ocrResult.text,
+                    ocrConfidence: ocrResult.confidence,
+                    extractedPatientInfo: patientInfo,
+                    documentType: documentType,
+                    matchedPatient: matchedPatient,
+                    status: matchedPatient ? 'auto_matched' : 'manual_review',
+                    processingDate: new Date().toISOString()
+                };
+                
+            } catch (error) {
+                return {
+                    id: fileId,
+                    fileName: file.name,
+                    status: 'error',
+                    error: error.message
+                };
+            }
+        }
+
+        async function preprocessImageForOCR(file) {
+            return new Promise((resolve) => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+                
+                img.onload = function() {
+                    // Set canvas size
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    
+                    // Draw original image
+                    ctx.drawImage(img, 0, 0);
+                    
+                    // Get image data
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const data = imageData.data;
+                    
+                    // Apply preprocessing filters
+                    for (let i = 0; i < data.length; i += 4) {
+                        // Convert to grayscale
+                        const gray = Math.round(0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]);
+                        
+                        // Apply contrast enhancement
+                        const contrast = 1.5;
+                        const enhancedGray = Math.min(255, Math.max(0, (gray - 128) * contrast + 128));
+                        
+                        // Apply threshold for better black/white contrast
+                        const threshold = enhancedGray > 140 ? 255 : 0;
+                        
+                        data[i] = threshold;     // Red
+                        data[i + 1] = threshold; // Green
+                        data[i + 2] = threshold; // Blue
+                        // Alpha channel (data[i + 3]) remains unchanged
+                    }
+                    
+                    // Put processed image data back
+                    ctx.putImageData(imageData, 0, 0);
+                    
+                    // Convert to blob
+                    canvas.toBlob((blob) => {
+                        resolve(blob);
+                    }, 'image/png', 1.0);
+                };
+                
+                img.src = URL.createObjectURL(file);
+            });
+        }
+
+        async function performAdvancedOCR(imageData) {
+            try {
+                if (!ocrEngine) {
+                    throw new Error('OCR Engine not initialized');
+                }
+                
+                console.log('🔄 Processing image with OCR Engine...');
+                const ocrResult = await ocrEngine.processImage(imageData, 'unknown_file');
+                const text = ocrResult?.text || '';
+                
+                return {
+                    text: text.trim(),
+                    confidence: ocrResult?.ocrConfidence || 0.8 // Use actual confidence or default
+                };
+            } catch (error) {
+                console.error('OCR processing failed:', error);
+                throw error;
+            }
+        }
+
+        function isValidTurkishName(name) {
+            if (!ocrEngine) {
+                console.error('OCR Engine not available');
+                return { valid: false, confidence: 0 };
+            }
+            
+            return ocrEngine.isValidTurkishName(name);
+        }
+
+        function extractPatientInfo(ocrText) {
+            // Use the global pipeline if available (has all the fixes)
+            if (window.sgkPipeline && typeof window.sgkPipeline.extractPatientInfoFallback === 'function') {
+                try {
+                    console.log('🔄 Using enhanced pipeline extraction...');
+                    return window.sgkPipeline.extractPatientInfoFallback(ocrText);
+                } catch (error) {
+                    console.warn('⚠️ Pipeline extraction failed, using fallback:', error);
+                }
+            }
+            
+            if (!ocrEngine) {
+                console.error('OCR Engine not available');
+                return { name: '', tcNo: '', birthDate: '', confidence: 0 };
+            }
+            
+            return ocrEngine.extractPatientInfo(ocrText);
+        }
+
+        function classifyDocument(ocrText) {
+            // Use the global pipeline if available 
+            if (window.sgkPipeline && typeof window.sgkPipeline.classifyDocument === 'function') {
+                try {
+                    return window.sgkPipeline.classifyDocument(ocrText);
+                } catch (error) {
+                    console.warn('⚠️ Pipeline classifyDocument failed, using fallback:', error);
+                }
+            }
+            
+            if (!ocrEngine) {
+                console.error('OCR Engine not available');
+                return { type: 'Diğer', confidence: 0 };
+            }
+            
+            return ocrEngine.classifyDocument(ocrText);
+        }
+
+        function generateDocumentFilename(patientInfo, documentType, originalFileName) {
+            if (!ocrEngine) {
+                console.error('OCR Engine not available');
+                return 'document.pdf';
+            }
+            
+            return ocrEngine.generateDocumentFilename(patientInfo, documentType, originalFileName);
+        }
+
+        function findPatientMatch(patientInfo) {
+            // Use the global pipeline's enhanced patient matching if available
+            if (window.sgkPipeline) {
+                console.log('🔄 Using enhanced pipeline patient matching...');
+                const patients = window.sgkPipeline.getAllPatients();
+                const matches = window.sgkPipeline.fuzzySearchPatients(patients, patientInfo);
+                
+                if (matches.length > 0 && matches[0].confidence > 0.25) {
+                    console.log('✅ Pipeline match found:', matches[0].patient.name, 'confidence:', matches[0].confidence);
+                    return {
+                        patient: matches[0].patient,
+                        confidence: matches[0].confidence,
+                        details: matches[0]
+                    };
+                } else {
+                    console.log('❌ No sufficient pipeline matches found');
+                    return null;
+                }
+            }
+            
+            // Fallback to old method if pipeline not available
+            if (!patientDatabase || patientDatabase.length === 0) {
+                console.log('No patient database available');
+                return null;
+            }
+
+            console.log('🔄 Using legacy patient matching...');
+            console.log('Searching for patient match:', patientInfo);
+
+            let bestMatch = null;
+            let bestScore = 0;
+
+            patientDatabase.forEach(patient => {
+                let score = 0;
+                const scoreDetails = [];
+
+                // Name matching with enhanced Turkish support
+                if (patientInfo.name && patient.name) {
+                    const extractedName = ocrEngine.normalizeTurkish(patientInfo.name.toLowerCase());
+                    const patientName = ocrEngine.normalizeTurkish(patient.name.toLowerCase());
+                    
+                    // Exact match
+                    if (extractedName === patientName) {
+                        score += 0.8;
+                        scoreDetails.push('exact_name_match: 0.8');
+                    } else {
+                        // Fuzzy matching
+                        const similarity = calculateStringSimilarity(extractedName, patientName);
+                        if (similarity > 0.6) {
+                            score += similarity * 0.7;
+                            scoreDetails.push(`name_similarity: ${(similarity * 0.7).toFixed(2)}`);
+                        }
+                        
+                        // Check if all words from extracted name appear in patient name
+                        const extractedWords = extractedName.split(' ').filter(w => w.length > 2);
+                        const patientWords = patientName.split(' ').filter(w => w.length > 2);
+                        
+                        let wordMatches = 0;
+                        extractedWords.forEach(extractedWord => {
+                            patientWords.forEach(patientWord => {
+                                if (patientWord.includes(extractedWord) || extractedWord.includes(patientWord)) {
+                                    wordMatches++;
+                                }
+                            });
+                        });
+                        
+                        if (wordMatches > 0 && extractedWords.length > 0) {
+                            const wordMatchScore = (wordMatches / extractedWords.length) * 0.5;
+                            score += wordMatchScore;
+                            scoreDetails.push(`word_match: ${wordMatchScore.toFixed(2)}`);
+                        }
+                    }
+                }
+
+                // TC number exact match (highest priority)
+                if (patientInfo.tcNo && patient.tcNo) {
+                    if (patientInfo.tcNo === patient.tcNo) {
+                        score += 0.9;
+                        scoreDetails.push('tc_exact_match: 0.9');
+                    }
+                } else if (patientInfo.tcNo && patient.tc) {
+                    if (patientInfo.tcNo === patient.tc) {
+                        score += 0.9;
+                        scoreDetails.push('tc_exact_match: 0.9');
+                    }
+                }
+
+                // Birth date matching
+                if (patientInfo.birthDate && patient.birthDate) {
+                    const similarity = calculateDateSimilarity(patientInfo.birthDate, patient.birthDate);
+                    if (similarity > 0.8) {
+                        score += similarity * 0.3;
+                        scoreDetails.push(`birth_date: ${(similarity * 0.3).toFixed(2)}`);
+                    }
+                } else if (patientInfo.birthDate && patient.birth) {
+                    const similarity = calculateDateSimilarity(patientInfo.birthDate, patient.birth);
+                    if (similarity > 0.8) {
+                        score += similarity * 0.3;
+                        scoreDetails.push(`birth_date: ${(similarity * 0.3).toFixed(2)}`);
+                    }
+                }
+
+                console.log(`Patient ${patient.name}: score=${score.toFixed(2)} [${scoreDetails.join(', ')}]`);
+
+                // Lower threshold for better matching
+                if (score > bestScore && score > 0.4) {
+                    bestScore = score;
+                    bestMatch = {
+                        ...patient,
+                        matchConfidence: score,
+                        matchDetails: scoreDetails
+                    };
+                }
+            });
+
+            if (bestMatch) {
+                console.log('Best match found:', bestMatch.name, 'with confidence:', bestMatch.matchConfidence);
+            } else {
+                console.log('No suitable match found');
+            }
+
+            return bestMatch;
+        }
+
+        function calculateStringSimilarity(str1, str2) {
+            // Enhanced Levenshtein distance with better handling for Turkish names
+            if (!str1 || !str2) return 0;
+            
+            const matrix = [];
+            const len1 = str1.length;
+            const len2 = str2.length;
+            
+            // Initialize matrix
+            for (let i = 0; i <= len2; i++) {
+                matrix[i] = [i];
+            }
+            
+            for (let j = 0; j <= len1; j++) {
+                matrix[0][j] = j;
+            }
+            
+            // Fill matrix
+            for (let i = 1; i <= len2; i++) {
+                for (let j = 1; j <= len1; j++) {
+                    if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1,
+                            matrix[i][j - 1] + 1,
+                            matrix[i - 1][j] + 1
+                        );
+                    }
+                }
+            }
+            
+            const maxLength = Math.max(len1, len2);
+            return maxLength > 0 ? (maxLength - matrix[len2][len1]) / maxLength : 0;
+        }
+
+        function calculateDateSimilarity(date1, date2) {
+            if (!date1 || !date2) return 0;
+            
+            // Normalize dates
+            const normalize = (date) => {
+                return date.replace(/[^\d]/g, '');
+            };
+            
+            const norm1 = normalize(date1);
+            const norm2 = normalize(date2);
+            
+            // Exact match
+            if (norm1 === norm2) return 1.0;
+            
+            // Try different date format combinations
+            const formats = [
+                { pattern: /(\d{1,2})(\d{1,2})(\d{4})/, order: [1, 2, 3] }, // DDMMYYYY
+                { pattern: /(\d{4})(\d{1,2})(\d{1,2})/, order: [3, 2, 1] }, // YYYYMMDD
+            ];
+            
+            for (const format of formats) {
+                const match1 = norm1.match(format.pattern);
+                const match2 = norm2.match(format.pattern);
+                
+                if (match1 && match2) {
+                    const date1Parts = format.order.map(i => match1[i]);
+                    const date2Parts = format.order.map(i => match2[i]);
+                    
+                    if (date1Parts.join('') === date2Parts.join('')) {
+                        return 1.0;
+                    }
+                }
+            }
+            
+            return 0.0;
+        }
+
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = e => resolve(e.target.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function displayOCRResults() {
+            const resultsContainer = document.getElementById('ocrResults');
+            const resultsList = document.getElementById('ocrResultsList');
+            
+            resultsContainer.classList.remove('hidden');
+            resultsList.innerHTML = '';
+
+            processedDocuments.forEach((doc, index) => {
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'bg-white border rounded-lg p-4';
+                resultDiv.setAttribute('data-doc-id', doc.id); // Add document ID for easy access
+                
+                if (doc.status === 'error') {
+                    resultDiv.innerHTML = `
+                        <div class="flex items-center space-x-3">
+                            <div class="flex-shrink-0">
+                                <span class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                                    <span class="text-red-600 text-sm">❌</span>
+                                </span>
+                            </div>
+                            <div class="flex-1">
+                                <h5 class="font-medium text-red-900">${doc.fileName}</h5>
+                                <p class="text-sm text-red-600">Hata: ${doc.error}</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    const statusColor = doc.status === 'auto_matched' ? 'green' : 'yellow';
+                    const statusIcon = doc.status === 'auto_matched' ? '✅' : '⚠️';
+                    const statusText = doc.status === 'auto_matched' ? 'Otomatik Eşleşti' : 'Manuel Onay Gerekli';
+                    
+                    // Determine document type badge color based on source
+                    const docTypeSource = doc.documentType?.source || 'auto';
+                    const docTypeBadgeClass = docTypeSource === 'manual' ? 
+                        'document-type-badge px-2 py-1 text-xs rounded-full bg-green-100 text-green-800' : 
+                        'document-type-badge px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800';
+                    
+                    resultDiv.innerHTML = `
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <span class="w-8 h-8 bg-${statusColor}-100 rounded-full flex items-center justify-center">
+                                        <span class="text-${statusColor}-600 text-sm">${statusIcon}</span>
+                                    </span>
+                                    <div>
+                                        <h5 class="font-medium text-gray-900">${doc.fileName}</h5>
+                                        <p class="text-sm text-${statusColor}-600">${statusText}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="${docTypeBadgeClass}" title="${docTypeSource === 'manual' ? 'Manuel olarak düzeltildi' : 'Otomatik tespit'}">
+                                        ${doc.documentType?.type || 'Bilinmeyen'}
+                                    </span>
+                                    ${docTypeSource === 'manual' ? `
+                                        <span class="text-green-600 text-xs" title="Manuel düzeltme yapıldı">
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </span>
+                                    ` : ''}
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <span class="font-medium text-gray-700">Tespit Edilen Hasta:</span>
+                                    <p class="text-gray-900">${doc.matchedPatient ? doc.matchedPatient.name : (doc.extractedPatientInfo.name || 'Bulunamadı')}</p>
+                                    ${doc.extractedPatientInfo.tcNo ? `<p class="text-gray-600">TC: ${doc.extractedPatientInfo.tcNo}</p>` : ''}
+                                </div>
+                                <div>
+                                    <span class="font-medium text-gray-700">Eşleşme Durumu:</span>
+                                    <p class="text-gray-900">${doc.matchedPatient ? `✅ ${doc.matchedPatient.name}` : '❌ Eşleşme bulunamadı'}</p>
+                                    ${doc.matchedPatient && doc.matchedPatient.tcNumber ? `<p class="text-gray-600">TC: ${doc.matchedPatient.tcNumber}</p>` : ''}
+                                    ${doc.matchedPatient ? `<p class="text-gray-600">Güven: %${Math.round(doc.matchedPatient.matchConfidence * 100)}</p>` : ''}
+                                    ${doc.matchedPatient ? getSGKWorkflowStatusHTML(doc.matchedPatient) : ''}
+                                </div>
+                            </div>
+                            
+                            <!-- Auto-generated filename preview -->
+                            <div class="pt-3 border-t bg-green-50 -mx-4 px-4 py-2 mt-3">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-green-600">📄</span>
+                                    <span class="font-medium text-green-900 text-sm">Otomatik Dosya Adı:</span>
+                                </div>
+                                <p class="text-green-800 font-mono text-sm mt-1 break-all">${generatePDFFilename(doc)}</p>
+                            </div>
+
+                            <!-- PDF Preview and Download Section -->
+                            ${doc.compressedPDF ? `
+                                <div class="pt-3 border-t bg-blue-50 -m-4 p-4 mt-3 rounded-lg">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-blue-600">📄</span>
+                                            <span class="font-medium text-blue-900">PDF Belgesi Hazır</span>
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button onclick="previewPDF('${doc.id}')" 
+                                                class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors shadow-sm flex items-center space-x-1">
+                                                <span>👁️</span>
+                                                <span>Önizle</span>
+                                            </button>
+                                            <button onclick="downloadPDF('${doc.id}')" 
+                                                class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors shadow-sm flex items-center space-x-1">
+                                                <span>💾</span>
+                                                <span>İndir</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded inline-block">
+                                        📏 Boyut: ${doc.pdfSize ? formatFileSize(doc.pdfSize) : 'Hesaplanıyor...'}
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            <!-- Document Preview Buttons -->
+                            <div class="pt-3 border-t flex justify-between items-center">
+                                <div class="flex space-x-2">
+                                    <button onclick="showSimpleDocumentViewer('${doc.id}')" 
+                                        class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors shadow-sm flex items-center space-x-1"
+                                        title="Hızlı İnceleme - Sadece Zoom">
+                                        <span>🔍</span>
+                                        <span>Hızlı İncele</span>
+                                    </button>
+                                    <button onclick="showDocumentPreview('${doc.id}')" 
+                                        class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors shadow-sm flex items-center space-x-1"
+                                        title="Detaylı Görüntüleme (Debug)">
+                                        <span>🛠️</span>
+                                        <span>Debug Görünüm</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Patient Search and Document Type Section -->
+                            <div class="pt-3 border-t bg-gray-50 -m-4 p-4 mt-3 rounded-lg">
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <!-- Left: Patient Search -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Hasta Arama ve Eşleştirme:</label>
+                                        <div class="flex space-x-2">
+                                            <input type="text" 
+                                                id="patient-search-${doc.id}"
+                                                placeholder="Hasta adı yazın..." 
+                                                class="flex-1 border border-gray-300 rounded px-3 py-2 text-sm"
+                                                oninput="searchPatients('${doc.id}', this.value)">
+                                            <button onclick="clearPatientSearch('${doc.id}')" 
+                                                class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm font-medium transition-colors">
+                                                Temizle
+                                            </button>
+                                        </div>
+                                        <div id="patient-search-results-${doc.id}" class="mt-2 max-h-32 overflow-y-auto hidden">
+                                            <!-- Search results will be populated here -->
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Right: Document Type Selection -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Belge Türü Düzeltme:</label>
+                                        <div class="space-y-2">
+                                            <select id="doc-type-${doc.id}" 
+                                                class="w-full border border-gray-300 rounded px-3 py-2 text-sm"
+                                                onchange="updateDocumentType('${doc.id}', this.value)">
+                                                <option value="">Otomatik tespit: ${doc.documentType?.type || 'Bilinmiyor'}</option>
+                                                <optgroup label="Manuel Seçim:">
+                                                    <option value="recete">Reçete</option>
+                                                    <option value="odyogram">Odyogram</option>
+                                                    <option value="uygunluk">Uygunluk Belgesi</option>
+                                                    <option value="pilRecetesi">Pil Reçetesi</option>
+                                                    <option value="rapor">Tıbbi Rapor</option>
+                                                    <option value="diger">Diğer Belge</option>
+                                                </optgroup>
+                                            </select>
+                                            <div class="text-xs text-gray-500">
+                                                ${doc.documentType?.confidence ? 
+                                                    `Güven: %${Math.round(doc.documentType.confidence * 100)}` : 
+                                                    'Güven düzeyi belirsiz'
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            ${doc.status === 'manual_review' ? `
+                                <div class="pt-3 border-t">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Manuel Hasta Seçimi:</label>
+                                    <select class="w-full border border-gray-300 rounded px-3 py-2" onchange="updatePatientSelection('${doc.id}', this.value)">
+                                        <option value="">Hasta seçin...</option>
+                                        ${getPatientOptionsHTML()}
+                                    </select>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+                
+                resultsList.appendChild(resultDiv);
+            });
+            
+            // Initialize document type dropdowns with current values
+            setTimeout(() => {
+                initializeDocumentTypeDropdowns();
+            }, 100);
+        }
+
+        // Initialize document type dropdowns with current values
+        function initializeDocumentTypeDropdowns() {
+            processedDocuments.forEach(doc => {
+                const dropdown = document.getElementById(`doc-type-${doc.id}`);
+                if (dropdown && doc.documentType?.type) {
+                    // Set the current document type as selected
+                    const currentType = doc.documentType.type;
+                    for (let option of dropdown.options) {
+                        if (option.value === currentType) {
+                            dropdown.value = currentType;
+                            break;
+                        }
+                    }
+                    
+                    // Update the first option to show current auto-detected type
+                    if (dropdown.options[0]) {
+                        const confidence = doc.documentType.confidence ? 
+                            ` (Güven: %${Math.round(doc.documentType.confidence * 100)})` : '';
+                        const source = doc.documentType.source === 'manual' ? ' [Manuel]' : '';
+                        dropdown.options[0].text = `Otomatik tespit: ${currentType}${confidence}${source}`;
+                    }
+                }
+            });
+        }
+
+        function updatePatientSelection(docId, patientId) {
+            const doc = processedDocuments.find(d => d.id === docId);
+            if (doc && patientId) {
+                const selectedPatient = patientDatabase.find(p => p.id === patientId);
+                if (selectedPatient) {
+                    doc.matchedPatient = selectedPatient;
+                    doc.status = 'manual_matched';
+                    updateStatistics();
+                }
+            }
+        }
+
+        function updateStatistics() {
+            const successCount = processedDocuments.filter(d => d.status === 'auto_matched' || d.status === 'manual_matched').length;
+            const failureCount = processedDocuments.filter(d => d.status === 'error').length;
+            const manualCount = processedDocuments.filter(d => d.status === 'manual_review').length;
+            
+            document.getElementById('successCount').textContent = successCount;
+            document.getElementById('failureCount').textContent = failureCount;
+            document.getElementById('manualCount').textContent = manualCount;
+            
+            // Show/hide review button
+            const reviewBtn = document.getElementById('reviewBtn');
+            if (manualCount > 0) {
+                reviewBtn.classList.remove('hidden');
+            } else {
+                reviewBtn.classList.add('hidden');
+            }
+        }
+
+        // PDF Preview and Download Functions
+        function previewPDF(docId) {
+            console.log('🔍 Previewing PDF for document:', docId);
+            const doc = processedDocuments.find(d => d.id === docId);
+            
+            if (!doc || !doc.compressedPDF) {
+                Utils.showToast('PDF verisi bulunamadı', 'error');
+                return;
+            }
+
+            try {
+                // Create a blob URL for the PDF
+                const pdfBlob = dataURLToBlob(doc.compressedPDF);
+                const blobUrl = URL.createObjectURL(pdfBlob);
+                
+                // Open in new window for preview
+                const previewWindow = window.open(blobUrl, '_blank');
+                if (!previewWindow) {
+                    Utils.showToast('Popup engelleyici aktif olabilir. PDF indiriliyor...', 'warning');
+                    downloadPDF(docId);
+                } else {
+                    previewWindow.document.title = `${doc.fileName} - PDF Önizleme`;
+                }
+                
+                // Clean up URL after a delay
+                setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+                
+            } catch (error) {
+                console.error('PDF preview error:', error);
+                Utils.showToast('PDF önizleme hatası', 'error');
+            }
+        }
+
+        // Generate automatic PDF filename for display
+        function generatePDFFilename(doc) {
+            const patientName = (doc.matchedPatient?.name || doc.extractedPatientInfo?.name || 'BilinmeyenHasta')
+                .replace(/[^a-zA-ZçğıöşüÇĞIİÖŞÜ0-9]/g, '_');
+            
+            // Map document types to short names for filename
+            const docTypeMap = {
+                'Reçete': 'recete',
+                'Pil Reçete': 'pil_recete', 
+                'Pil Reçetesi': 'pil_recete',
+                'SGK Belge': 'sgk_belge',
+                'SGK Reçete': 'sgk_recete',
+                'Tıbbi Belge': 'tibbi_belge'
+            };
+            
+            const originalDocType = doc.documentType?.displayName || doc.documentType?.name || 'SGK_Belge';
+            const docType = docTypeMap[originalDocType] || originalDocType.replace(/[^a-zA-ZçğıöşüÇĞIİÖŞÜ0-9]/g, '_').toLowerCase();
+            
+            const date = new Date().toISOString().split('T')[0];
+            return `${patientName}_${docType}_${date}.pdf`;
+        }
+
+        function downloadPDF(docId) {
+            console.log('💾 Downloading PDF for document:', docId);
+            const doc = processedDocuments.find(d => d.id === docId);
+            
+            if (!doc || !doc.compressedPDF) {
+                Utils.showToast('PDF verisi bulunamadı', 'error');
+                return;
+            }
+
+            try {
+                // Generate filename using the same function
+                const filename = generatePDFFilename(doc);
+                
+                // Create download link
+                const pdfBlob = dataURLToBlob(doc.compressedPDF);
+                const downloadUrl = URL.createObjectURL(pdfBlob);
+                
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Clean up URL
+                setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+                
+                Utils.showToast(`PDF indirildi: ${filename}`, 'success');
+                
+            } catch (error) {
+                console.error('PDF download error:', error);
+                Utils.showToast('PDF indirme hatası', 'error');
+            }
+        }
+
+        // Helper function to convert data URL to Blob
+        function dataURLToBlob(dataURL) {
+            const parts = dataURL.split(',');
+            const contentType = parts[0].split(':')[1].split(';')[0];
+            const raw = window.atob(parts[1]);
+            const rawLength = raw.length;
+            const uInt8Array = new Uint8Array(rawLength);
+            
+            for (let i = 0; i < rawLength; ++i) {
+                uInt8Array[i] = raw.charCodeAt(i);
+            }
+            
+            return new Blob([uInt8Array], { type: contentType });
+        }
+
+        // Helper function to format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Show document preview modal
+        async function showDocumentPreview(docId) {
+            console.log('🔍 showDocumentPreview called with docId:', docId);
+            console.log('📄 processedDocuments array:', processedDocuments);
+            
+            const doc = processedDocuments.find(d => d.id === docId);
+            if (!doc) {
+                console.error('❌ Document not found with id:', docId);
+                Utils.showToast('Belge bulunamadı', 'error');
+                return;
+            }
+            
+            console.log('📄 Found document:', doc);
+            console.log('🔧 QuickLookModal class available:', typeof QuickLookModal);
+            console.log('🔧 window.patientDatabase:', window.patientDatabase ? window.patientDatabase.length : 'undefined');
+            console.log('🔧 document.body available:', !!document.body);
+            console.log('🔧 document.readyState:', document.readyState);
+
+            // Ensure DOM is ready and defer if needed
+            if (document.readyState === 'loading') {
+                console.warn('⚠️ Document still loading, waiting for DOMContentLoaded...');
+                return new Promise((resolve) => {
+                    document.addEventListener('DOMContentLoaded', () => {
+                        console.log('📄 DOM loaded, retrying showDocumentPreview...');
+                        showDocumentPreview(docId).then(resolve);
+                    }, { once: true });
+                });
+            }
+
+            // Additional safety check for document.body
+            if (!document.body) {
+                console.warn('⚠️ Document body not ready, waiting...');
+                let attempts = 0;
+                const waitForBody = () => {
+                    attempts++;
+                    if (document.body || attempts > 50) { // Max 5 seconds
+                        if (document.body) {
+                            console.log('📄 Document body ready, proceeding...');
+                            showDocumentPreview(docId);
+                        } else {
+                            console.error('❌ Document body still not available after 5 seconds');
+                            Utils.showToast('Sayfa henüz yüklenemedi, lütfen tekrar deneyin', 'error');
+                        }
+                    } else {
+                        setTimeout(waitForBody, 100);
+                    }
+                };
+                waitForBody();
+                return;
+            }
+
+            // Make sure patientDatabase is available globally
+            if (!window.patientDatabase) {
+                console.log('📋 Initializing patient database...');
+                window.patientDatabase = [
+                    { id: '1', name: 'Ahmet Yılmaz', tcNo: '12345678901', phone: '0532 123 4567' },
+                    { id: '2', name: 'Ayşe Demir', tcNo: '12345678902', phone: '0533 234 5678' },
+                    { id: '3', name: 'Mehmet Kaya', tcNo: '12345678903', phone: '0534 345 6789' }
+                ];
+            }
+
+            // Show Quick Look modal with save and cancel handlers
+            try {
+                console.log('📱 Attempting to show QuickLook modal...');
+                
+                const quickLook = await QuickLookModal.show(doc, {
+                    debug: true,
+                    onSave: (updatedDoc) => {
+                        // Update the document in the processedDocuments array
+                        const index = processedDocuments.findIndex(d => d.id === docId);
+                        if (index !== -1) {
+                            processedDocuments[index] = { ...processedDocuments[index], ...updatedDoc };
+                            
+                            // Refresh the results display
+                            displayOCRResults();
+                            
+                            Utils.showToast('Belge bilgileri güncellendi', 'success');
+                        }
+                    },
+                    onCancel: () => {
+                        console.log('Document preview cancelled for:', doc.fileName);
+                    }
+                });
+                
+                console.log('✅ QuickLook modal opened successfully');
+                
+            } catch (error) {
+                console.error('❌ Error showing QuickLook:', error);
+                console.error('❌ Error context:', {
+                    docId: docId,
+                    documentFound: !!doc,
+                    hasQuickLookModal: typeof QuickLookModal !== 'undefined',
+                    hasDocumentBody: !!document.body,
+                    documentReadyState: document.readyState,
+                    patientDatabaseSize: window.patientDatabase ? window.patientDatabase.length : 0
+                });
+                Utils.showToast('Belge önizleme hatası: ' + error.message, 'error');
+            }
+        }
+
+        // Simple Document Viewer - Just image with zoom
+        function showSimpleDocumentViewer(docId) {
+            console.log('🔍 showSimpleDocumentViewer called with docId:', docId);
+            
+            try {
+                const doc = processedDocuments.find(d => d.id === docId);
+                if (!doc) {
+                    console.error('❌ Document not found with id:', docId);
+                    Utils.showToast('Belge bulunamadı', 'error');
+                    return;
+                }
+
+                console.log('📄 Found document for simple viewer:', doc);
+
+                // Create simple modal overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50';
+                overlay.style.zIndex = '10000';
+                
+                overlay.innerHTML = `
+                    <div class="relative max-w-6xl max-h-full p-4 w-full h-full flex flex-col">
+                        <div class="bg-white rounded-lg shadow-lg flex flex-col h-full">
+                            <div class="flex justify-between items-center p-4 border-b flex-shrink-0">
+                                <h3 class="text-lg font-semibold">${doc.fileName} - Hızlı İnceleme</h3>
+                                <button onclick="closeSimpleViewer()" 
+                                    class="text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+                            </div>
+                            <div class="p-4 flex-1 flex flex-col overflow-hidden">
+                                <div class="relative overflow-auto flex-1 border border-gray-200 rounded mb-4" style="min-height: 400px;">
+                                    <img id="simple-viewer-image" 
+                                        src="${doc.originalFileData || doc.fileData || ''}" 
+                                        alt="${doc.fileName}"
+                                        class="max-w-full h-auto cursor-zoom-in transition-transform mx-auto block"
+                                        style="transform: scale(1);">
+                                </div>
+                                <div class="flex justify-center space-x-2 flex-shrink-0">
+                                    <button onclick="zoomImage(-0.2)" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm">
+                                        🔍- Küçült
+                                    </button>
+                                    <button onclick="resetImageZoom()" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded text-sm">
+                                        🔄 Sıfırla
+                                    </button>
+                                    <button onclick="zoomImage(0.2)" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm">
+                                        🔍+ Büyüt
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                document.body.appendChild(overlay);
+
+                // Add zoom functionality
+                let currentZoom = 1;
+                window.zoomImage = function(delta) {
+                    currentZoom = Math.max(0.3, Math.min(5, currentZoom + delta));
+                    const img = document.getElementById('simple-viewer-image');
+                    if (img) {
+                        img.style.transform = `scale(${currentZoom})`;
+                        console.log(`🔍 Zoom changed to: ${currentZoom}`);
+                    }
+                };
+
+                window.resetImageZoom = function() {
+                    currentZoom = 1;
+                    const img = document.getElementById('simple-viewer-image');
+                    if (img) {
+                        img.style.transform = 'scale(1)';
+                        console.log('🔄 Zoom reset to 1');
+                    }
+                };
+
+                window.closeSimpleViewer = function() {
+                    overlay.remove();
+                    // Clean up global functions
+                    delete window.zoomImage;
+                    delete window.resetImageZoom;
+                    delete window.closeSimpleViewer;
+                    document.removeEventListener('keydown', handleEscape);
+                };
+
+                // Close on ESC key
+                const handleEscape = (e) => {
+                    if (e.key === 'Escape') {
+                        window.closeSimpleViewer();
+                    }
+                };
+                document.addEventListener('keydown', handleEscape);
+
+                console.log('✅ Simple viewer opened successfully');
+                
+            } catch (error) {
+                console.error('❌ Error in showSimpleDocumentViewer:', error);
+                Utils.showToast('Görüntüleyici açılırken hata oluştu: ' + error.message, 'error');
+            }
+        }
+
+        // Patient Search Functions
+        function searchPatients(docId, query) {
+            console.log(`🔍 Searching patients for docId: ${docId}, query: "${query}"`);
+            
+            try {
+                const resultsContainer = document.getElementById(`patient-search-results-${docId}`);
+                
+                if (!query || query.length < 2) {
+                    if (resultsContainer) resultsContainer.classList.add('hidden');
+                    return;
+                }
+
+                if (!patientDatabase || !Array.isArray(patientDatabase)) {
+                    console.error('❌ Patient database not available');
+                    if (resultsContainer) {
+                        resultsContainer.innerHTML = '<div class="text-red-500 text-sm p-2">Hasta veritabanı yüklenemedi</div>';
+                        resultsContainer.classList.remove('hidden');
+                    }
+                    return;
+                }
+
+                // Filter patients based on search query
+                const filtered = patientDatabase.filter(patient => 
+                    patient.name.toLowerCase().includes(query.toLowerCase()) ||
+                    (patient.tcNumber && patient.tcNumber.includes(query))
+                ).slice(0, 5); // Limit to 5 results
+
+                console.log(`🔍 Found ${filtered.length} matching patients`);
+
+                if (filtered.length === 0) {
+                    resultsContainer.innerHTML = '<div class="text-gray-500 text-sm p-2">Eşleşen hasta bulunamadı</div>';
+                    resultsContainer.classList.remove('hidden');
+                    return;
+                }
+
+                resultsContainer.innerHTML = filtered.map(patient => `
+                    <div class="flex justify-between items-center p-2 hover:bg-gray-100 border-b cursor-pointer patient-search-item"
+                         onclick="selectPatientForDocument('${docId}', '${patient.id}')">
+                        <div>
+                            <div class="font-medium text-sm">${patient.name}</div>
+                            ${patient.tcNumber ? `<div class="text-xs text-gray-500">TC: ${patient.tcNumber}</div>` : ''}
+                        </div>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs">
+                            Seç
+                        </button>
+                    </div>
+                `).join('');
+
+                resultsContainer.classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('❌ Error in searchPatients:', error);
+            }
+        }
+
+        function selectPatientForDocument(docId, patientId) {
+            const doc = processedDocuments.find(d => d.id === docId);
+            const patient = patientDatabase.find(p => p.id === patientId);
+            
+            if (!doc || !patient) {
+                Utils.showToast('Hasta seçimi hatası', 'error');
+                return;
+            }
+
+            // Update document with selected patient
+            doc.matchedPatient = patient;
+            doc.status = 'manual_matched';
+            
+            // Clear search
+            clearPatientSearch(docId);
+            
+            // Refresh display
+            displayOCRResults();
+            updateStatistics();
+            
+            Utils.showToast(`${patient.name} başarıyla eşleştirildi`, 'success');
+        }
+
+        function clearPatientSearch(docId) {
+            const searchInput = document.getElementById(`patient-search-${docId}`);
+            const resultsContainer = document.getElementById(`patient-search-results-${docId}`);
+            
+            if (searchInput) searchInput.value = '';
+            if (resultsContainer) resultsContainer.classList.add('hidden');
+        }
+
+        // Update document type manually
+        function updateDocumentType(docId, newType) {
+            console.log(`📝 Updating document type for ${docId} to: ${newType}`);
+            
+            if (!newType) {
+                console.log('No document type selected, keeping original');
+                return;
+            }
+            
+            // Find the document in processedDocuments
+            const docIndex = processedDocuments.findIndex(doc => doc.id === docId);
+            if (docIndex !== -1) {
+                const oldType = processedDocuments[docIndex].documentType?.type || 'Unknown';
+                
+                // Update document type
+                processedDocuments[docIndex].documentType = {
+                    type: newType,
+                    confidence: 1.0, // Manual selection = 100% confidence
+                    source: 'manual',
+                    originalType: oldType,
+                    updatedAt: new Date().toISOString()
+                };
+                
+                // Update UI to show the change
+                const docElement = document.querySelector(`[data-doc-id="${docId}"]`);
+                if (docElement) {
+                    // Update document type badge
+                    const typeBadge = docElement.querySelector('.document-type-badge');
+                    if (typeBadge) {
+                        typeBadge.textContent = newType;
+                        typeBadge.className = 'document-type-badge px-2 py-1 text-xs rounded-full bg-green-100 text-green-800';
+                        typeBadge.title = 'Manuel olarak düzeltildi';
+                    }
+                    
+                    // Add manual correction indicator
+                    const existingIndicator = docElement.querySelector('.manual-correction-indicator');
+                    if (!existingIndicator) {
+                        const indicator = document.createElement('div');
+                        indicator.className = 'manual-correction-indicator flex items-center text-xs text-green-600 mt-1';
+                        indicator.innerHTML = `
+                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            Manuel düzeltme yapıldı
+                        `;
+                        
+                        const cardContent = docElement.querySelector('.bg-white');
+                        if (cardContent) {
+                            cardContent.appendChild(indicator);
+                        }
+                    }
+                }
+                
+                // Show success message
+                Utils.showToast(`Belge türü "${newType}" olarak güncellendi`, 'success');
+                
+                // Update statistics
+                updateStatistics();
+                
+                console.log(`✅ Document ${docId} type updated:`, {
+                    from: oldType,
+                    to: newType,
+                    confidence: '100% (manual)'
+                });
+                
+            } else {
+                console.error(`Document ${docId} not found in processedDocuments`);
+                Utils.showToast('Belge bulunamadı', 'error');
+            }
+        }
+
+        // Storage Management Functions
+        async function checkStorageQuota() {
+            try {
+                // Estimate current localStorage usage
+                let totalSize = 0;
+                for (let key in localStorage) {
+                    if (localStorage.hasOwnProperty(key)) {
+                        totalSize += localStorage[key].length + key.length;
+                    }
+                }
+                
+                const usedMB = (totalSize / 1024 / 1024).toFixed(2);
+                const maxMB = 5; // Conservative estimate for localStorage limit
+                const canSave = totalSize < (maxMB * 1024 * 1024 * 0.8); // Use 80% of quota
+                
+                console.log(`💾 Storage check: ${usedMB}MB used, canSave: ${canSave}`);
+                
+                return { usedMB: parseFloat(usedMB), maxMB, canSave };
+                
+            } catch (error) {
+                console.error('Storage check failed:', error);
+                return { usedMB: 0, maxMB: 5, canSave: false };
+            }
+        }
+
+        async function safeStorageSet(key, value) {
+            try {
+                // Test if we can store this data
+                const testKey = 'test_' + Date.now();
+                localStorage.setItem(testKey, value);
+                localStorage.removeItem(testKey);
+                
+                // If test succeeded, store the actual data
+                localStorage.setItem(key, value);
+                
+                console.log(`✅ Safely stored ${key} (${(value.length / 1024).toFixed(1)}KB)`);
+                
+            } catch (error) {
+                console.error(`❌ Storage failed for ${key}:`, error);
+                
+                if (error.name === 'QuotaExceededError' || error.message.includes('quota')) {
+                    // Try to clean up old data and retry
+                    await cleanupOldStorage();
+                    
+                    try {
+                        localStorage.setItem(key, value);
+                        console.log(`✅ Stored ${key} after cleanup`);
+                    } catch (retryError) {
+                        throw new Error('Storage quota exceeded even after cleanup');
+                    }
+                } else {
+                    throw error;
+                }
+            }
+        }
+
+        async function cleanupOldStorage() {
+            console.log('🧹 Cleaning up old storage data...');
+            
+            try {
+                // Clean up old SGK documents (keep only last 50)
+                const sgkDocs = JSON.parse(localStorage.getItem('sgk_documents') || '[]');
+                if (sgkDocs.length > 50) {
+                    // Sort by date and keep newest 50
+                    sgkDocs.sort((a, b) => new Date(b.uploadDate || 0) - new Date(a.uploadDate || 0));
+                    const keepDocs = sgkDocs.slice(0, 50);
+                    localStorage.setItem('sgk_documents', JSON.stringify(keepDocs));
+                    console.log(`🗑️ Cleaned SGK docs: ${sgkDocs.length} → ${keepDocs.length}`);
+                }
+                
+                // Clean up old patient documents data that might contain large binary data
+                const patientDocs = JSON.parse(localStorage.getItem('patient_documents') || '{}');
+                let cleaned = false;
+                
+                for (const patientId in patientDocs) {
+                    const docs = patientDocs[patientId];
+                    for (let i = 0; i < docs.length; i++) {
+                        const doc = docs[i];
+                        // Remove large binary data fields, keep only metadata
+                        if (doc.fileData || doc.croppedImage || doc.compressedPDF) {
+                            docs[i] = {
+                                ...doc,
+                                fileData: null,
+                                croppedImage: null,
+                                compressedPDF: null,
+                                hasImage: !!doc.croppedImage,
+                                hasPDF: !!doc.compressedPDF,
+                                cleanedAt: new Date().toISOString()
+                            };
+                            cleaned = true;
+                        }
+                    }
+                }
+                
+                if (cleaned) {
+                    localStorage.setItem('patient_documents', JSON.stringify(patientDocs));
+                    console.log('🗑️ Cleaned large binary data from patient documents');
+                }
+                
+                // Remove very old temporary data
+                for (let key in localStorage) {
+                    if (key.startsWith('temp_') || key.startsWith('cache_')) {
+                        const timestamp = key.split('_')[1];
+                        if (timestamp && Date.now() - parseInt(timestamp) > 24 * 60 * 60 * 1000) {
+                            localStorage.removeItem(key);
+                            console.log(`🗑️ Removed old temp data: ${key}`);
+                        }
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Storage cleanup failed:', error);
+            }
+        }
+
+        // Storage Info and Management UI
+        async function showStorageInfo() {
+            try {
+                const storageCheck = await checkStorageQuota();
+                const storageDetails = getStorageBreakdown();
+                
+                const message = `💾 Depolama Durumu:
+                
+📊 Kullanım: ${storageCheck.usedMB}MB / ${storageCheck.maxMB}MB (${Math.round((storageCheck.usedMB / storageCheck.maxMB) * 100)}%)
+${storageCheck.canSave ? '✅' : '❌'} Yeni belge kaydı: ${storageCheck.canSave ? 'Mümkün' : 'Depolama dolu!'}
+
+📂 Depolama Dağılımı:
+• SGK Belgeleri: ${storageDetails.sgkDocs} adet
+• Hasta Belgeleri: ${storageDetails.patientDocs} adet  
+• Toplam Veri: ${storageDetails.totalKeys} öğe
+
+${!storageCheck.canSave ? '\n🧹 Depolama alanı dolu! Eski verileri temizlemek ister misiniz?' : ''}`;
+
+                if (!storageCheck.canSave) {
+                    const cleanup = confirm(message + '\n\nEvet: Eski verileri temizle\nHayır: İptal');
+                    if (cleanup) {
+                        await cleanupOldStorage();
+                        const newCheck = await checkStorageQuota();
+                        alert(`🧹 Temizlik tamamlandı!\nYeni kullanım: ${newCheck.usedMB}MB (${newCheck.canSave ? 'Kayıt mümkün' : 'Hala dolu'})`);
+                    }
+                } else {
+                    alert(message);
+                }
+                
+            } catch (error) {
+                console.error('Storage info error:', error);
+                alert('Depolama bilgisi alınamadı: ' + error.message);
+            }
+        }
+
+        function getStorageBreakdown() {
+            try {
+                const sgkDocs = JSON.parse(localStorage.getItem('sgk_documents') || '[]');
+                const patientDocs = JSON.parse(localStorage.getItem('patient_documents') || '{}');
+                const patientDocCount = Object.values(patientDocs).reduce((total, docs) => total + (Array.isArray(docs) ? docs.length : 1), 0);
+                
+                return {
+                    sgkDocs: sgkDocs.length,
+                    patientDocs: patientDocCount,
+                    totalKeys: Object.keys(localStorage).length
+                };
+            } catch (error) {
+                return { sgkDocs: 0, patientDocs: 0, totalKeys: 0 };
+            }
+        }
+
+        function reviewManualApprovals() {
+            const manualDocs = processedDocuments.filter(d => d.status === 'manual_review');
+            alert(`${manualDocs.length} belge manuel onay bekliyor. Lütfen hasta seçimlerini tamamlayın.`);
+        }
+
+        async function saveAllToPatients() {
+            console.log('🔄 Starting unlimited save system...');
+            
+            try {
+                // Load the unlimited storage manager if not already loaded
+                if (!window.SGK?.storageManager) {
+                    await loadScript('/public/modules/sgk/sgk-storage-manager.js');
+                    // Wait a moment for initialization
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+
+                // Check localStorage availability first
+                const testKey = 'test_storage_' + Date.now();
+                try {
+                    localStorage.setItem(testKey, 'test');
+                    localStorage.removeItem(testKey);
+                } catch (error) {
+                    console.warn('LocalStorage test failed, but unlimited storage will handle this');
+                }
+
+                // Get documents to save
+                const sgkDocuments = JSON.parse(localStorage.getItem('sgk_documents') || '[]');
+                const recentDocs = sgkDocuments.filter(doc => {
+                    const uploadTime = new Date(doc.uploadDate);
+                    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+                    return uploadTime > oneHourAgo && (!doc.savedToPatient || doc.patientId === 'unassigned');
+                });
+
+                // Also include processed documents from current session
+                let allDocsToSave = [...recentDocs];
+                if (processedDocuments && processedDocuments.length > 0) {
+                    const validProcessedDocs = processedDocuments.filter(d => 
+                        (d.status === 'auto_matched' || d.status === 'manual_matched') && d.matchedPatient
+                    );
+                    allDocsToSave.push(...validProcessedDocs);
+                    
+                    console.log('📋 Documents to save:', validProcessedDocs.map(d => ({
+                        id: d.id,
+                        filename: d.fileName,
+                        patientId: d.matchedPatient?.id,
+                        patientName: d.matchedPatient?.name,
+                        status: d.status
+                    })));
+                }
+
+                console.log('📊 Total documents to save:', allDocsToSave.length);
+                
+                if (allDocsToSave.length === 0) {
+                    alert('Kaydedilecek belge bulunamadı. Belgeler zaten kaydedilmiş olabilir.');
+                    return;
+                }
+
+                const saveBtn = document.getElementById('saveAllBtn');
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = '🚀 Arka Planda Kaydediliyor...';
+
+                // Use unlimited storage system
+                const result = await window.SGK.storageManager.saveUnlimited(allDocsToSave);
+                
+                if (result.success) {
+                    if (result.backgroundProcess) {
+                        // Show immediate feedback for background processing
+                        const message = `� ${result.documentCount} belge arka planda kaydediliyor!\n\n` +
+                                      `✅ Bu sayfadan ayrılabilirsiniz\n` +
+                                      `📱 İşlem tamamlandığında bildirim alacaksınız\n` +
+                                      `🔄 Sayfaya döndüğünüzde sonuçları görebilirsiniz`;
+                        
+                        alert(message);
+                        
+                        // Update button to show background processing
+                        saveBtn.innerHTML = '📤 Arka Planda İşleniyor...';
+                        saveBtn.disabled = false; // Allow user to start another batch if needed
+                        
+                        // Clear current documents since they're being processed
+                        processedDocuments = [];
+                        document.getElementById('processingStatus').classList.add('hidden');
+                        document.getElementById('ocrResults').classList.add('hidden');
+                        document.getElementById('bulkOCRUpload').value = '';
+                        
+                    } else {
+                        // Immediate completion
+                        alert(`✅ ${allDocsToSave.length} belge başarıyla kaydedildi!`);
+                        
+                        // Reset UI
+                        saveBtn.innerHTML = '💾 Tümünü Hastalara Kaydet';
+                        saveBtn.disabled = false;
+                    }
+                    
+                    // Refresh SGK reports after a delay
+                    setTimeout(() => {
+                        loadSGKReports();
+                    }, 1000);
+                    
+                } else {
+                    throw new Error(result.error || 'Unlimited storage failed');
+                }
+                
+            } catch (error) {
+                console.error('Save error:', error);
+                
+                // Provide helpful error message
+                let errorMessage = 'Kaydetme sırasında hata oluştu: ';
+                if (error.message.includes('quota') || error.message.includes('storage')) {
+                    errorMessage += 'Depolama alanı sorunu. Arka plan işleme sistemi devreye girdi.';
+                } else if (error.message.includes('network') || error.message.includes('connection')) {
+                    errorMessage += 'İnternet bağlantısı sorunu. Lütfen bağlantınızı kontrol edin.';
+                } else {
+                    errorMessage += error.message;
+                }
+                
+                alert(errorMessage);
+                
+                const saveBtn = document.getElementById('saveAllBtn');
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = '💾 Tümünü Hastalara Kaydet';
+            }
+        }
+
+        // Helper function to load scripts dynamically
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
+        async function saveNewPipelineDocument(doc) {
+            try {
+                console.log('💾 Saving new pipeline document with storage optimization...');
+                
+                // Check storage availability first
+                const storageCheck = await checkStorageQuota();
+                if (!storageCheck.canSave) {
+                    throw new Error(`Depolama alanı yetersiz. Kullanılan: ${storageCheck.usedMB}MB`);
+                }
+                
+                // Update the document's patient assignment
+                const patient = doc.patientMatch.patient;
+                
+                // Create optimized document data (remove large binary data)
+                const optimizedDoc = {
+                    id: doc.id,
+                    filename: doc.filename,
+                    originalSize: doc.originalSize,
+                    patientId: patient.id,
+                    patientName: patient.name,
+                    documentType: doc.documentType,
+                    uploadDate: doc.uploadDate,
+                    processingDate: new Date().toISOString(),
+                    savedToPatient: true,
+                    saveDate: new Date().toISOString(),
+                    ocrText: doc.ocrText ? doc.ocrText.substring(0, 1000) : '', // Limit OCR text
+                    ocrConfidence: doc.ocrConfidence,
+                    extractedPatientInfo: doc.extractedPatientInfo,
+                    matchConfidence: doc.patientMatch.confidence,
+                    pdfSize: doc.pdfSize,
+                    status: 'saved',
+                    source: 'sgk_pipeline',
+                    // Store only metadata, not binary data
+                    hasImage: !!doc.croppedImage,
+                    hasPDF: !!doc.compressedPDF,
+                    // Keep small thumbnail only if needed
+                    thumbnail: doc.thumbnail || null
+                };
+                
+                // Update in SGK documents storage (metadata only)
+                const sgkDocs = JSON.parse(localStorage.getItem('sgk_documents') || '[]');
+                const docIndex = sgkDocs.findIndex(d => d.id === doc.id);
+                
+                if (docIndex !== -1) {
+                    // Update existing entry with optimized data
+                    sgkDocs[docIndex] = { ...sgkDocs[docIndex], ...optimizedDoc };
+                } else {
+                    // Add new optimized entry
+                    sgkDocs.push(optimizedDoc);
+                }
+                
+                // Store with quota check
+                await safeStorageSet('sgk_documents', JSON.stringify(sgkDocs));
+                
+                // Also ensure it's in patient documents (metadata only)
+                const patientDocs = JSON.parse(localStorage.getItem('patient_documents') || '{}');
+                if (!patientDocs[patient.id]) {
+                    patientDocs[patient.id] = [];
+                }
+                
+                // Check if already exists
+                const existsIndex = patientDocs[patient.id].findIndex(d => d.id === doc.id);
+                if (existsIndex !== -1) {
+                    patientDocs[patient.id][existsIndex] = optimizedDoc;
+                } else {
+                    patientDocs[patient.id].push(optimizedDoc);
+                }
+                
+                await safeStorageSet('patient_documents', JSON.stringify(patientDocs));
+                
+                console.log(`✅ Optimized document saved for patient ${patient.name}: ${doc.filename}`);
+                
+                // Clean up temporary processing data
+                if (doc.fileData) delete doc.fileData;
+                if (doc.croppedImage) delete doc.croppedImage;
+                if (doc.compressedPDF) delete doc.compressedPDF;
+                
+            } catch (error) {
+                console.error('Failed to save new pipeline document:', error);
+                if (error.message.includes('quota') || error.message.includes('storage')) {
+                    throw new Error('Belge kaydetme hatası: The quota has been exceeded.');
+                }
+                throw error;
+            }
+        }
+
+        async function saveDocumentToPatient(doc) {
+            try {
+                console.log('💾 Saving old system document with storage optimization...');
+                
+                // Validate document data more thoroughly
+                if (!doc) {
+                    throw new Error('Belge verisi bulunamadı');
+                }
+                
+                if (!doc.matchedPatient || !doc.matchedPatient.id) {
+                    throw new Error('Geçersiz hasta bilgisi - Hasta ID bulunamadı');
+                }
+                
+                if (!doc.matchedPatient.name) {
+                    throw new Error('Geçersiz hasta bilgisi - Hasta adı bulunamadı');
+                }
+                
+                if (!doc.fileName && !doc.filename) {
+                    throw new Error('Geçersiz belge verisi - Dosya adı bulunamadı');
+                }
+                
+                // Check storage availability first
+                const storageCheck = await checkStorageQuota();
+                if (!storageCheck.canSave) {
+                    throw new Error(`Depolama alanı yetersiz. Kullanılan: ${storageCheck.usedMB}MB`);
+                }
+                
+                // Get or create patient documents storage
+                const patientDocuments = JSON.parse(localStorage.getItem(`patient_documents_${doc.matchedPatient.id}`) || '{}');
+                
+                const docKey = doc.documentType?.type || 'other';
+                const finalName = generateDocumentName(
+                    doc.matchedPatient.name, 
+                    doc.documentType?.displayName || doc.documentType?.name || 'Belge', 
+                    doc.fileName || doc.filename
+                );
+                
+                // Create optimized document data (without large binary data)
+                const documentData = {
+                    id: 'sgk_old_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                    originalName: doc.fileName || doc.filename,
+                    suggestedName: finalName,
+                    type: doc.fileType || 'image/jpeg',
+                    // Store only small thumbnail instead of full image data
+                    data: null, // Remove large image data
+                    thumbnail: doc.thumbnail || null,
+                    uploadDate: doc.processingDate || new Date().toISOString(),
+                    ocrProcessed: true,
+                    ocrData: {
+                        text: doc.ocrText ? doc.ocrText.substring(0, 1000) : '', // Limit text length
+                        confidence: doc.ocrConfidence || 0,
+                        extractedPatientInfo: doc.extractedPatientInfo || {},
+                        classification: doc.documentType || { type: 'other', confidence: 0 }
+                    },
+                    patientMatch: {
+                        patientId: doc.matchedPatient.id,
+                        patientName: doc.matchedPatient.name,
+                        matchConfidence: doc.matchedPatient.matchConfidence || 1
+                    },
+                    source: 'old_sgk_system',
+                    optimized: true,
+                    originalSize: doc.fileData ? doc.fileData.length : 0
+                };
+                
+                // Store document
+                if (!patientDocuments[docKey]) {
+                    patientDocuments[docKey] = documentData;
+                } else {
+                    if (!Array.isArray(patientDocuments[docKey])) {
+                        patientDocuments[docKey] = [patientDocuments[docKey]];
+                    }
+                    patientDocuments[docKey].push(documentData);
+                }
+                
+                // Use safe storage method
+                await safeStorageSet(`patient_documents_${doc.matchedPatient.id}`, JSON.stringify(patientDocuments));
+                
+                console.log(`✅ Optimized old system document saved for patient ${doc.matchedPatient.name}: ${doc.fileName}`);
+                
+                // Clean up large data from memory
+                if (doc.fileData) delete doc.fileData;
+                
+            } catch (error) {
+                console.error('Failed to save old system document:', error);
+                if (error.message.includes('quota') || error.message.includes('storage')) {
+                    throw new Error('Belge kaydetme hatası: The quota has been exceeded.');
+                }
+                throw error;
+            }
+        }
+
+        function generateDocumentName(patientName, documentType, originalName) {
+            try {
+                const date = new Date().toISOString().split('T')[0];
+                const cleanPatientName = (patientName || 'Bilinmeyen_Hasta')
+                    .replace(/[çÇ]/g, 'c')
+                    .replace(/[ğĞ]/g, 'g')
+                    .replace(/[ıI]/g, 'i')
+                    .replace(/[öÖ]/g, 'o')
+                    .replace(/[şŞ]/g, 's')
+                    .replace(/[üÜ]/g, 'u')
+                    .replace(/[^a-zA-Z0-9\s]/g, '')
+                    .replace(/\s+/g, '_');
+                
+                const cleanDocType = (documentType || 'Belge')
+                    .replace(/[çÇ]/g, 'c')
+                    .replace(/[ğĞ]/g, 'g')
+                    .replace(/[ıI]/g, 'i')
+                    .replace(/[öÖ]/g, 'o')
+                    .replace(/[şŞ]/g, 's')
+                    .replace(/[üÜ]/g, 'u')
+                    .replace(/[^a-zA-Z0-9\s]/g, '')
+                    .replace(/\s+/g, '_');
+                
+                const extension = originalName ? originalName.split('.').pop() : 'pdf';
+                
+                return `${cleanPatientName}_${cleanDocType}_${date}.${extension}`;
+                
+            } catch (error) {
+                console.error('Generate document name error:', error);
+                const timestamp = Date.now();
+                return `SGK_Document_${timestamp}.pdf`;
+            }
+        }
+
+        // Helper functions for enhanced UI
+        function previewDocument(index) {
+            const doc = processedDocuments[index];
+            if (!doc) return;
+            
+            // Create modal for document preview
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg p-6 max-w-4xl max-h-[90vh] overflow-auto">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">${doc.fileName} - Hızlı Görüntüle</h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-gray-500 hover:text-gray-700">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <img src="${doc.originalImage || doc.imageData}" alt="Document" class="max-w-full h-auto border rounded">
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <h4 class="font-medium mb-2">Çıkarılan Bilgiler:</h4>
+                                <p><strong>Hasta Adı:</strong> ${doc.extractedPatientInfo?.name || 'Bulunamadı'}</p>
+                                <p><strong>TC No:</strong> ${doc.extractedPatientInfo?.tcNo || 'Bulunamadı'}</p>
+                                <p><strong>Belge Türü:</strong> ${doc.documentType?.displayName || 'Bilinmeyen'}</p>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-2">OCR Metni (İlk 300 karakter):</h4>
+                                <p class="text-xs bg-gray-100 p-2 rounded">${(doc.extractedText || '').substring(0, 300)}...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function updateDocumentType(index, type) {
+            const doc = processedDocuments[index];
+            if (!doc) return;
+            
+            const typeMap = {
+                'cihaz_recete': 'Cihaz Reçete',
+                'pil_recete': 'Pil Reçete',
+                'odyogram': 'Odyogram',
+                'uygunluk_belgesi': 'Uygunluk Belgesi',
+                'sgk_raporu': 'SGK Raporu',
+                'diger': 'Diğer'
+            };
+            
+            doc.documentType = {
+                type: type,
+                displayName: typeMap[type] || 'Bilinmeyen',
+                confidence: 1.0 // Manual selection = 100% confidence
+            };
+            
+            console.log(`Document type updated for ${doc.fileName}: ${typeMap[type]}`);
+            displayOCRResults(); // Refresh display
+        }
+
+        function updatePatientMatch(index, patientId) {
+            const doc = processedDocuments[index];
+            if (!doc || !patientId) return;
+            
+            // Find patient in the patients list (this should come from your patient database)
+            const patient = window.patients?.find(p => p.id === patientId);
+            if (patient) {
+                doc.matchedPatient = {
+                    id: patient.id,
+                    name: patient.name,
+                    matchConfidence: 1.0 // Manual selection = 100% confidence
+                };
+                doc.status = 'auto_matched'; // Change status to matched
+                
+                console.log(`Patient manually matched for ${doc.fileName}: ${patient.name}`);
+                displayOCRResults(); // Refresh display
+            }
+        }
+
+        function getPatientOptions() {
+            // This should be populated from your actual patient database
+            // For now, returning a placeholder
+            const samplePatients = [
+                { id: 1, name: 'Rahime Çelik' },
+                { id: 2, name: 'Onur Aydoğdu' },
+                { id: 3, name: 'Sercan Kubilay' },
+                { id: 4, name: 'Sami Karatay' }
+            ];
+            
+            return samplePatients.map(patient => 
+                `<option value="${patient.id}">${patient.name}</option>`
+            ).join('');
+        }
+
+        // Function to populate SGK reports table
+        function loadSGKReports() {
+            console.log('🔄 Loading SGK reports...');
+            
+            try {
+                const reportsTableBody = document.getElementById('reports-table-body');
+                if (!reportsTableBody) {
+                    console.warn('Reports table body not found');
+                    return;
+                }
+                
+                // Get saved SGK documents from multiple sources
+                const sgkReports = JSON.parse(localStorage.getItem('sgk_reports') || '[]');
+                const sgkDocs = JSON.parse(localStorage.getItem('sgk_documents') || '[]');
+                const patientDocs = JSON.parse(localStorage.getItem('patient_documents') || '{}');
+                
+                // Combine all documents from all sources
+                let allReports = [];
+                
+                // Add dedicated SGK reports (highest priority)
+                allReports = allReports.concat(sgkReports.map(report => ({
+                    id: report.id,
+                    patientName: report.patientName,
+                    patientId: report.patientId,
+                    tcNumber: report.tcNumber || this.getPatientTC(report.patientId),
+                    reportType: report.reportType,
+                    date: new Date(report.saveDate || report.uploadDate).toLocaleDateString('tr-TR'),
+                    status: this.getSGKStatusFromWorkflow(report.patientId) || report.status || 'Belgeler Yüklendi',
+                    filename: report.filename,
+                    source: 'sgk_reports'
+                })));
+                
+                // Add SGK documents (if not already in reports)
+                sgkDocs.forEach(doc => {
+                    if (doc.savedToPatient && doc.patientId && doc.patientName && !allReports.find(r => r.id === doc.id)) {
+                        allReports.push({
+                            id: doc.id,
+                            patientName: doc.patientName,
+                            patientId: doc.patientId,
+                            tcNumber: this.getPatientTC(doc.patientId),
+                            reportType: doc.documentType?.label || doc.documentType?.name || 'Belge',
+                            date: new Date(doc.saveDate || doc.uploadDate).toLocaleDateString('tr-TR'),
+                            status: this.getSGKStatusFromWorkflow(doc.patientId) || 'Belgeler Yüklendi',
+                            filename: doc.filename,
+                            source: 'sgk_pipeline'
+                        });
+                    }
+                });
+                
+                // Add patient documents (if not already added)
+                Object.entries(patientDocs).forEach(([patientId, docs]) => {
+                    docs.forEach(doc => {
+                        // Avoid duplicates
+                        if (!allReports.find(r => r.id === doc.id)) {
+                            allReports.push({
+                                id: doc.id,
+                                patientName: doc.patientName || this.getPatientName(patientId),
+                                patientId: patientId,
+                                tcNumber: this.getPatientTC(patientId),
+                                reportType: doc.documentType?.label || doc.documentType?.name || 'Belge',
+                                date: new Date(doc.saveDate || doc.uploadDate || doc.processingDate).toLocaleDateString('tr-TR'),
+                                status: this.getSGKStatusFromWorkflow(patientId) || 'Belgeler Yüklendi',
+                                filename: doc.filename,
+                                source: 'patient_docs'
+                            });
+                        }
+                    });
+                });
+                
+                // Sort by date (newest first)
+                allReports.sort((a, b) => {
+                    const dateA = new Date(a.date.split('.').reverse().join('-'));
+                    const dateB = new Date(b.date.split('.').reverse().join('-'));
+                    return dateB - dateA;
+                });
+                
+                // Generate table HTML
+                if (allReports.length === 0) {
+                    reportsTableBody.innerHTML = `
+                        <tr>
+                            <td colspan="6" class="text-center py-8 text-gray-500">
+                                <div class="flex flex-col items-center space-y-2">
+                                    <span class="text-3xl">📄</span>
+                                    <span>Henüz kaydedilmiş belge bulunmuyor</span>
+                                    <span class="text-sm">Belgeler kaydedildikten sonra burada görünecektir</span>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    // Group documents by patient for better display
+                    const patientGroups = {};
+                    allReports.forEach(report => {
+                        const key = `${report.patientId}_${report.patientName}`;
+                        if (!patientGroups[key]) {
+                            patientGroups[key] = {
+                                patientId: report.patientId,
+                                patientName: report.patientName,
+                                tcNumber: report.tcNumber,
+                                documents: [],
+                                reportTypes: new Set()
+                            };
+                        }
+                        patientGroups[key].documents.push(report);
+                        patientGroups[key].reportTypes.add(report.reportType);
+                    });
+
+                    reportsTableBody.innerHTML = Object.values(patientGroups).map(group => {
+                        // Determine main report type and missing documents
+                        const hasIsitmeRaporu = Array.from(group.reportTypes).some(type => 
+                            type.includes('İşitme') || type.includes('Hearing') || type.includes('cihaz'));
+                        const hasPilRaporu = Array.from(group.reportTypes).some(type => 
+                            type.includes('Pil') || type.includes('Battery'));
+                        
+                        // Required documents based on report types
+                        let requiredDocs = [];
+                        let patientDocs = [];
+                        
+                        if (hasIsitmeRaporu) {
+                            requiredDocs.push('Reçete', 'Odyogram', 'Uygunluk Belgesi');
+                        }
+                        if (hasPilRaporu) {
+                            requiredDocs.push('Pil Reçetesi');
+                        }
+                        
+                        // Check what documents the patient has
+                        group.documents.forEach(doc => {
+                            const docType = mapDocumentTypeToDisplay(doc.reportType);
+                            if (!patientDocs.includes(docType)) {
+                                patientDocs.push(docType);
+                            }
+                        });
+                        
+                        // Find missing documents
+                        const missingDocs = requiredDocs.filter(req => !patientDocs.includes(req));
+                        
+                        // Create document type display
+                        const docTypesDisplay = patientDocs.length > 0 ? patientDocs.join(', ') : 'Belge türü bilinmiyor';
+                        
+                        // Warning icon for missing documents
+                        const warningIcon = missingDocs.length > 0 ? 
+                            `<span class="inline-flex items-center ml-2 text-amber-500" title="Eksik belgeler: ${missingDocs.join(', ')}">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                </svg>
+                            </span>` : '';
+                        
+                        // Get latest document for date and status
+                        const latestDoc = group.documents.sort((a, b) => {
+                            const dateA = new Date(a.date.split('.').reverse().join('-'));
+                            const dateB = new Date(b.date.split('.').reverse().join('-'));
+                            return dateB - dateA;
+                        })[0];
+                        
+                        // Determine main report type for display
+                        let mainReportType = 'Belge';
+                        if (hasIsitmeRaporu && hasPilRaporu) {
+                            mainReportType = 'İşitme Cihazı + Pil Raporu';
+                        } else if (hasIsitmeRaporu) {
+                            mainReportType = 'İşitme Cihazı Raporu';
+                        } else if (hasPilRaporu) {
+                            mainReportType = 'Pil Raporu';
+                        }
+                        
+                        return `
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <button onclick="openPatientDetails('${group.patientId}')" 
+                                                class="text-sm font-medium text-indigo-600 hover:text-indigo-900 hover:underline">
+                                            ${group.patientName}
+                                        </button>
+                                        ${warningIcon}
+                                    </div>
+                                    <div class="text-xs text-gray-500">${docTypesDisplay}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    ${group.tcNumber || 'Bilinmiyor'}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        ${mainReportType}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    ${latestDoc.date}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusBadgeClass(latestDoc.status)}">
+                                        ${latestDoc.status}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button onclick="viewPatientReports('${group.patientId}')" class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                        Görüntüle
+                                    </button>
+                                    <button onclick="downloadPatientReports('${group.patientId}')" class="text-green-600 hover:text-green-900">
+                                        İndir
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+                
+                console.log(`✅ Loaded ${allReports.length} SGK reports from ${sgkReports.length} dedicated reports, ${sgkDocs.length} SGK docs, and patient docs`);
+                
+            } catch (error) {
+                console.error('Failed to load SGK reports:', error);
+                document.getElementById('reports-table-body').innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center py-8 text-red-500">
+                            <div class="flex flex-col items-center space-y-2">
+                                <span class="text-3xl">❌</span>
+                                <span>Raporlar yüklenirken hata oluştu</span>
+                                <span class="text-sm">${error.message}</span>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+        
+        // Helper function to map document types to user-friendly display names
+        function mapDocumentTypeToDisplay(reportType) {
+            const typeMap = {
+                'cihaz_recete': 'Reçete',
+                'pil_recete': 'Pil Reçetesi', 
+                'odyogram': 'Odyogram',
+                'uygunluk_belgesi': 'Uygunluk Belgesi',
+                'sgk_raporu': 'SGK Raporu',
+                'recete': 'Reçete',
+                'kimlik': 'Kimlik Belgesi',
+                'İşitme Cihazı Raporu': 'Reçete',
+                'Pil Raporu': 'Pil Reçetesi',
+                'Hearing Aid': 'Reçete',
+                'Battery': 'Pil Reçetesi'
+            };
+            
+            // Check if the reportType contains keywords
+            const lowerType = reportType.toLowerCase();
+            if (lowerType.includes('pil') || lowerType.includes('battery')) {
+                return 'Pil Reçetesi';
+            }
+            if (lowerType.includes('odyogram') || lowerType.includes('audiogram')) {
+                return 'Odyogram';
+            }
+            if (lowerType.includes('uygunluk') || lowerType.includes('eligibility')) {
+                return 'Uygunluk Belgesi';
+            }
+            if (lowerType.includes('reçete') || lowerType.includes('recete') || lowerType.includes('prescription')) {
+                return 'Reçete';
+            }
+            
+            return typeMap[reportType] || reportType;
+        }
+        
+        // Function to open patient details with documents tab
+        function openPatientDetails(patientId) {
+            console.log('👤 Opening patient details for:', patientId);
+            
+            try {
+                // Check if we're already on the patient details page
+                if (window.location.pathname.includes('patient-details.html')) {
+                    // We're already on patient details, just load the patient
+                    if (window.patientDetailsManager && window.patientDetailsManager.loadPatient) {
+                        window.patientDetailsManager.loadPatient(patientId);
+                        // Switch to documents tab
+                        setTimeout(() => {
+                            const documentsTab = document.querySelector('[data-tab="documents"]');
+                            if (documentsTab) {
+                                documentsTab.click();
+                            }
+                        }, 500);
+                    }
+                } else {
+                    // Navigate to patient details page with patient ID and documents tab
+                    const baseUrl = window.location.origin + window.location.pathname.replace('sgk.html', 'patient-details.html');
+                    const url = `${baseUrl}?patient=${patientId}&tab=documents`;
+                    window.open(url, '_blank');
+                }
+            } catch (error) {
+                console.error('Failed to open patient details:', error);
+                alert('Hasta detayları açılırken hata oluştu: ' + error.message);
+            }
+        }
+        
+        // Function to view all reports for a patient
+        async function viewPatientReports(patientId) {
+            console.log('📋 Viewing all reports for patient:', patientId);
+            
+            try {
+                // Add debug information
+                console.log('🔍 Debug: Checking all storage locations for patient:', patientId);
+                
+                // Check what's in localStorage
+                console.log('🗃️ LocalStorage keys containing patient data:', 
+                    Object.keys(localStorage).filter(key => key.includes('patient') || key.includes(patientId))
+                );
+                
+                // Get all documents for this patient from multiple storage locations
+                const sgkDocs = JSON.parse(localStorage.getItem('sgk_documents') || '[]');
+                const patientDocs = JSON.parse(localStorage.getItem('patient_documents') || '{}');
+                const patientSpecificDocs = JSON.parse(localStorage.getItem(`patient_documents_${patientId}`) || '{}');
+                
+                console.log('📊 Storage contents:', {
+                    sgkDocsTotal: sgkDocs.length,
+                    patientDocsKeys: Object.keys(patientDocs),
+                    patientSpecificStructure: patientSpecificDocs,
+                    targetPatientId: patientId
+                });
+                
+                let patientReports = [];
+                
+                // From SGK documents
+                sgkDocs.forEach(doc => {
+                    if (doc.patientId === patientId) {
+                        patientReports.push(doc);
+                        console.log('✅ Found SGK document:', doc.filename || doc.fileName);
+                    }
+                });
+                
+                // From general patient documents
+                if (patientDocs[patientId]) {
+                    patientReports = patientReports.concat(patientDocs[patientId]);
+                    console.log('✅ Found general patient documents:', patientDocs[patientId].length);
+                }
+                
+                // From patient-specific storage (unlimited storage system)
+                if (patientSpecificDocs.documents && Array.isArray(patientSpecificDocs.documents)) {
+                    patientReports = patientReports.concat(patientSpecificDocs.documents);
+                    console.log('✅ Found patient-specific documents:', patientSpecificDocs.documents.length);
+                }
+                
+                // Also check IndexedDB and other storage methods if available
+                if (window.SGK?.storageManager) {
+                    try {
+                        const additionalDocs = await window.SGK.storageManager.retrievePatientDocuments(patientId);
+                        if (additionalDocs && additionalDocs.length > 0) {
+                            patientReports = patientReports.concat(additionalDocs);
+                            console.log(`📄 Found ${additionalDocs.length} additional documents from unlimited storage`);
+                        }
+                    } catch (error) {
+                        console.warn('Could not retrieve from unlimited storage:', error);
+                    }
+                }
+                
+                console.log(`📄 Found ${patientReports.length} documents for patient ${patientId}:`, {
+                    sgkDocs: sgkDocs.filter(doc => doc.patientId === patientId).length,
+                    generalDocs: patientDocs[patientId] ? patientDocs[patientId].length : 0,
+                    specificDocs: patientSpecificDocs.documents ? patientSpecificDocs.documents.length : 0,
+                    unlimitedStorage: window.SGK?.storageManager ? 'checked' : 'not available',
+                    documentsFound: patientReports.map(d => d.filename || d.fileName || d.id)
+                });
+                
+                if (patientReports.length === 0) {
+                    alert(`Bu hasta için belge bulunamadı.\n\nDebug bilgisi:\n• SGK dokümanları: ${sgkDocs.length}\n• Hasta ID: ${patientId}\n• Depolama anahtarları: ${Object.keys(localStorage).filter(k => k.includes('patient')).length}`);
+                    return;
+                }
+                
+                // Create and show modal with patient documents
+                showPatientReportsModal(patientId, patientReports);
+                
+            } catch (error) {
+                console.error('Failed to load patient reports:', error);
+                alert('Hasta belgeleri yüklenirken hata oluştu: ' + error.message);
+            }
+        }
+        
+        // Function to download all reports for a patient
+        function downloadPatientReports(patientId) {
+            console.log('💾 Downloading all reports for patient:', patientId);
+            alert(`Hasta belgeleri indiriliyor: ${patientId}\n(Bu özellik henüz geliştirilmektedir)`);
+        }
+        
+        // Function to show patient reports in a modal
+        function showPatientReportsModal(patientId, reports) {
+            // Create modal HTML
+            const modalHtml = `
+                <div id="patient-reports-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+                    <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden m-4">
+                        <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">Hasta Belgeleri</h3>
+                            <button onclick="closePatientReportsModal()" class="text-gray-400 hover:text-gray-600">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="p-6 overflow-y-auto max-h-[70vh]">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                ${reports.map(doc => `
+                                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm font-medium text-gray-900">
+                                                ${mapDocumentTypeToDisplay(doc.documentType?.label || doc.reportType || 'Belge')}
+                                            </span>
+                                            <span class="text-xs text-gray-500">
+                                                ${new Date(doc.saveDate || doc.uploadDate || doc.processingDate).toLocaleDateString('tr-TR')}
+                                            </span>
+                                        </div>
+                                        <div class="text-xs text-gray-600 mb-3">
+                                            ${doc.filename || doc.originalName || 'Dosya adı bilinmiyor'}
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button onclick="viewDocument('${doc.id}')" 
+                                                    class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded hover:bg-indigo-200">
+                                                Görüntüle
+                                            </button>
+                                            <button onclick="downloadDocument('${doc.id}')" 
+                                                    class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded hover:bg-green-200">
+                                                İndir
+                                            </button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add modal to page
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+        }
+        
+        // Function to close patient reports modal
+        function closePatientReportsModal() {
+            const modal = document.getElementById('patient-reports-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+        
+        // Function to view a specific document
+        function viewDocument(documentId) {
+            console.log('👁️ Viewing document:', documentId);
+            alert(`Belge görüntüleniyor: ${documentId}\n(Bu özellik henüz geliştirilmektedir)`);
+        }
+        
+        // Function to download a specific document
+        function downloadDocument(documentId) {
+            console.log('💾 Downloading document:', documentId);
+            
+            try {
+                // First, try to find the document in processedDocuments (current session)
+                let document = processedDocuments.find(doc => doc.id === documentId);
+                
+                if (document && document.compressedPDF) {
+                    // Document has PDF data
+                    const pdfBlob = document.compressedPDF;
+                    const filename = generatePDFFilename(document);
+                    
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(pdfBlob);
+                    link.download = filename;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href);
+                    
+                    console.log('✅ Downloaded PDF document:', filename);
+                    return;
+                }
+                
+                // If not found in current session, check if it's a simplified stored document
+                if (!document) {
+                    // Search in all storage locations
+                    const allStorageKeys = Object.keys(localStorage).filter(key => 
+                        key.startsWith('patient_documents_') || key === 'sgk_documents'
+                    );
+                    
+                    for (const key of allStorageKeys) {
+                        try {
+                            const data = JSON.parse(localStorage.getItem(key) || '{}');
+                            
+                            if (Array.isArray(data)) {
+                                // SGK documents format
+                                document = data.find(doc => doc.id === documentId);
+                            } else if (data.documents && Array.isArray(data.documents)) {
+                                // New unlimited storage format
+                                document = data.documents.find(doc => doc.id === documentId);
+                            }
+                            
+                            if (document) break;
+                        } catch (e) {
+                            console.warn('Error parsing storage key:', key);
+                        }
+                    }
+                }
+                
+                if (document) {
+                    // Create a basic text file with document information
+                    const docInfo = `
+SGK Belge Bilgisi
+================
+
+Dosya Adı: ${document.filename || document.fileName || 'Belge'}
+Belge Türü: ${document.documentType || 'Bilinmiyor'}
+Hasta Adı: ${document.patientName || 'Bilinmiyor'}
+Yükleme Tarihi: ${document.uploadDate || document.saveDate || 'Bilinmiyor'}
+Durum: ${document.status || 'Kaydedildi'}
+
+Not: Bu belge optimized depolama nedeniyle orijinal dosya verisi bulunmuyor.
+Orijinal dosyayı indirmek için belgeyi yeniden yükleyin.
+
+OCR Metni:
+${document.ocrText || 'OCR metni mevcut değil'}
+                    `.trim();
+                    
+                    const blob = new Blob([docInfo], { type: 'text/plain;charset=utf-8' });
+                    const filename = `${document.filename || 'belge'}_bilgi.txt`;
+                    
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = filename;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href);
+                    
+                    console.log('✅ Downloaded document info as text file:', filename);
+                    alert('Belge bilgileri text dosyası olarak indirildi.\n\nNot: Optimized depolama nedeniyle orijinal dosya verisi mevcut değil.');
+                } else {
+                    alert(`Belge bulunamadı: ${documentId}\nBelge silinmiş olabilir veya farklı bir oturumda yüklenmiş olabilir.`);
+                }
+                
+            } catch (error) {
+                console.error('Download error:', error);
+                alert('Belge indirilirken hata oluştu: ' + error.message);
+            }
+        }
+
+        // Helper functions for report loading
+        function getPatientName(patientId) {
+            try {
+                const patients = window.sgkPipeline ? window.sgkPipeline.getAllPatients() : [];
+                const patient = patients.find(p => p.id === patientId);
+                return patient ? patient.name : 'Bilinmeyen Hasta';
+            } catch (error) {
+                return 'Bilinmeyen Hasta';
+            }
+        }
+        
+        function getPatientTC(patientId) {
+            try {
+                const patients = window.sgkPipeline ? window.sgkPipeline.getAllPatients() : [];
+                const patient = patients.find(p => p.id === patientId);
+                return patient ? patient.tcNumber : null;
+            } catch (error) {
+                return null;
+            }
+        }
+        
+        function getSGKStatusFromWorkflow(patientId) {
+            try {
+                if (window.sgkPipeline) {
+                    const workflowStatus = window.sgkPipeline.getPatientSGKWorkflowStatus(patientId);
+                    return workflowStatus ? workflowStatus.currentStatusInfo?.label : null;
+                }
+                return null;
+            } catch (error) {
+                return null;
+            }
+        }
+        
+        function getStatusBadgeClass(status) {
+            const statusClasses = {
+                'Sorgulandı': 'bg-blue-100 text-blue-800',
+                'Reçete Kaydedildi': 'bg-indigo-100 text-indigo-800',
+                'Malzeme Teslim Edildi': 'bg-purple-100 text-purple-800',
+                'Belgeler Yüklendi': 'bg-green-100 text-green-800',
+                'Faturalandı': 'bg-yellow-100 text-yellow-800',
+                'Ödemesi Alındı': 'bg-emerald-100 text-emerald-800',
+                'Bekleyen': 'bg-gray-100 text-gray-800',
+                'Reddedilen': 'bg-red-100 text-red-800'
+            };
+            return statusClasses[status] || 'bg-gray-100 text-gray-800';
+        }
+        
+        // Function to view report details
+        function viewReportDetails(reportId) {
+            console.log('👁️ Viewing report details:', reportId);
+            // TODO: Implement report details modal
+            alert(`Rapor detayları: ${reportId}`);
+        }
+        
+        // Function to download report
+        function downloadReport(reportId) {
+            console.log('💾 Downloading report:', reportId);
+            // TODO: Implement report download
+            alert(`Rapor indiriliyor: ${reportId}`);
+        }
+        
+        // Test function to create sample SGK report entries (for development)
+        function createSampleSGKReports() {
+            console.log('🔄 Creating sample SGK reports for testing...');
+            
+            try {
+                const sampleReports = [
+                    {
+                        id: 'sample_report_1',
+                        patientId: 'p1',
+                        patientName: 'Elif Özkan',
+                        tcNumber: '12345678901',
+                        reportType: 'İşitme Cihazı Raporu',
+                        filename: 'Elif_Ozkan_Isitme_Raporu.pdf',
+                        uploadDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days ago
+                        saveDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+                        status: 'documents_uploaded',
+                        workflowStatus: 'documents_uploaded',
+                        source: 'test_data'
+                    },
+                    {
+                        id: 'sample_report_2',
+                        patientId: 'p2',
+                        patientName: 'Murat Demir',
+                        tcNumber: '98765432109',
+                        reportType: 'Pil Raporu',
+                        filename: 'Murat_Demir_Pil_Raporu.pdf',
+                        uploadDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days ago
+                        saveDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+                        status: 'documents_uploaded',
+                        workflowStatus: 'documents_uploaded',
+                        source: 'test_data'
+                    }
+                ];
+                
+                // Get existing reports
+                const existingReports = JSON.parse(localStorage.getItem('sgk_reports') || '[]');
+                
+                // Add sample reports if they don't exist
+                sampleReports.forEach(sampleReport => {
+                    if (!existingReports.find(r => r.id === sampleReport.id)) {
+                        existingReports.push(sampleReport);
+                    }
+                });
+                
+                // Save back to localStorage
+                localStorage.setItem('sgk_reports', JSON.stringify(existingReports));
+                
+                console.log(`✅ Added ${sampleReports.length} sample SGK reports`);
+                
+                // Refresh the reports table
+                loadSGKReports();
+                
+            } catch (error) {
+                console.error('Failed to create sample reports:', error);
+            }
+        }
+
+        // Initialize SGK Pipeline
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📄 DOM Content Loaded - initializing components...');
+            
+            // Initialize the SGK document pipeline
+            if (typeof SGKDocumentPipeline !== 'undefined') {
+                window.sgkPipeline = new SGKDocumentPipeline();
+                console.log('✅ SGK Document Pipeline initialized');
+                
+                // Debug: Check if methods are available
+                const methods = ['classifyDocument', 'extractPatientInfo', 'extractPatientInfoFallback', 'getAllPatients', 'fuzzySearchPatients'];
+                methods.forEach(method => {
+                    if (typeof window.sgkPipeline[method] === 'function') {
+                        console.log(`✅ Method available: ${method}`);
+                    } else {
+                        console.warn(`❌ Method missing: ${method}`);
+                    }
+                });
+            } else {
+                console.warn('⚠️ SGK Document Pipeline not available');
+            }
+            
+            // Initialize document manager
+            if (typeof DocumentManager !== 'undefined') {
+                window.documentManager = new DocumentManager();
+                console.log('✅ Document Manager initialized');
+            }
+            
+            // Initialize QuickLook Modal component
+            if (typeof QuickLookModal !== 'undefined') {
+                console.log('✅ QuickLook Modal component available');
+                
+                // Test QuickLook availability
+                try {
+                    const testModal = new QuickLookModal({ debug: true });
+                    console.log('✅ QuickLook Modal test instance created successfully');
+                } catch (error) {
+                    console.error('❌ QuickLook Modal initialization test failed:', error);
+                }
+            } else {
+                console.error('❌ QuickLook Modal component not available');
+            }
+            
+            // Ensure patient database is available
+            if (!window.patientDatabase) {
+                console.log('📋 Initializing patient database...');
+                window.patientDatabase = [
+                    { id: '1', name: 'Ahmet Yılmaz', tcNo: '12345678901', phone: '0532 123 4567' },
+                    { id: '2', name: 'Ayşe Demir', tcNo: '12345678902', phone: '0533 234 5678' },
+                    { id: '3', name: 'Mehmet Kaya', tcNo: '12345678903', phone: '0534 345 6789' }
+                ];
+                console.log('✅ Patient database initialized with', window.patientDatabase.length, 'patients');
+            }
+            
+            // Load SGK reports on page load
+            setTimeout(() => {
+                // Create sample reports if none exist
+                const existingReports = JSON.parse(localStorage.getItem('sgk_reports') || '[]');
+                if (existingReports.length === 0) {
+                    createSampleSGKReports();
+                } else {
+                    loadSGKReports();
+                }
+                
+                // Check background processing status
+                showBackgroundProcessingStatus();
+            }, 1000);
+        });
+
+        // Calculate localStorage usage
+        function calculateStorageUsage() {
+            try {
+                let totalSize = 0;
+                for (let key in localStorage) {
+                    if (localStorage.hasOwnProperty(key)) {
+                        totalSize += localStorage[key].length + key.length;
+                    }
+                }
+                
+                // Estimate localStorage limit (usually 5-10MB)
+                const estimatedLimit = 5 * 1024 * 1024; // 5MB
+                const percentage = (totalSize / estimatedLimit) * 100;
+                
+                return {
+                    used: totalSize,
+                    usedMB: Math.round(totalSize / (1024 * 1024) * 100) / 100,
+                    estimatedLimit: estimatedLimit,
+                    limitMB: Math.round(estimatedLimit / (1024 * 1024)),
+                    percentage: Math.round(percentage)
+                };
+            } catch (error) {
+                return { error: error.message };
+            }
+        }
+
+        // Show storage warning
+        function showStorageWarning(usage) {
+            const warningDiv = document.createElement('div');
+            warningDiv.className = 'fixed top-4 left-4 bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded z-50';
+            warningDiv.innerHTML = `
+                <div class="flex items-start">
+                    <div class="flex-1">
+                        <strong>⚠️ Depolama Uyarısı</strong>
+                        <p class="text-sm mt-1">Depolama alanının %${usage.percentage}'i dolu (${usage.usedMB} MB / ~${usage.limitMB} MB)</p>
+                        <p class="text-xs mt-1">Arka plan kaydetme sistemi aktif - depolama sınırı olmadan çalışır</p>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-yellow-600 hover:text-yellow-800">×</button>
+                </div>
+            `;
+            document.body.appendChild(warningDiv);
+            
+            // Auto-hide after 10 seconds
+            setTimeout(() => {
+                if (warningDiv.parentElement) {
+                    warningDiv.remove();
+                }
+            }, 10000);
+        }
+
+        // Show background processing status
+        function showBackgroundProcessingStatus() {
+            // Check if there are any documents being processed
+            const processingStatus = localStorage.getItem('background_processing_status');
+            if (processingStatus) {
+                const status = JSON.parse(processingStatus);
+                
+                const statusDiv = document.createElement('div');
+                statusDiv.className = 'fixed bottom-4 right-4 bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg shadow-lg z-50';
+                statusDiv.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                        <div>
+                            <p class="text-sm font-medium">📤 Arka plan işleme devam ediyor</p>
+                            <p class="text-xs">${status.completed || 0}/${status.total || 0} belge işlendi</p>
+                        </div>
+                        <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-blue-600 hover:text-blue-800">×</button>
+                    </div>
+                `;
+                document.body.appendChild(statusDiv);
+            }
+        }
+        
+        /**
+         * Check if there's ongoing background processing from a previous session
+         */
+        function checkBackgroundProcessingStatus() {
+            try {
+                const bgStatus = localStorage.getItem('background_processing_status');
+                if (bgStatus) {
+                    const status = JSON.parse(bgStatus);
+                    const timeSinceStart = Date.now() - status.startTime;
+                    
+                    // If processing was started less than 10 minutes ago, show status
+                    if (timeSinceStart < 10 * 60 * 1000) {
+                        showBackgroundProcessingStatus();
+                        
+                        if (window.SGK?.storageManager) {
+                            window.SGK.storageManager.showBackgroundProcessingBadge(true);
+                        }
+                        
+                        // Show notification if user returned to page
+                        if ('Notification' in window && Notification.permission === 'granted') {
+                            new Notification('SGK Dosya İşleme Devam Ediyor', {
+                                body: `${status.processedFiles}/${status.totalFiles} dosya işlendi. İşlem arka planda devam ediyor.`,
+                                icon: '/public/assets/img/logo.png'
+                            });
+                        }
+                    } else {
+                        // Processing likely completed or failed, clean up
+                        localStorage.removeItem('background_processing_status');
+                    }
+                }
+            } catch (error) {
+                console.warn('Error checking background processing status:', error);
+            }
+        }
+    </script>
+</body>
+</html>

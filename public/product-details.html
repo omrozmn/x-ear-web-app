@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Detayları - X-Ear CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        },
+                        gray: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .card {
+            @apply bg-white rounded-xl shadow-sm border border-gray-200/60;
+        }
+        .card-header {
+            @apply px-6 py-4 border-b border-gray-200/60;
+        }
+        .card-title {
+            @apply text-lg font-semibold text-gray-900;
+        }
+        .btn-primary {
+            @apply inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors duration-200;
+        }
+        .btn-secondary {
+            @apply inline-flex items-center px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 font-medium rounded-lg border border-gray-300 transition-colors duration-200;
+        }
+        .btn-danger {
+            @apply inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors duration-200;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+    <!-- Sidebar Navigation -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200/60 backdrop-blur-sm sticky top-0 z-10">
+            <div class="px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-6">
+                        <button class="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors" data-menu-toggle>
+                            <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                        
+                        <!-- Breadcrumb -->
+                        <nav class="flex items-center space-x-2 text-sm">
+                            <a href="inventory.html" class="text-gray-500 hover:text-gray-700 font-medium transition-colors">Stok Yönetimi</a>
+                            <svg class="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-gray-900 font-semibold" id="breadcrumbProductName">Ürün Detayları</span>
+                        </nav>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <button class="btn-secondary" onclick="goBack()">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+                            </svg>
+                            Geri Dön
+                        </button>
+                        
+                        <div class="flex items-center space-x-3 pl-4 border-l border-gray-200">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%233b82f6'/%3E%3Ctext x='16' y='21' text-anchor='middle' fill='white' font-family='Inter' font-size='12' font-weight='600'%3EAD%3C/text%3E%3C/svg%3E" alt="Admin" class="w-8 h-8 rounded-full ring-2 ring-primary-100">
+                            <span class="text-sm font-medium text-gray-700">Admin User</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Product Details Content -->
+        <div class="p-6 max-w-7xl mx-auto">
+            <!-- Product Info Header -->
+            <div class="card mb-8 overflow-hidden">
+                <div class="bg-gradient-to-r from-primary-50 to-primary-100/50 px-6 py-8">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-6">
+                            <div class="w-20 h-20 bg-white rounded-2xl shadow-sm flex items-center justify-center ring-1 ring-primary-200">
+                                <svg class="w-10 h-10 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 2L3 7v11a2 2 0 002 2h10a2 2 0 002-2V7l-7-5zM6 9a1 1 0 112 0 1 1 0 01-2 0zm6 0a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h1 class="text-3xl font-bold text-gray-900 mb-2" id="productTitle">Ürün Yükleniyor...</h1>
+                                <p class="text-lg text-gray-600 font-medium" id="productSubtitle">Marka ve Model</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-white rounded-xl px-4 py-2 shadow-sm ring-1 ring-gray-200">
+                                <span class="block text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Stok Durumu</span>
+                                <span class="status-badge text-sm" id="stockStatus">Stok Durumu</span>
+                            </div>
+                            <button class="btn-primary shadow-lg" onclick="toggleEditMode()" id="editToggleBtn">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                                </svg>
+                                Düzenle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Form -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Main Product Details -->
+                <div class="lg:col-span-2 space-y-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title flex items-center">
+                                <svg class="w-5 h-5 text-primary-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 0h8v12H6V4z" clip-rule="evenodd"/>
+                                </svg>
+                                Ürün Bilgileri
+                            </h3>
+                        </div>
+                        
+                        <div class="p-6">
+                            <form id="productForm" class="space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-semibold text-gray-700">Ürün Adı *</label>
+                                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-gray-50 disabled:bg-gray-100" id="productName" required>
+                                    </div>
+                                    
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-semibold text-gray-700">Marka *</label>
+                                        <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-gray-50 disabled:bg-gray-100" id="productBrand" required>
+                                            <option value="">Marka seçin</option>
+                                            <option value="Phonak">Phonak</option>
+                                            <option value="Oticon">Oticon</option>
+                                            <option value="Widex">Widex</option>
+                                            <option value="Signia">Signia</option>
+                                            <option value="ReSound">ReSound</option>
+                                            <option value="Starkey">Starkey</option>
+                                            <option value="Unitron">Unitron</option>
+                                            <option value="PowerOne">PowerOne</option>
+                                            <option value="Duracell">Duracell</option>
+                                            <option value="Rayovac">Rayovac</option>
+                                            <option value="Universal">Universal</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-semibold text-gray-700">Model</label>
+                                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-gray-50 disabled:bg-gray-100" id="productModel">
+                                    </div>
+                                    
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-semibold text-gray-700">Kategori *</label>
+                                        <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-gray-50 disabled:bg-gray-100" id="productCategory" required>
+                                            <option value="">Kategori seçin</option>
+                                            <option value="isitme_cihazi">İşitme Cihazı</option>
+                                            <option value="aksesuar">Aksesuar</option>
+                                            <option value="pil">Pil</option>
+                                            <option value="bakim">Bakım</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-semibold text-gray-700">Seri Numarası</label>
+                                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-gray-50 disabled:bg-gray-100" id="productSerial">
+                                    </div>
+                                    
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-semibold text-gray-700">Barkod No</label>
+                                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-gray-50 disabled:bg-gray-100" id="productBarcode">
+                                    </div>
+                                    
+                                    <div class="space-y-2">
+                                        <label class="block text-sm font-semibold text-gray-700">Tedarikçi</label>
+                                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-gray-50 disabled:bg-gray-100" id="productSupplier">
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-semibold text-gray-700">Açıklama</label>
+                                    <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-gray-50 disabled:bg-gray-100 resize-none" id="productDescription" rows="4" placeholder="Ürün hakkında detaylı bilgi..."></textarea>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stock & Pricing Info -->
+                <div class="space-y-8">
+                    <!-- Stock Information -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title flex items-center">
+                                <svg class="w-5 h-5 text-primary-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732L14.146 12.8l-1.179 4.456a1 1 0 01-1.856.048L9.353 12.8 6 10.866a1 1 0 010-1.732L9.353 7.2l1.758-4.456A1 1 0 0112 2z" clip-rule="evenodd"/>
+                                </svg>
+                                Stok Bilgileri
+                            </h3>
+                        </div>
+                        
+                        <div class="p-6 space-y-6">
+                            <div class="space-y-2">
+                                <label class="block text-sm font-semibold text-gray-700">Mevcut Stok</label>
+                                <div class="relative">
+                                    <input type="number" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-gray-50 disabled:bg-gray-100 pr-16" id="productStock" min="0">
+                                    <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-sm text-gray-500 font-medium">adet</span>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label class="block text-sm font-semibold text-gray-700">Minimum Stok</label>
+                                <div class="relative">
+                                    <input type="number" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-gray-50 disabled:bg-gray-100 pr-16" id="productMinStock" min="0">
+                                    <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-sm text-gray-500 font-medium">adet</span>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label class="block text-sm font-semibold text-gray-700">Denemede Olan</label>
+                                <div class="relative">
+                                    <input type="number" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-gray-50 disabled:bg-gray-100 pr-16" id="productOnTrial" min="0">
+                                    <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-sm text-gray-500 font-medium">adet</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pricing Information -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title flex items-center">
+                                <svg class="w-5 h-5 text-primary-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                                </svg>
+                                Fiyat Bilgileri
+                            </h3>
+                        </div>
+                        
+                        <div class="p-6 space-y-6">
+                            <div class="space-y-2">
+                                <label class="block text-sm font-semibold text-gray-700">Birim Fiyat *</label>
+                                <div class="relative">
+                                    <input type="number" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-gray-50 disabled:bg-gray-100 pr-12" id="productPrice" required min="0" step="0.01">
+                                    <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-sm text-gray-500 font-medium">₺</span>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label class="block text-sm font-semibold text-gray-700">Toplam Stok Değeri</label>
+                                <div class="bg-gradient-to-r from-primary-50 to-primary-100/50 p-4 rounded-xl border border-primary-200">
+                                    <span class="text-xl font-bold text-primary-900" id="totalStockValue">₺0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Warranty Information -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title flex items-center">
+                                <svg class="w-5 h-5 text-primary-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                Garanti Bilgileri
+                            </h3>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="space-y-2">
+                                <label class="block text-sm font-semibold text-gray-700">Garanti Süresi</label>
+                                <div class="relative">
+                                    <input type="number" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-gray-50 disabled:bg-gray-100 pr-12" id="productWarranty" min="0">
+                                    <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-sm text-gray-500 font-medium">ay</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-12 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <button type="button" class="btn-secondary" onclick="goBack()">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+                            </svg>
+                            İptal
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4" id="actionButtons">
+                        <button type="button" class="btn-danger" onclick="confirmDeleteProduct()" id="deleteBtn">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd"/>
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L7.586 12l-1.293 1.293a1 1 0 101.414 1.414L9 13.414l2.293 2.293a1 1 0 001.414-1.414L11.414 12l1.293-1.293z" clip-rule="evenodd"/>
+                            </svg>
+                            Ürünü Sil
+                        </button>
+                        
+                        <button type="button" class="btn-primary shadow-lg" onclick="saveProduct()" id="saveBtn">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                            Değişiklikleri Kaydet
+                        </button>
+                    </div>
+                </div>
+            </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Activity Log -->
+            <div class="mt-8 card">
+                <div class="card-header">
+                    <h3 class="card-title">İşlem Geçmişi</h3>
+                </div>
+                
+                <div class="card-body">
+                    <div class="space-y-4" id="activityLog">
+                        <!-- Activity items will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 transform transition-all">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold text-gray-900">Ürünü Sil</h3>
+                <button class="p-2 rounded-lg hover:bg-gray-100 transition-colors" onclick="closeDeleteConfirmModal()">
+                    <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-900 mb-2">Ürünü silmek istediğinizden emin misiniz?</h4>
+                        <p class="text-gray-600">Bu işlem geri alınamaz ve tüm veriler kalıcı olarak silinecektir.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-red-50 border border-red-200 p-4 rounded-xl">
+                    <p class="text-sm text-red-800">
+                        <strong id="deleteProductName" class="font-semibold">Ürün Adı</strong> kalıcı olarak silinecek.
+                        Tüm stok geçmişi ve ilişkili veriler kaybolacak.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="flex items-center justify-end space-x-4 mt-8">
+                <button type="button" class="btn-secondary" onclick="closeDeleteConfirmModal()">İptal</button>
+                <button type="button" class="btn-danger" onclick="deleteProduct()">Ürünü Sil</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/data.js"></script>
+    <script src="assets/widgets/sidebar.js"></script>
+    
+    <script>
+        let currentProduct = null;
+        let isEditMode = false;
+        let originalProductData = null;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarContainer = document.getElementById('sidebar-container');
+            if (sidebarContainer && typeof SidebarWidget !== 'undefined') {
+                const sidebar = new SidebarWidget('inventory');
+                sidebarContainer.innerHTML = sidebar.render();
+            }
+            
+            initPage();
+        });
+
+        function initPage() {
+            const productId = Utils.getUrlParameter('id');
+            if (productId) {
+                loadProduct(productId);
+            } else {
+                Utils.showToast('Ürün ID\'si bulunamadı', 'error');
+                goBack();
+            }
+            
+            setupFormValidation();
+            setupAutoCalculations();
+        }
+
+        function loadProduct(productId) {
+            // Load from AppState or localStorage
+            const inventory = window.AppState?.inventory || window.Storage?.load('inventory') || [];
+            currentProduct = inventory.find(item => item.id === productId);
+            
+            if (!currentProduct) {
+                Utils.showToast('Ürün bulunamadı', 'error');
+                goBack();
+                return;
+            }
+            
+            // Store original data for comparison
+            originalProductData = Utils.deepClone(currentProduct);
+            
+            populateForm();
+            updateStockStatus();
+            loadActivityLog();
+        }
+
+        function populateForm() {
+            if (!currentProduct) return;
+            
+            // Update header
+            document.getElementById('productTitle').textContent = currentProduct.name;
+            document.getElementById('productSubtitle').textContent = `${currentProduct.brand} ${currentProduct.model || ''}`;
+            document.getElementById('breadcrumbProductName').textContent = currentProduct.name;
+            
+            // Populate form fields
+            document.getElementById('productName').value = currentProduct.name || '';
+            document.getElementById('productBrand').value = currentProduct.brand || '';
+            document.getElementById('productModel').value = currentProduct.model || '';
+            document.getElementById('productCategory').value = currentProduct.category || '';
+            document.getElementById('productSerial').value = currentProduct.serialNumber || '';
+            document.getElementById('productBarcode').value = currentProduct.barcode || '';
+            document.getElementById('productSupplier').value = currentProduct.supplier || '';
+            document.getElementById('productDescription').value = currentProduct.description || '';
+            document.getElementById('productStock').value = currentProduct.stock || 0;
+            document.getElementById('productMinStock').value = currentProduct.minStock || 0;
+            document.getElementById('productOnTrial').value = currentProduct.onTrial || 0;
+            document.getElementById('productPrice').value = currentProduct.price || 0;
+            document.getElementById('productWarranty').value = currentProduct.warranty || 0;
+            
+            updateTotalStockValue();
+            setFormMode(false); // Start in view mode
+        }
+
+        function updateStockStatus() {
+            if (!currentProduct) return;
+            
+            const stockStatusElement = document.getElementById('stockStatus');
+            let statusClass = 'status-active';
+            let statusText = 'Stokta';
+            
+            if (currentProduct.stock === 0) {
+                statusClass = 'status-inactive';
+                statusText = 'Tükendi';
+            } else if (currentProduct.stock <= (currentProduct.minStock || 5)) {
+                statusClass = 'status-warning';
+                statusText = 'Düşük Stok';
+            } else if (currentProduct.onTrial > 0) {
+                statusClass = 'status-pending';
+                statusText = `${currentProduct.onTrial} Denemede`;
+            }
+            
+            stockStatusElement.className = `status-badge ${statusClass}`;
+            stockStatusElement.textContent = statusText;
+        }
+
+        function setupFormValidation() {
+            const form = document.getElementById('productForm');
+            const inputs = form.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                input.addEventListener('input', validateForm);
+                input.addEventListener('change', validateForm);
+            });
+        }
+
+        function setupAutoCalculations() {
+            const stockInput = document.getElementById('productStock');
+            const priceInput = document.getElementById('productPrice');
+            
+            [stockInput, priceInput].forEach(input => {
+                input.addEventListener('input', updateTotalStockValue);
+                input.addEventListener('change', updateTotalStockValue);
+            });
+        }
+
+        function updateTotalStockValue() {
+            const stock = parseFloat(document.getElementById('productStock').value) || 0;
+            const price = parseFloat(document.getElementById('productPrice').value) || 0;
+            const totalValue = stock * price;
+            
+            document.getElementById('totalStockValue').textContent = Utils.formatCurrency(totalValue);
+        }
+
+        function validateForm() {
+            const requiredFields = ['productName', 'productBrand', 'productCategory', 'productPrice'];
+            let isValid = true;
+            
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                const value = field.value.trim();
+                
+                if (!value) {
+                    isValid = false;
+                    field.classList.add('border-red-500');
+                } else {
+                    field.classList.remove('border-red-500');
+                }
+            });
+            
+            document.getElementById('saveBtn').disabled = !isValid;
+            return isValid;
+        }
+
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            setFormMode(isEditMode);
+        }
+
+        function setFormMode(editMode) {
+            isEditMode = editMode;
+            const form = document.getElementById('productForm');
+            const inputs = form.querySelectorAll('input, select, textarea');
+            const editBtn = document.getElementById('editToggleBtn');
+            const actionButtons = document.getElementById('actionButtons');
+            
+            inputs.forEach(input => {
+                input.disabled = !editMode;
+                if (editMode) {
+                    input.classList.remove('bg-gray-50');
+                } else {
+                    input.classList.add('bg-gray-50');
+                }
+            });
+            
+            if (editMode) {
+                editBtn.innerHTML = `
+                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                    İptal
+                `;
+                actionButtons.classList.remove('hidden');
+            } else {
+                editBtn.innerHTML = `
+                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                    </svg>
+                    Düzenle
+                `;
+                actionButtons.classList.add('hidden');
+                
+                // Reset form to original values if canceling
+                if (originalProductData) {
+                    populateForm();
+                }
+            }
+        }
+
+        function saveProduct() {
+            if (!validateForm()) {
+                Utils.showToast('Lütfen zorunlu alanları doldurun', 'warning');
+                return;
+            }
+            
+            if (!currentProduct) return;
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('productName').value.trim(),
+                brand: document.getElementById('productBrand').value,
+                model: document.getElementById('productModel').value.trim(),
+                category: document.getElementById('productCategory').value,
+                serialNumber: document.getElementById('productSerial').value.trim(),
+                barcode: document.getElementById('productBarcode').value.trim(),
+                supplier: document.getElementById('productSupplier').value.trim(),
+                description: document.getElementById('productDescription').value.trim(),
+                stock: parseInt(document.getElementById('productStock').value) || 0,
+                minStock: parseInt(document.getElementById('productMinStock').value) || 0,
+                onTrial: parseInt(document.getElementById('productOnTrial').value) || 0,
+                price: parseFloat(document.getElementById('productPrice').value) || 0,
+                warranty: parseInt(document.getElementById('productWarranty').value) || 0,
+                lastUpdated: new Date().toISOString()
+            };
+            
+            // Update current product
+            Object.assign(currentProduct, formData);
+            
+            // Save to storage
+            const inventory = window.AppState?.inventory || window.Storage?.load('inventory') || [];
+            const index = inventory.findIndex(item => item.id === currentProduct.id);
+            if (index !== -1) {
+                inventory[index] = currentProduct;
+                
+                // Update AppState if it exists
+                if (window.AppState) {
+                    window.AppState.inventory = inventory;
+                }
+                
+                // Save to localStorage
+                if (window.Storage) {
+                    window.Storage.save('inventory', inventory);
+                }
+            }
+            
+            // Update UI
+            originalProductData = Utils.deepClone(currentProduct);
+            populateForm();
+            updateStockStatus();
+            setFormMode(false);
+            
+            // Add to activity log
+            addActivityLogEntry('update', 'Ürün bilgileri güncellendi');
+            
+            Utils.showToast('Ürün başarıyla güncellendi', 'success');
+        }
+
+        function confirmDeleteProduct() {
+            if (!currentProduct) return;
+            
+            document.getElementById('deleteProductName').textContent = currentProduct.name;
+            const modal = document.getElementById('deleteConfirmModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDeleteConfirmModal() {
+            const modal = document.getElementById('deleteConfirmModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function deleteProduct() {
+            if (!currentProduct) return;
+            
+            const inventory = window.AppState?.inventory || window.Storage?.load('inventory') || [];
+            const index = inventory.findIndex(item => item.id === currentProduct.id);
+            
+            if (index !== -1) {
+                inventory.splice(index, 1);
+                
+                // Update AppState if it exists
+                if (window.AppState) {
+                    window.AppState.inventory = inventory;
+                }
+                
+                // Save to localStorage
+                if (window.Storage) {
+                    window.Storage.save('inventory', inventory);
+                }
+                
+                Utils.showToast('Ürün başarıyla silindi', 'success');
+                goBack();
+            }
+        }
+
+        function loadActivityLog() {
+            const activityLogContainer = document.getElementById('activityLog');
+            
+            // Create sample activity log entries
+            const activities = [
+                {
+                    type: 'create',
+                    title: 'Ürün Oluşturuldu',
+                    description: 'Ürün stoğa eklendi',
+                    timestamp: currentProduct?.createdAt || new Date().toISOString(),
+                    user: 'Admin User'
+                },
+                {
+                    type: 'update',
+                    title: 'Son Güncelleme',
+                    description: 'Ürün bilgileri güncellendi',
+                    timestamp: currentProduct?.lastUpdated || new Date().toISOString(),
+                    user: 'Admin User'
+                }
+            ];
+            
+            activityLogContainer.innerHTML = activities.map(activity => `
+                <div class="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L7.586 12l-1.293 1.293a1 1 0 101.414 1.414L9 13.414l2.293 2.293a1 1 0 001.414-1.414L11.414 12l1.293-1.293z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-sm font-medium text-gray-900">${activity.title}</h4>
+                        <p class="text-sm text-gray-600">${activity.description}</p>
+                        <p class="text-xs text-gray-500 mt-1">
+                            ${Utils.formatDateTime(activity.timestamp)} - ${activity.user}
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addActivityLogEntry(type, description) {
+            const activityLogContainer = document.getElementById('activityLog');
+            const newActivity = document.createElement('div');
+            newActivity.className = 'flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border border-blue-200';
+            newActivity.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L7.586 12l-1.293 1.293a1 1 0 101.414 1.414L9 13.414l2.293 2.293a1 1 0 001.414-1.414L11.414 12l1.293-1.293z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h4 class="text-sm font-medium text-gray-900">Güncelleme</h4>
+                    <p class="text-sm text-gray-600">${description}</p>
+                    <p class="text-xs text-gray-500 mt-1">
+                        ${Utils.formatDateTime(new Date().toISOString())} - Admin User
+                    </p>
+                </div>
+            `;
+            
+            activityLogContainer.insertBefore(newActivity, activityLogContainer.firstChild);
+        }
+
+        function goBack() {
+            if (isEditMode && hasUnsavedChanges()) {
+                const confirmed = confirm('Kaydedilmemiş değişiklikler var. Çıkmak istediğinizden emin misiniz?');
+                if (!confirmed) return;
+            }
+            
+            window.location.href = 'inventory.html';
+        }
+
+        function hasUnsavedChanges() {
+            if (!originalProductData || !currentProduct) return false;
+            
+            const currentFormData = {
+                name: document.getElementById('productName').value.trim(),
+                brand: document.getElementById('productBrand').value,
+                model: document.getElementById('productModel').value.trim(),
+                category: document.getElementById('productCategory').value,
+                serialNumber: document.getElementById('productSerial').value.trim(),
+                barcode: document.getElementById('productBarcode').value.trim(),
+                supplier: document.getElementById('productSupplier').value.trim(),
+                description: document.getElementById('productDescription').value.trim(),
+                stock: parseInt(document.getElementById('productStock').value) || 0,
+                minStock: parseInt(document.getElementById('productMinStock').value) || 0,
+                onTrial: parseInt(document.getElementById('productOnTrial').value) || 0,
+                price: parseFloat(document.getElementById('productPrice').value) || 0,
+                warranty: parseInt(document.getElementById('productWarranty').value) || 0
+            };
+            
+            return JSON.stringify(currentFormData) !== JSON.stringify({
+                name: originalProductData.name || '',
+                brand: originalProductData.brand || '',
+                model: originalProductData.model || '',
+                category: originalProductData.category || '',
+                serialNumber: originalProductData.serialNumber || '',
+                barcode: originalProductData.barcode || '',
+                supplier: originalProductData.supplier || '',
+                description: originalProductData.description || '',
+                stock: originalProductData.stock || 0,
+                minStock: originalProductData.minStock || 0,
+                onTrial: originalProductData.onTrial || 0,
+                price: originalProductData.price || 0,
+                warranty: originalProductData.warranty || 0
+            });
+        }
+
+        // Handle browser back button
+        window.addEventListener('beforeunload', function(e) {
+            if (isEditMode && hasUnsavedChanges()) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+    </script>
+</body>
+</html>

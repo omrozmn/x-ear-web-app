@@ -1,0 +1,28 @@
+# Python Requirements for spaCy Backend Service
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+flask==2.3.2
+flask-cors==4.0.0
+spacy==3.6.1
+
+# Optional: Better performance
+spacy[transformers]==3.6.1
+
+# Development dependencies
+pytest==7.4.0
+pytest-flask==1.2.0
+
+# Logging and monitoring
+gunicorn==21.2.0
+
+# Additional ML libraries for enhanced functionality
+scikit-learn==1.3.0
+numpy==1.24.3
+
+# For custom model training (optional)
+spacy[training]==3.6.1
+
+# Turkish language model (install separately)
+# python -m spacy download tr_core_news_lg
+# python -m spacy download tr_core_news_sm

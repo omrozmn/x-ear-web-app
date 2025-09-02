@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raporlar - X-Ear CRM</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="assets/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         tailwind.config = {
@@ -22,7 +22,7 @@
 </head>
 <body class="bg-light-gray">
     <!-- Sidebar Navigation -->
-    <nav class="sidebar-nav">
+    <div id="sidebar-container"></div>
         <div class="p-6">
             <div class="flex items-center space-x-3 mb-8">
                 <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
@@ -77,10 +77,6 @@
                     </svg>
                     Ayarlar
                 </a></li>
-            </ul>
-        </div>
-    </nav>
-
     <!-- Main Content -->
     <main class="main-content">
         <!-- Header -->
@@ -372,8 +368,8 @@
         </div>
     </main>
 
-    <script src="../assets/app.js"></script>
-    <script src="../assets/data.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/data.js"></script>
     <script>
         let charts = {};
         let currentDateRange = 30;
@@ -800,6 +796,22 @@
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+    
+    <!-- Widget Scripts -->
+    <script src="assets/data.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/widgets/sidebar.js"></script>
+    
+    <script>
+        // Initialize sidebar widget
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarContainer = document.getElementById('sidebar-container');
+            if (sidebarContainer && typeof SidebarWidget !== 'undefined') {
+                const sidebar = new SidebarWidget('reports');
+                sidebarContainer.innerHTML = sidebar.render();
+            }
+        });
     </script>
 </body>
 </html>

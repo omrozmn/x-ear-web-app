@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>spaCy NLP Integration Test - X-Ear CRM</title>
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <style>
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .test-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .test-section h3 {
+            margin-top: 0;
+            color: #1f2937;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 10px;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .input-group textarea,
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .input-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .btn-test {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        .btn-test:hover {
+            background: #2563eb;
+        }
+        
+        .btn-test:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 6px;
+            border-left: 4px solid #10b981;
+        }
+        
+        .results.error {
+            background: #fef2f2;
+            border-left-color: #ef4444;
+        }
+        
+        .results pre {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-size: 12px;
+        }
+        
+        .entity-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            margin: 2px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .entity-person { background: #dbeafe; color: #1e40af; }
+        .entity-tc { background: #fef3c7; color: #92400e; }
+        .entity-date { background: #d1fae5; color: #065f46; }
+        .entity-medical { background: #fce7f3; color: #be185d; }
+        .entity-device { background: #e0e7ff; color: #3730a3; }
+        
+        .similarity-score {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 6px;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        
+        .similarity-high { background: #dcfce7; color: #166534; }
+        .similarity-medium { background: #fef08a; color: #854d0e; }
+        .similarity-low { background: #fee2e2; color: #991b1b; }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f4f6;
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <header style="text-align: center; margin-bottom: 30px;">
+            <h1>🧠 spaCy NLP Integration Test</h1>
+            <p>X-Ear CRM Türkçe Tıbbi Metin İşleme Testi</p>
+            <div id="nlp-status" class="stat-card" style="display: inline-block;">
+                <div class="stat-value" id="status-indicator">❓</div>
+                <div class="stat-label">NLP Durumu</div>
+            </div>
+        </header>
+
+        <!-- Document Processing Test -->
+        <div class="test-section">
+            <h3>📄 Tıbbi Belge İşleme Testi</h3>
+            <div class="input-group">
+                <label for="document-text">Tıbbi Belge Metni (Türkçe):</label>
+                <textarea id="document-text" placeholder="Hasta Adı: Mehmet Özkan
+TC Kimlik No: 12345678901
+Doğum Tarihi: 15.05.1980
+Tanı: İşitme kaybı
+Cihaz: BTE tipi işitme cihazı
+Doktor: Dr. Ahmet Yılmaz"></textarea>
+            </div>
+            <button class="btn-test" onclick="testDocumentProcessing()">
+                <span id="doc-loading" style="display: none;" class="loading"></span>
+                Belgeyi İşle
+            </button>
+            <div id="document-results" class="results" style="display: none;"></div>
+        </div>
+
+        <!-- Patient Matching Test -->
+        <div class="test-section">
+            <h3>👥 Hasta Eşleştirme Testi</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="input-group">
+                    <label for="extracted-info">OCR'dan Çıkan Hasta Bilgisi:</label>
+                    <textarea id="extracted-info" placeholder='{"name": "Mehmet Ozkan", "tcNo": "12345678901", "birthDate": "15.05.1980"}'></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="patient-database">Hasta Veritabanı (JSON):</label>
+                    <textarea id="patient-database" placeholder='[{"name": "Mehmet Özkan", "tcNo": "12345678901", "birthDate": "1980-05-15"}, {"name": "Ayşe Kaya", "tcNo": "98765432109", "birthDate": "1975-03-20"}]'></textarea>
+                </div>
+            </div>
+            <button class="btn-test" onclick="testPatientMatching()">
+                <span id="match-loading" style="display: none;" class="loading"></span>
+                Hastaları Eşleştir
+            </button>
+            <div id="matching-results" class="results" style="display: none;"></div>
+        </div>
+
+        <!-- Global Search Test -->
+        <div class="test-section">
+            <h3>🔍 Akıllı Arama Testi</h3>
+            <div class="input-group">
+                <label for="search-query">Doğal Dil Arama Sorgusu:</label>
+                <input type="text" id="search-query" placeholder="Mehmet adında hastayı bul" />
+            </div>
+            <button class="btn-test" onclick="testGlobalSearch()">
+                <span id="search-loading" style="display: none;" class="loading"></span>
+                Ara
+            </button>
+            <div id="search-results" class="results" style="display: none;"></div>
+        </div>
+
+        <!-- Similarity Test -->
+        <div class="test-section">
+            <h3>🎯 Semantic Benzerlik Testi</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="input-group">
+                    <label for="text1">Metin 1:</label>
+                    <textarea id="text1" placeholder="işitme kaybı"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="text2">Metin 2:</label>
+                    <textarea id="text2" placeholder="işitme azalması"></textarea>
+                </div>
+            </div>
+            <button class="btn-test" onclick="testSimilarity()">
+                <span id="sim-loading" style="display: none;" class="loading"></span>
+                Benzerliği Hesapla
+            </button>
+            <div id="similarity-results" class="results" style="display: none;"></div>
+        </div>
+
+        <!-- Performance Stats -->
+        <div class="test-section">
+            <h3>📊 Performans İstatistikleri</h3>
+            <button class="btn-test" onclick="updateStats()">İstatistikleri Yenile</button>
+            <div class="stats-grid" id="stats-grid">
+                <!-- Stats will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/spacy-nlp-service.js"></script>
+    <script src="assets/js/patient-matching-service.js"></script>
+    <script src="assets/js/ocr-engine.js"></script>
+    <script src="assets/js/global-search.js"></script>
+    
+    <script>
+        let nlpService = null;
+        let patientMatchingService = null;
+        let ocrEngine = null;
+        let globalSearch = null;
+
+        // Initialize services
+        async function initializeServices() {
+            try {
+                console.log('🔄 Initializing services...');
+                
+                // Initialize NLP Service
+                nlpService = new SpacyNLPService({ debug: true });
+                await nlpService.initialize();
+                
+                // Initialize Patient Matching Service
+                patientMatchingService = new PatientMatchingService({ debug: true });
+                await patientMatchingService.initialize();
+                
+                // Initialize OCR Engine with NLP
+                ocrEngine = new OCREngine({ enableNLP: true, debug: true });
+                await ocrEngine.initialize();
+                
+                // Initialize Global Search
+                globalSearch = new GlobalSearchManager({ enableNLP: true, debug: true });
+                
+                updateNLPStatus(true);
+                console.log('✅ All services initialized successfully');
+                
+            } catch (error) {
+                console.error('❌ Service initialization failed:', error);
+                updateNLPStatus(false, error.message);
+            }
+        }
+
+        function updateNLPStatus(ready, error = null) {
+            const indicator = document.getElementById('status-indicator');
+            const label = indicator.nextElementSibling;
+            
+            if (ready) {
+                indicator.textContent = '✅';
+                indicator.style.color = '#10b981';
+                label.textContent = 'Hazır';
+            } else {
+                indicator.textContent = '❌';
+                indicator.style.color = '#ef4444';
+                label.textContent = error ? 'Hata' : 'Yükleniyor...';
+                if (error) {
+                    label.title = error;
+                }
+            }
+        }
+
+        async function testDocumentProcessing() {
+            const text = document.getElementById('document-text').value;
+            const loading = document.getElementById('doc-loading');
+            const results = document.getElementById('document-results');
+            
+            if (!text.trim()) {
+                alert('Lütfen test metni girin');
+                return;
+            }
+
+            loading.style.display = 'inline-block';
+            results.style.display = 'none';
+
+            try {
+                const result = await nlpService.processDocument(text, 'medical');
+                
+                let html = '<h4>🧠 NLP Analiz Sonuçları</h4>';
+                
+                // Entities
+                html += '<h5>📋 Bulunan Varlıklar:</h5>';
+                for (const [entityType, entities] of Object.entries(result.entities)) {
+                    html += `<div><strong>${entityType}:</strong><br>`;
+                    entities.forEach(entity => {
+                        const className = `entity-${entityType.toLowerCase().replace('_', '')}`;
+                        html += `<span class="entity-tag ${className}">${entity.text} (${(entity.confidence * 100).toFixed(0)}%)</span>`;
+                    });
+                    html += '</div><br>';
+                }
+                
+                // Classification
+                html += '<h5>📂 Belge Sınıflandırması:</h5>';
+                html += `<p><strong>Tür:</strong> ${result.classification.type}<br>`;
+                html += `<strong>Güven:</strong> ${(result.classification.confidence * 100).toFixed(0)}%</p>`;
+                
+                // Medical Terms
+                if (result.medicalTerms.length > 0) {
+                    html += '<h5>🏥 Tıbbi Terimler:</h5>';
+                    html += `<p>${result.medicalTerms.join(', ')}</p>`;
+                }
+                
+                // Raw result
+                html += '<h5>🔬 Ham Sonuç:</h5>';
+                html += `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+                
+                results.innerHTML = html;
+                results.className = 'results';
+                
+            } catch (error) {
+                results.innerHTML = `<h4>❌ Hata</h4><p>${error.message}</p>`;
+                results.className = 'results error';
+            }
+            
+            loading.style.display = 'none';
+            results.style.display = 'block';
+        }
+
+        async function testPatientMatching() {
+            const extractedText = document.getElementById('extracted-info').value;
+            const databaseText = document.getElementById('patient-database').value;
+            const loading = document.getElementById('match-loading');
+            const results = document.getElementById('matching-results');
+            
+            if (!extractedText.trim() || !databaseText.trim()) {
+                alert('Lütfen her iki alanı da doldurun');
+                return;
+            }
+
+            loading.style.display = 'inline-block';
+            results.style.display = 'none';
+
+            try {
+                const extractedInfo = JSON.parse(extractedText);
+                const patientDatabase = JSON.parse(databaseText);
+                
+                const matches = await patientMatchingService.findMatches(extractedInfo, patientDatabase);
+                
+                let html = '<h4>🎯 Hasta Eşleştirme Sonuçları</h4>';
+                
+                if (matches.length === 0) {
+                    html += '<p>Eşleşen hasta bulunamadı.</p>';
+                } else {
+                    matches.forEach((match, index) => {
+                        html += `<div style="border: 1px solid #e5e7eb; padding: 15px; margin: 10px 0; border-radius: 6px;">`;
+                        html += `<h5>🏆 ${index + 1}. Eşleşme (${match.level})</h5>`;
+                        html += `<p><strong>Hasta:</strong> ${match.patient.name}<br>`;
+                        html += `<strong>TC:</strong> ***${match.patient.tcNo ? match.patient.tcNo.slice(-4) : 'N/A'}<br>`;
+                        html += `<strong>Doğum Tarihi:</strong> ${match.patient.birthDate || 'N/A'}</p>`;
+                        html += `<p><strong>Toplam Skor:</strong> ${(match.score * 100).toFixed(1)}%<br>`;
+                        html += `<strong>Güven:</strong> ${(match.confidence * 100).toFixed(1)}%</p>`;
+                        html += `<p><strong>Detaylar:</strong> İsim: ${(match.scores.name * 100).toFixed(0)}%, `;
+                        html += `Soyisim: ${(match.scores.surname * 100).toFixed(0)}%, `;
+                        html += `TC: ${match.details.tcNumberMatch ? '✅' : '❌'}, `;
+                        html += `Tarih: ${match.details.birthDateMatch ? '✅' : '❌'}</p>`;
+                        if (match.details.semanticSimilarity > 0) {
+                            html += `<p><strong>Semantic Benzerlik:</strong> ${(match.details.semanticSimilarity * 100).toFixed(1)}%</p>`;
+                        }
+                        html += '</div>';
+                    });
+                }
+                
+                results.innerHTML = html;
+                results.className = 'results';
+                
+            } catch (error) {
+                results.innerHTML = `<h4>❌ Hata</h4><p>${error.message}</p>`;
+                results.className = 'results error';
+            }
+            
+            loading.style.display = 'none';
+            results.style.display = 'block';
+        }
+
+        async function testGlobalSearch() {
+            const query = document.getElementById('search-query').value;
+            const loading = document.getElementById('search-loading');
+            const results = document.getElementById('search-results');
+            
+            if (!query.trim()) {
+                alert('Lütfen arama sorgusu girin');
+                return;
+            }
+
+            loading.style.display = 'inline-block';
+            results.style.display = 'none';
+
+            try {
+                // Parse intent
+                const intent = await nlpService.parseIntent(query);
+                
+                let html = '<h4>🔍 Akıllı Arama Sonuçları</h4>';
+                html += `<h5>🎯 Algılanan Niyet</h5>`;
+                html += `<p><strong>Tür:</strong> ${intent.type}<br>`;
+                html += `<strong>Güven:</strong> ${(intent.confidence * 100).toFixed(0)}%<br>`;
+                html += `<strong>Orijinal Sorgu:</strong> "${intent.originalQuery}"</p>`;
+                
+                if (intent.entities && Object.keys(intent.entities).length > 0) {
+                    html += '<h5>📋 Bulunan Varlıklar:</h5>';
+                    for (const [entityType, entities] of Object.entries(intent.entities)) {
+                        if (entities.length > 0) {
+                            html += `<p><strong>${entityType}:</strong> `;
+                            entities.forEach(entity => {
+                                html += `<span class="entity-tag">${entity.text}</span>`;
+                            });
+                            html += '</p>';
+                        }
+                    }
+                }
+                
+                html += '<h5>🔬 Ham Sonuç:</h5>';
+                html += `<pre>${JSON.stringify(intent, null, 2)}</pre>`;
+                
+                results.innerHTML = html;
+                results.className = 'results';
+                
+            } catch (error) {
+                results.innerHTML = `<h4>❌ Hata</h4><p>${error.message}</p>`;
+                results.className = 'results error';
+            }
+            
+            loading.style.display = 'none';
+            results.style.display = 'block';
+        }
+
+        async function testSimilarity() {
+            const text1 = document.getElementById('text1').value;
+            const text2 = document.getElementById('text2').value;
+            const loading = document.getElementById('sim-loading');
+            const results = document.getElementById('similarity-results');
+            
+            if (!text1.trim() || !text2.trim()) {
+                alert('Lütfen her iki metni de girin');
+                return;
+            }
+
+            loading.style.display = 'inline-block';
+            results.style.display = 'none';
+
+            try {
+                const similarity = await nlpService.calculateSemanticSimilarity(text1, text2);
+                
+                const score = similarity.similarity;
+                const scoreClass = score > 0.7 ? 'similarity-high' : score > 0.4 ? 'similarity-medium' : 'similarity-low';
+                
+                let html = '<h4>🎯 Semantic Benzerlik Sonucu</h4>';
+                html += `<div class="similarity-score ${scoreClass}">`;
+                html += `Benzerlik Skoru: ${(score * 100).toFixed(1)}%`;
+                html += '</div>';
+                
+                if (similarity.breakdown) {
+                    html += '<h5>📊 Detaylı Analiz:</h5>';
+                    html += `<p><strong>Lexical:</strong> ${(similarity.breakdown.lexical * 100).toFixed(1)}%<br>`;
+                    html += `<strong>Semantic:</strong> ${(similarity.breakdown.semantic * 100).toFixed(1)}%<br>`;
+                    html += `<strong>Medical:</strong> ${(similarity.breakdown.medical * 100).toFixed(1)}%<br>`;
+                    html += `<strong>Structural:</strong> ${(similarity.breakdown.structural * 100).toFixed(1)}%</p>`;
+                }
+                
+                html += '<h5>🔬 Ham Sonuç:</h5>';
+                html += `<pre>${JSON.stringify(similarity, null, 2)}</pre>`;
+                
+                results.innerHTML = html;
+                results.className = 'results';
+                
+            } catch (error) {
+                results.innerHTML = `<h4>❌ Hata</h4><p>${error.message}</p>`;
+                results.className = 'results error';
+            }
+            
+            loading.style.display = 'none';
+            results.style.display = 'block';
+        }
+
+        function updateStats() {
+            const statsGrid = document.getElementById('stats-grid');
+            
+            const allStats = {
+                'NLP Service': nlpService ? nlpService.getStats() : null,
+                'Patient Matching': patientMatchingService ? patientMatchingService.getStats() : null,
+                'OCR Engine': ocrEngine ? ocrEngine.getStats() : null,
+                'Global Search': globalSearch ? globalSearch.getStats() : null
+            };
+            
+            let html = '';
+            
+            for (const [serviceName, stats] of Object.entries(allStats)) {
+                if (stats) {
+                    html += `<div class="stat-card">`;
+                    html += `<h5>${serviceName}</h5>`;
+                    if (stats.initialized !== undefined) {
+                        html += `<div class="stat-value">${stats.initialized ? '✅' : '❌'}</div>`;
+                        html += `<div class="stat-label">Durum</div>`;
+                    }
+                    if (stats.cacheSize !== undefined) {
+                        html += `<div class="stat-value">${stats.cacheSize}</div>`;
+                        html += `<div class="stat-label">Cache Size</div>`;
+                    }
+                    if (stats.nlpEnabled !== undefined) {
+                        html += `<div class="stat-value">${stats.nlpEnabled ? '🧠' : '📚'}</div>`;
+                        html += `<div class="stat-label">Mode</div>`;
+                    }
+                    html += '</div>';
+                }
+            }
+            
+            statsGrid.innerHTML = html;
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', async () => {
+            updateNLPStatus(false);
+            await initializeServices();
+            updateStats();
+            
+            // Fill in some sample data
+            document.getElementById('document-text').value = `Hasta Adı: Mehmet Özkan
+TC Kimlik No: 12345678901
+Doğum Tarihi: 15.05.1980
+Tanı: Sensörinöral işitme kaybı
+Cihaz Türü: BTE tipi işitme cihazı
+Doktor: Dr. Ahmet Yılmaz
+Hastane: İstanbul Üniversitesi Tıp Fakültesi`;
+
+            document.getElementById('extracted-info').value = JSON.stringify({
+                name: "Mehmet Ozkan",
+                tcNo: "12345678901",
+                birthDate: "15.05.1980",
+                confidence: 0.85
+            }, null, 2);
+
+            document.getElementById('patient-database').value = JSON.stringify([
+                {
+                    name: "Mehmet Özkan",
+                    tcNo: "12345678901",
+                    birthDate: "1980-05-15",
+                    phone: "0532 123 4567"
+                },
+                {
+                    name: "Ayşe Kaya",
+                    tcNo: "98765432109",
+                    birthDate: "1975-03-20",
+                    phone: "0533 987 6543"
+                },
+                {
+                    name: "Mehmed Özkan",
+                    tcNo: "12345678901",
+                    birthDate: "15/05/1980",
+                    phone: "0534 111 2233"
+                }
+            ], null, 2);
+
+            document.getElementById('search-query').value = "Mehmet adında hastayı bul";
+            document.getElementById('text1').value = "işitme kaybı";
+            document.getElementById('text2').value = "işitme azalması";
+        });
+    </script>
+</body>
+</html>
